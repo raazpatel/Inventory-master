@@ -211,6 +211,7 @@
     <Compile Include="Controllers\Mapping\MenuStoreMappingController.cs" />
     <Compile Include="Controllers\Masters\InventoryItemsController.cs" />
     <Compile Include="Controllers\Masters\MajorItemsController.cs" />
+    <Compile Include="Controllers\Masters\MasterStoreController.cs" />
     <Compile Include="Controllers\Masters\MinorItemsController.cs" />
     <Compile Include="Controllers\Masters\VendorController.cs" />
     <Compile Include="Controllers\API\Receipt\RecievingItemCatalogController.cs" />
@@ -876,6 +877,9 @@
     <Content Include="Views\WasteDetails\WasteReportByGroup.cshtml" />
     <Content Include="Views\WasteDetails\WasteReportByItem.cshtml" />
     <Content Include="Views\StockOnHand\COSByCostCenters.cshtml" />
+    <Content Include="Views\MasterStore\Create.cshtml" />
+    <Content Include="Views\MasterStore\Edit.cshtml" />
+    <Content Include="Views\MasterStore\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

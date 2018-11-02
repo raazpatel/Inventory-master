@@ -45,13 +45,13 @@
         <AssociationConnector Association="InventoryModuleModel.FK_I_RecipeDetails_I_MenuItems" />
         <AssociationConnector Association="InventoryModuleModel.FK_I_RecipeDetails_I_Recipe" />
         <AssociationConnector Association="InventoryModuleModel.FK_I_RecipeDetails_I_UnitMaster" />
-        <EntityTypeShape EntityType="InventoryModuleModel.Store_Details" Width="1.5" PointX="0.75" PointY="7.75" />
-        <AssociationConnector Association="InventoryModuleModel.FK_I_OrderDetails_Store_Details" />
-        <AssociationConnector Association="InventoryModuleModel.FK_I_StockTaking_Store_Details" />
         <EntityTypeShape EntityType="InventoryModuleModel.I_WasteDetails" Width="1.5" PointX="3" PointY="21.625" />
-        <AssociationConnector Association="InventoryModuleModel.FK_I_WasteDetails_Store_Details" />
         <EntityTypeShape EntityType="InventoryModuleModel.I_WasteItemCatalog" Width="1.5" PointX="16.375" PointY="14.75" />
         <EntityTypeShape EntityType="InventoryModuleModel.I_VendorItemCatalog" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.Store_Details" Width="1.5" PointX="0.75" PointY="11.125" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_OrderDetails_Store_Details" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_StockTaking_Store_Details" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_WasteDetails_Store_Details" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

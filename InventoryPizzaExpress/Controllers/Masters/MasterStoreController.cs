@@ -1,34 +1,32 @@
-﻿using System;
+﻿using AutoMapper;
+using InventoryPizzaExpress.Models.Store;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using InventoryPizzaExpress;
-using InventoryPizzaExpress.Models.Store;
-using AutoMapper;
-using System.Threading.Tasks;
 
-namespace InventoryPizzaExpress.Controllers.Store
+namespace InventoryPizzaExpress.Controllers.Masters
 {
     [Authorize]
-    public class StoreController : Controller
+    public class MasterStoreController : Controller
     {
+
         private InventoryModuleEntities db = new InventoryModuleEntities();
 
         // GET: Store
         public ActionResult Index()
         {
-            return View(db.Store_Details.Where(m => m.MasterStoreId != 0).ToList());
+            return View(db.Store_Details.Where(m=>m.MasterStoreId==0).ToList());
         }
         [HttpPost]
-        public  JsonResult GetStoresDetails()
+        public JsonResult GetStoresDetails()
         {
             List<SelectListItem> items = new List<SelectListItem>();
-                    
-            items = (from m in db.Store_Details select new SelectListItem { Value = m.storeId.ToString(), Text = m.storename }).ToList();
+
+            items = (from m in db.Store_Details  select new SelectListItem { Value = m.storeId.ToString(), Text = m.storename }).ToList();
             return Json(items);
         }
         // GET: Store/Details/5
@@ -64,9 +62,10 @@ namespace InventoryPizzaExpress.Controllers.Store
                 var config = new MapperConfiguration(cfg => {
                     cfg.CreateMap<StoreDetails, Store_Details>();
                 });
+                storeDetail.MasterStoreId = 0;
 
                 IMapper mapper = config.CreateMapper();
-               
+
                 var dest = mapper.Map<StoreDetails, Store_Details>(storeDetail);
                 db.Store_Details.Add(dest);
                 db.SaveChanges();
@@ -86,7 +85,7 @@ namespace InventoryPizzaExpress.Controllers.Store
 
             Store_Details storeDetail = db.Store_Details.Find(id);
             var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Store_Details,StoreDetails >();
+                cfg.CreateMap<Store_Details, StoreDetails>();
             });
 
             IMapper mapper = config.CreateMapper();

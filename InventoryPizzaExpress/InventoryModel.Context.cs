@@ -83,13 +83,13 @@ public partial class InventoryModuleEntities : DbContext
 
     public virtual DbSet<I_RecipeDetails> I_RecipeDetails { get; set; }
 
-    public virtual DbSet<Store_Details> Store_Details { get; set; }
-
     public virtual DbSet<I_WasteDetails> I_WasteDetails { get; set; }
 
     public virtual DbSet<I_WasteItemCatalog> I_WasteItemCatalog { get; set; }
 
     public virtual DbSet<I_VendorItemCatalog> I_VendorItemCatalog { get; set; }
+
+    public virtual DbSet<Store_Details> Store_Details { get; set; }
 
 
     public virtual int MapAllMenuItems(Nullable<int> targetStore)

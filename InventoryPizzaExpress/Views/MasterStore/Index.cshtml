@@ -1,0 +1,84 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Store_Details>
+@{
+    ViewBag.Title = "Index";
+}
+<section class="content">
+
+    <p>
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "MasterStore")';return false;">Add</button>
+
+    </p>
+    <div class="box box-primary">
+        <div class="box-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <span>Admin Store</span>
+                        </th>
+                        <th>
+                            <span>Address</span>
+                        </th>
+                        <th>
+                            <span>City</span>
+                        </th>
+                        <th>
+                            <span>State</span>
+                        </th>
+                        <th>
+                            <span>Email Id</span>
+                        </th>
+                        <th>
+                            <span>Phone No</span>
+                        </th>
+                        <th>
+                            <span>Manager</span>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.storename)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.city)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.state)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.manager)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.storeId })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script>
+
+                $('.table').DataTable({"columnDefs": [ {
+                    "targets": 7,
+                    "orderable": false
+                } ]});
+    </script>
+</section>

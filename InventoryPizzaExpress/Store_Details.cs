@@ -35,6 +35,8 @@ public partial class Store_Details
 
     public string storename { get; set; }
 
+    public Nullable<int> MasterStoreId { get; set; }
+
     public string address { get; set; }
 
     public string city { get; set; }

@@ -477,6 +477,7 @@
           </Key>
           <Property Name="storeId" Type="int" Nullable="false" />
           <Property Name="storename" Type="varchar" MaxLength="100" />
+          <Property Name="MasterStoreId" Type="int" />
           <Property Name="address" Type="nvarchar" MaxLength="500" />
           <Property Name="city" Type="nvarchar" MaxLength="100" />
           <Property Name="state" Type="nvarchar" MaxLength="100" />
@@ -1085,6 +1086,9 @@
             <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
             <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
           </AssociationSet>
+          <EntitySet Name="I_WasteDetails" EntityType="InventoryModuleModel.I_WasteDetails" />
+          <EntitySet Name="I_WasteItemCatalog" EntityType="InventoryModuleModel.I_WasteItemCatalog" />
+          <EntitySet Name="I_VendorItemCatalog" EntityType="InventoryModuleModel.I_VendorItemCatalog" />
           <EntitySet Name="Store_Details" EntityType="InventoryModuleModel.Store_Details" />
           <AssociationSet Name="FK_I_OrderDetails_Store_Details" Association="InventoryModuleModel.FK_I_OrderDetails_Store_Details">
             <End Role="Store_Details" EntitySet="Store_Details" />
@@ -1094,13 +1098,10 @@
             <End Role="Store_Details" EntitySet="Store_Details" />
             <End Role="I_StockTaking" EntitySet="I_StockTaking" />
           </AssociationSet>
-          <EntitySet Name="I_WasteDetails" EntityType="InventoryModuleModel.I_WasteDetails" />
           <AssociationSet Name="FK_I_WasteDetails_Store_Details" Association="InventoryModuleModel.FK_I_WasteDetails_Store_Details">
             <End Role="Store_Details" EntitySet="Store_Details" />
             <End Role="I_WasteDetails" EntitySet="I_WasteDetails" />
           </AssociationSet>
-          <EntitySet Name="I_WasteItemCatalog" EntityType="InventoryModuleModel.I_WasteItemCatalog" />
-          <EntitySet Name="I_VendorItemCatalog" EntityType="InventoryModuleModel.I_VendorItemCatalog" />
           </EntityContainer>
         <EntityType Name="v_mi_def">
           <Key>
@@ -1377,8 +1378,8 @@
           <Property Name="Reason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="VendorId" Type="Int32" />
           <NavigationProperty Name="I_OrderItemCatalog" Relationship="InventoryModuleModel.FK_I_OrderItemCatalog_I_OrderDetails" FromRole="I_OrderDetails" ToRole="I_OrderItemCatalog" />
-          <NavigationProperty Name="Store_Details" Relationship="InventoryModuleModel.FK_I_OrderDetails_Store_Details" FromRole="I_OrderDetails" ToRole="Store_Details" />
           <Property Name="TranferNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Store_Details" Relationship="InventoryModuleModel.FK_I_OrderDetails_Store_Details" FromRole="I_OrderDetails" ToRole="Store_Details" />
         </EntityType>
         <EntityType Name="I_OrderItemCatalog">
           <Key>
@@ -1580,47 +1581,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Store_Details">
-          <Key>
-            <PropertyRef Name="storeId" />
-          </Key>
-          <Property Name="storeId" Type="Int32" Nullable="false" />
-          <Property Name="storename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="state" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="manager" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="I_OrderDetails" Relationship="InventoryModuleModel.FK_I_OrderDetails_Store_Details" FromRole="Store_Details" ToRole="I_OrderDetails" />
-          <NavigationProperty Name="I_StockTaking" Relationship="InventoryModuleModel.FK_I_StockTaking_Store_Details" FromRole="Store_Details" ToRole="I_StockTaking" />
-          <NavigationProperty Name="I_WasteDetails" Relationship="InventoryModuleModel.FK_I_WasteDetails_Store_Details" FromRole="Store_Details" ToRole="I_WasteDetails" />
-          <Property Name="isEM" Type="Boolean" />
-        </EntityType>
-        <Association Name="FK_I_OrderDetails_Store_Details">
-          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
-          <End Type="InventoryModuleModel.I_OrderDetails" Role="I_OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Store_Details">
-              <PropertyRef Name="storeId" />
-            </Principal>
-            <Dependent Role="I_OrderDetails">
-              <PropertyRef Name="StoreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_I_StockTaking_Store_Details">
-          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
-          <End Type="InventoryModuleModel.I_StockTaking" Role="I_StockTaking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Store_Details">
-              <PropertyRef Name="storeId" />
-            </Principal>
-            <Dependent Role="I_StockTaking">
-              <PropertyRef Name="StoreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="I_WasteDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -1638,18 +1598,6 @@
           <Property Name="Status" Type="Int32" />
           <NavigationProperty Name="Store_Details" Relationship="InventoryModuleModel.FK_I_WasteDetails_Store_Details" FromRole="I_WasteDetails" ToRole="Store_Details" />
         </EntityType>
-        <Association Name="FK_I_WasteDetails_Store_Details">
-          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
-          <End Type="InventoryModuleModel.I_WasteDetails" Role="I_WasteDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Store_Details">
-              <PropertyRef Name="storeId" />
-            </Principal>
-            <Dependent Role="I_WasteDetails">
-              <PropertyRef Name="StoreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="I_WasteItemCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -1690,6 +1638,60 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Store_Details">
+          <Key>
+            <PropertyRef Name="storeId" />
+          </Key>
+          <Property Name="storeId" Type="Int32" Nullable="false" />
+          <Property Name="storename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MasterStoreId" Type="Int32" />
+          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="manager" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isEM" Type="Boolean" />
+          <NavigationProperty Name="I_OrderDetails" Relationship="InventoryModuleModel.FK_I_OrderDetails_Store_Details" FromRole="Store_Details" ToRole="I_OrderDetails" />
+          <NavigationProperty Name="I_StockTaking" Relationship="InventoryModuleModel.FK_I_StockTaking_Store_Details" FromRole="Store_Details" ToRole="I_StockTaking" />
+          <NavigationProperty Name="I_WasteDetails" Relationship="InventoryModuleModel.FK_I_WasteDetails_Store_Details" FromRole="Store_Details" ToRole="I_WasteDetails" />
+        </EntityType>
+        <Association Name="FK_I_OrderDetails_Store_Details">
+          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_OrderDetails" Role="I_OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_OrderDetails">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_StockTaking_Store_Details">
+          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_StockTaking" Role="I_StockTaking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_StockTaking">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_WasteDetails_Store_Details">
+          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_WasteDetails" Role="I_WasteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_WasteDetails">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2202,21 +2204,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Store_Details">
-            <EntityTypeMapping TypeName="InventoryModuleModel.Store_Details">
-              <MappingFragment StoreEntitySet="Store_Details">
-                <ScalarProperty Name="isEM" ColumnName="isEM" />
-                <ScalarProperty Name="manager" ColumnName="manager" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="storename" ColumnName="storename" />
-                <ScalarProperty Name="storeId" ColumnName="storeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="I_WasteDetails">
             <EntityTypeMapping TypeName="InventoryModuleModel.I_WasteDetails">
               <MappingFragment StoreEntitySet="I_WasteDetails">
@@ -2273,6 +2260,22 @@
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Store_Details">
+            <EntityTypeMapping TypeName="InventoryModuleModel.Store_Details">
+              <MappingFragment StoreEntitySet="Store_Details">
+                <ScalarProperty Name="isEM" ColumnName="isEM" />
+                <ScalarProperty Name="manager" ColumnName="manager" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="MasterStoreId" ColumnName="MasterStoreId" />
+                <ScalarProperty Name="storename" ColumnName="storename" />
+                <ScalarProperty Name="storeId" ColumnName="storeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
