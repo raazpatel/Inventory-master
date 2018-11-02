@@ -1,0 +1,2302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="InventoryModuleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="I_InventoryItemMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemCode" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="MajorItemId" Type="int" Nullable="false" />
+          <Property Name="MinorItemId" Type="int" />
+          <Property Name="PrimaryUnit" Type="int" />
+          <Property Name="PrimaryUnitConv" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ReportingUnit" Type="int" />
+          <Property Name="ReportingUnitConv" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="StoreUnit" Type="int" />
+          <Property Name="StoreUnitConv" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="LossPercentage" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="GainPercentage" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ThersoldRecieving" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="FixedorVariable" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="I_ItemMater">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MajorItemId" Type="int" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ItemDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_MenuItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemCode" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="I_OrderDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="DeliveryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UerId" Type="int" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="500" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="TranferNo" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="I_OrderItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ItemsId" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Unit" Type="int" />
+          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="onHand" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="onOrder" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="Vendor" Type="int" />
+          <Property Name="FixedorVariable" Type="int" />
+          <Property Name="TotalSum" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Createdby" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_RecievingItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderIds" Type="nvarchar(max)" />
+          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Ref" Type="nvarchar" MaxLength="50" />
+          <Property Name="DelieveryDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="I_Recipe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecipeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_RecipeDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemuItem" Type="int" />
+          <Property Name="RecipeId" Type="int" />
+          <Property Name="Article" Type="int" />
+          <Property Name="ItemId" Type="int" />
+          <Property Name="Qty" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Yield" Type="int" />
+          <Property Name="Unit" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ProdArt" Type="int" />
+        </EntityType>
+        <EntityType Name="I_StockInventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="OrderNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Ref" Type="nvarchar" MaxLength="100" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="NetTotal" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="DiscountType" Type="int" />
+          <Property Name="DiscountValue" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="Tax" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="TotalAmount" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="OrderType" Type="int" Nullable="false" />
+          <Property Name="BusinessDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="StoreId" Type="int" />
+        </EntityType>
+        <EntityType Name="I_StockReqDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SourceStore" Type="int" Nullable="false" />
+          <Property Name="TragetStore" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="500" />
+          <Property Name="Status" Type="int" />
+          <Property Name="TranferNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_StockRequestItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReqNo" Type="int" Nullable="false" />
+          <Property Name="ItemCode" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_StockTaking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="InventoryTime" Type="int" Nullable="false" />
+          <Property Name="InventoryTimeValue" Type="time" Precision="7" />
+          <Property Name="ClosingMethod" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_StockTakingItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockTakingId" Type="int" />
+          <Property Name="ItemGroupId" Type="int" />
+        </EntityType>
+        <EntityType Name="I_StockTranferDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SourceStore" Type="int" Nullable="false" />
+          <Property Name="TragetStore" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="500" />
+          <Property Name="Status" Type="int" />
+          <Property Name="TranferNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_StockTransferItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReqNo" Type="int" Nullable="false" />
+          <Property Name="ItemCode" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="ReqQty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_UnitMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="I_VenderMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VenderName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AddressLine" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GSTIN" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_VendorItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="VendorId" Type="int" Nullable="false" />
+          <Property Name="Unit" Type="int" Nullable="false" />
+          <Property Name="FixedorVariable" Type="int" Nullable="false" />
+          <Property Name="DateEffectiveFrom" Type="datetime" Nullable="false" />
+          <Property Name="DateEffectiveTo" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nchar" MaxLength="10" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="I_WasteDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreId" Type="int" Nullable="false" />
+          <Property Name="WasteGroupId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="50" />
+          <Property Name="WasteNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="I_WasteItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WasteNo" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="200" />
+          <Property Name="Cost" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Total" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="mi_def">
+          <Key>
+            <PropertyRef Name="mi_def_Id" />
+          </Key>
+          <Property Name="mi_def_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="storeid" Type="int" Nullable="false" />
+          <Property Name="mi_seq" Type="int" Nullable="false" />
+          <Property Name="obj_num" Type="int" />
+          <Property Name="name_1" Type="varchar" MaxLength="16" />
+          <Property Name="name_2" Type="varchar" MaxLength="12" />
+          <Property Name="maj_grp_seq" Type="int" />
+          <Property Name="fam_grp_seq" Type="int" />
+          <Property Name="mi_grp_seq" Type="int" />
+          <Property Name="mi_slu_seq" Type="int" />
+          <Property Name="price_grp_seq" Type="int" />
+          <Property Name="slu_priority" Type="int" />
+          <Property Name="nlu_grp" Type="int" />
+          <Property Name="nlu_num" Type="numeric" Precision="12" Scale="0" />
+          <Property Name="key_num" Type="int" />
+          <Property Name="icon_id" Type="int" />
+          <Property Name="ob_mi31_chk_mi_avail" Type="char" MaxLength="1" />
+          <Property Name="ob_mi44_no_edit_in_mgr_proc" Type="char" MaxLength="1" />
+          <Property Name="ob_item_is_the_no_modifier" Type="char" MaxLength="1" />
+          <Property Name="ob_lite_mi_dirty" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd01" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd02" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd03" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd04" Type="char" MaxLength="1" />
+          <Property Name="mi_type_seq" Type="int" />
+          <Property Name="cond_grp_mem_seq" Type="int" />
+          <Property Name="cond_req" Type="int" />
+          <Property Name="cond_allowed" Type="int" />
+          <Property Name="crs_mem_seq" Type="int" />
+          <Property Name="crs_sel_seq" Type="int" />
+          <Property Name="mlvl_class_seq" Type="int" />
+          <Property Name="prn_def_class_seq" Type="int" />
+          <Property Name="product_seq_1" Type="int" />
+          <Property Name="product_seq_2" Type="int" />
+          <Property Name="product_seq_3" Type="int" />
+          <Property Name="product_seq_4" Type="int" />
+          <Property Name="comm_amt" Type="numeric" Precision="12" Scale="2" />
+          <Property Name="comm_pcnt" Type="numeric" Precision="8" Scale="4" />
+          <Property Name="cross_ref1" Type="varchar" MaxLength="16" />
+          <Property Name="cross_ref2" Type="varchar" MaxLength="16" />
+          <Property Name="ob_flags" Type="int" />
+          <Property Name="ob_workstation_only" Type="char" MaxLength="1" />
+          <Property Name="mi_slu2_seq" Type="int" />
+          <Property Name="prep_time" Type="int" />
+          <Property Name="external_type" Type="int" />
+          <Property Name="topping_type_seq" Type="int" />
+          <Property Name="topping_modifier_seq" Type="int" />
+          <Property Name="last_updated_by" Type="int" />
+          <Property Name="last_updated_date" Type="varchar" MaxLength="50" />
+          <Property Name="multi_user_access_seq" Type="int" />
+          <Property Name="build_screen_style_seq" Type="int" />
+          <Property Name="hht_build_screen_style_seq" Type="int" />
+          <Property Name="prefix_override_count" Type="int" />
+          <Property Name="prefix_override_level" Type="int" />
+          <Property Name="mi_slu3_seq" Type="int" />
+          <Property Name="mi_slu4_seq" Type="int" />
+          <Property Name="mi_slu5_seq" Type="int" />
+          <Property Name="mi_slu6_seq" Type="int" />
+          <Property Name="mi_slu7_seq" Type="int" />
+          <Property Name="mi_slu8_seq" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="master_item_Id" Type="int" />
+          <Property Name="RecipeId" Type="int" />
+          <Property Name="ob_tax_1_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_2_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_3_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_4_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_5_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_6_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_7_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_8_active" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Store_Details">
+          <Key>
+            <PropertyRef Name="storeId" />
+          </Key>
+          <Property Name="storeId" Type="int" Nullable="false" />
+          <Property Name="storename" Type="varchar" MaxLength="100" />
+          <Property Name="address" Type="nvarchar" MaxLength="500" />
+          <Property Name="city" Type="nvarchar" MaxLength="100" />
+          <Property Name="state" Type="nvarchar" MaxLength="100" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="manager" Type="nvarchar" MaxLength="50" />
+          <Property Name="isEM" Type="bit" />
+        </EntityType>
+        <EntityType Name="v_mi_def">
+          <Key>
+            <PropertyRef Name="v_mi_def_Id" />
+          </Key>
+          <Property Name="v_mi_def_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="storeid" Type="int" Nullable="false" />
+          <Property Name="mi_seq" Type="int" Nullable="false" />
+          <Property Name="obj_num" Type="int" />
+          <Property Name="name_1" Type="varchar" MaxLength="16" />
+          <Property Name="name_2" Type="varchar" MaxLength="12" />
+          <Property Name="maj_grp_seq" Type="int" />
+          <Property Name="fam_grp_seq" Type="int" />
+          <Property Name="mi_grp_seq" Type="int" />
+          <Property Name="mi_slu_seq" Type="int" />
+          <Property Name="price_grp_seq" Type="int" />
+          <Property Name="slu_priority" Type="int" />
+          <Property Name="nlu_grp" Type="int" />
+          <Property Name="nlu_num" Type="numeric" Precision="12" Scale="0" />
+          <Property Name="key_num" Type="int" />
+          <Property Name="icon_id" Type="int" />
+          <Property Name="ob_mi31_chk_mi_avail" Type="char" MaxLength="1" />
+          <Property Name="ob_mi44_no_edit_in_mgr_proc" Type="char" MaxLength="1" />
+          <Property Name="ob_item_is_the_no_modifier" Type="char" MaxLength="1" />
+          <Property Name="ob_lite_mi_dirty" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd01" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd02" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd03" Type="char" MaxLength="1" />
+          <Property Name="ob_rsvd04" Type="char" MaxLength="1" />
+          <Property Name="mi_type_seq" Type="int" />
+          <Property Name="cond_grp_mem_seq" Type="int" />
+          <Property Name="cond_req" Type="int" />
+          <Property Name="cond_allowed" Type="int" />
+          <Property Name="crs_mem_seq" Type="int" />
+          <Property Name="crs_sel_seq" Type="int" />
+          <Property Name="mlvl_class_seq" Type="int" />
+          <Property Name="prn_def_class_seq" Type="int" />
+          <Property Name="product_seq_1" Type="int" />
+          <Property Name="product_seq_2" Type="int" />
+          <Property Name="product_seq_3" Type="int" />
+          <Property Name="product_seq_4" Type="int" />
+          <Property Name="comm_amt" Type="numeric" Precision="12" Scale="2" />
+          <Property Name="comm_pcnt" Type="numeric" Precision="8" Scale="4" />
+          <Property Name="cross_ref1" Type="varchar" MaxLength="16" />
+          <Property Name="cross_ref2" Type="varchar" MaxLength="16" />
+          <Property Name="ob_flags" Type="int" />
+          <Property Name="ob_workstation_only" Type="char" MaxLength="1" />
+          <Property Name="mi_slu2_seq" Type="int" />
+          <Property Name="prep_time" Type="int" />
+          <Property Name="external_type" Type="int" />
+          <Property Name="topping_type_seq" Type="int" />
+          <Property Name="topping_modifier_seq" Type="int" />
+          <Property Name="last_updated_by" Type="int" />
+          <Property Name="last_updated_date" Type="varchar" MaxLength="50" />
+          <Property Name="multi_user_access_seq" Type="int" />
+          <Property Name="build_screen_style_seq" Type="int" />
+          <Property Name="hht_build_screen_style_seq" Type="int" />
+          <Property Name="prefix_override_count" Type="int" />
+          <Property Name="prefix_override_level" Type="int" />
+          <Property Name="mi_slu3_seq" Type="int" />
+          <Property Name="mi_slu4_seq" Type="int" />
+          <Property Name="mi_slu5_seq" Type="int" />
+          <Property Name="mi_slu6_seq" Type="int" />
+          <Property Name="mi_slu7_seq" Type="int" />
+          <Property Name="mi_slu8_seq" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="ob_tax_1_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_2_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_3_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_4_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_5_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_6_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_7_active" Type="char" MaxLength="1" />
+          <Property Name="ob_tax_8_active" Type="char" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_I_OrderDetails_Store_Details">
+          <End Role="Store_Details" Type="Self.Store_Details" Multiplicity="1" />
+          <End Role="I_OrderDetails" Type="Self.I_OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_OrderDetails">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_OrderItemCatalog_I_OrderDetails">
+          <End Role="I_OrderDetails" Type="Self.I_OrderDetails" Multiplicity="1" />
+          <End Role="I_OrderItemCatalog" Type="Self.I_OrderItemCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_OrderDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_OrderItemCatalog">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_OrderItemCatalog_I_UnitMaster">
+          <End Role="I_UnitMaster" Type="Self.I_UnitMaster" Multiplicity="0..1" />
+          <End Role="I_OrderItemCatalog" Type="Self.I_OrderItemCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_UnitMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_OrderItemCatalog">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_RecipeDetails_I_InventoryItemMaster">
+          <End Role="I_InventoryItemMaster" Type="Self.I_InventoryItemMaster" Multiplicity="0..1" />
+          <End Role="I_RecipeDetails" Type="Self.I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_InventoryItemMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_RecipeDetails_I_MenuItems">
+          <End Role="I_MenuItems" Type="Self.I_MenuItems" Multiplicity="0..1" />
+          <End Role="I_RecipeDetails" Type="Self.I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_MenuItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="MemuItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_RecipeDetails_I_Recipe">
+          <End Role="I_Recipe" Type="Self.I_Recipe" Multiplicity="0..1" />
+          <End Role="I_RecipeDetails" Type="Self.I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_Recipe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_RecipeDetails_I_UnitMaster">
+          <End Role="I_UnitMaster" Type="Self.I_UnitMaster" Multiplicity="0..1" />
+          <End Role="I_RecipeDetails" Type="Self.I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_UnitMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_StockTaking_Store_Details">
+          <End Role="Store_Details" Type="Self.Store_Details" Multiplicity="1" />
+          <End Role="I_StockTaking" Type="Self.I_StockTaking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_StockTaking">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_StockTakingItemCatalog_I_StockTaking">
+          <End Role="I_StockTaking" Type="Self.I_StockTaking" Multiplicity="0..1" />
+          <End Role="I_StockTakingItemCatalog" Type="Self.I_StockTakingItemCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_StockTaking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_StockTakingItemCatalog">
+              <PropertyRef Name="StockTakingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_StockTranferDetails_I_StockTranferDetails">
+          <End Role="I_StockTranferDetails" Type="Self.I_StockTranferDetails" Multiplicity="1" />
+          <End Role="I_StockTranferDetails1" Type="Self.I_StockTranferDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="I_StockTranferDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_StockTranferDetails1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_WasteDetails_Store_Details">
+          <End Role="Store_Details" Type="Self.Store_Details" Multiplicity="1" />
+          <End Role="I_WasteDetails" Type="Self.I_WasteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_WasteDetails">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="MapAllMenuItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TargetStore" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="InventoryModuleModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_InventoryItemMaster" EntityType="Self.I_InventoryItemMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_ItemMater" EntityType="Self.I_ItemMater" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_MenuItems" EntityType="Self.I_MenuItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_OrderDetails" EntityType="Self.I_OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_OrderItemCatalog" EntityType="Self.I_OrderItemCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_RecievingItemCatalog" EntityType="Self.I_RecievingItemCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_Recipe" EntityType="Self.I_Recipe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_RecipeDetails" EntityType="Self.I_RecipeDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_StockInventory" EntityType="Self.I_StockInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_StockReqDetails" EntityType="Self.I_StockReqDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_StockRequestItemCatalog" EntityType="Self.I_StockRequestItemCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_StockTaking" EntityType="Self.I_StockTaking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_StockTakingItemCatalog" EntityType="Self.I_StockTakingItemCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_StockTranferDetails" EntityType="Self.I_StockTranferDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_StockTransferItemCatalog" EntityType="Self.I_StockTransferItemCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_UnitMaster" EntityType="Self.I_UnitMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_VenderMaster" EntityType="Self.I_VenderMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_VendorItemCatalog" EntityType="Self.I_VendorItemCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_WasteDetails" EntityType="Self.I_WasteDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_WasteItemCatalog" EntityType="Self.I_WasteItemCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mi_def" EntityType="Self.mi_def" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store_Details" EntityType="Self.Store_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_mi_def" EntityType="Self.v_mi_def" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_I_OrderDetails_Store_Details" Association="Self.FK_I_OrderDetails_Store_Details">
+            <End Role="Store_Details" EntitySet="Store_Details" />
+            <End Role="I_OrderDetails" EntitySet="I_OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_OrderItemCatalog_I_OrderDetails" Association="Self.FK_I_OrderItemCatalog_I_OrderDetails">
+            <End Role="I_OrderDetails" EntitySet="I_OrderDetails" />
+            <End Role="I_OrderItemCatalog" EntitySet="I_OrderItemCatalog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_OrderItemCatalog_I_UnitMaster" Association="Self.FK_I_OrderItemCatalog_I_UnitMaster">
+            <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
+            <End Role="I_OrderItemCatalog" EntitySet="I_OrderItemCatalog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_RecipeDetails_I_InventoryItemMaster" Association="Self.FK_I_RecipeDetails_I_InventoryItemMaster">
+            <End Role="I_InventoryItemMaster" EntitySet="I_InventoryItemMaster" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_RecipeDetails_I_MenuItems" Association="Self.FK_I_RecipeDetails_I_MenuItems">
+            <End Role="I_MenuItems" EntitySet="I_MenuItems" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_RecipeDetails_I_Recipe" Association="Self.FK_I_RecipeDetails_I_Recipe">
+            <End Role="I_Recipe" EntitySet="I_Recipe" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_RecipeDetails_I_UnitMaster" Association="Self.FK_I_RecipeDetails_I_UnitMaster">
+            <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_StockTaking_Store_Details" Association="Self.FK_I_StockTaking_Store_Details">
+            <End Role="Store_Details" EntitySet="Store_Details" />
+            <End Role="I_StockTaking" EntitySet="I_StockTaking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_StockTakingItemCatalog_I_StockTaking" Association="Self.FK_I_StockTakingItemCatalog_I_StockTaking">
+            <End Role="I_StockTaking" EntitySet="I_StockTaking" />
+            <End Role="I_StockTakingItemCatalog" EntitySet="I_StockTakingItemCatalog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_StockTranferDetails_I_StockTranferDetails" Association="Self.FK_I_StockTranferDetails_I_StockTranferDetails">
+            <End Role="I_StockTranferDetails" EntitySet="I_StockTranferDetails" />
+            <End Role="I_StockTranferDetails1" EntitySet="I_StockTranferDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_WasteDetails_Store_Details" Association="Self.FK_I_WasteDetails_Store_Details">
+            <End Role="Store_Details" EntitySet="Store_Details" />
+            <End Role="I_WasteDetails" EntitySet="I_WasteDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InventoryModuleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="I_InventoryItemMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MajorItemId" Type="Int32" Nullable="false" />
+          <Property Name="MinorItemId" Type="Int32" />
+          <Property Name="PrimaryUnit" Type="Int32" />
+          <Property Name="PrimaryUnitConv" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ReportingUnit" Type="Int32" />
+          <Property Name="ReportingUnitConv" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="StoreUnit" Type="Int32" />
+          <Property Name="StoreUnitConv" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="LossPercentage" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="GainPercentage" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ThersoldRecieving" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FixedorVariable" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="I_ItemMater" Relationship="Self.FK_I_InventoryItemMaster_I_ItemMater2" FromRole="I_InventoryItemMaster" ToRole="I_ItemMater" />
+          <NavigationProperty Name="I_ItemMater1" Relationship="Self.FK_I_InventoryItemMaster_I_ItemMater3" FromRole="I_InventoryItemMaster" ToRole="I_ItemMater" />
+          <NavigationProperty Name="I_UnitMaster" Relationship="Self.FK_I_InventoryItemMaster_I_UnitMaster1" FromRole="I_InventoryItemMaster" ToRole="I_UnitMaster" />
+          <NavigationProperty Name="I_UnitMaster1" Relationship="Self.FK_I_InventoryItemMaster_I_UnitMaster2" FromRole="I_InventoryItemMaster" ToRole="I_UnitMaster" />
+          <NavigationProperty Name="I_UnitMaster2" Relationship="Self.FK_I_InventoryItemMaster_I_UnitMaster3" FromRole="I_InventoryItemMaster" ToRole="I_UnitMaster" />
+          <NavigationProperty Name="I_RecipeDetails" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_InventoryItemMaster" FromRole="I_InventoryItemMaster" ToRole="I_RecipeDetails" />
+          </EntityType>
+        <EntityType Name="I_ItemMater">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MajorItemId" Type="Int32" />
+          <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="I_InventoryItemMaster" Relationship="Self.FK_I_InventoryItemMaster_I_ItemMater2" FromRole="I_ItemMater" ToRole="I_InventoryItemMaster" />
+          <NavigationProperty Name="I_InventoryItemMaster1" Relationship="Self.FK_I_InventoryItemMaster_I_ItemMater3" FromRole="I_ItemMater" ToRole="I_InventoryItemMaster" />
+        </EntityType>
+        <EntityType Name="I_MenuItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="I_RecipeDetails" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_MenuItems" FromRole="I_MenuItems" ToRole="I_RecipeDetails" />
+        </EntityType>
+        <EntityType Name="I_UnitMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="I_InventoryItemMaster" Relationship="Self.FK_I_InventoryItemMaster_I_UnitMaster1" FromRole="I_UnitMaster" ToRole="I_InventoryItemMaster" />
+          <NavigationProperty Name="I_InventoryItemMaster1" Relationship="Self.FK_I_InventoryItemMaster_I_UnitMaster2" FromRole="I_UnitMaster" ToRole="I_InventoryItemMaster" />
+          <NavigationProperty Name="I_InventoryItemMaster2" Relationship="Self.FK_I_InventoryItemMaster_I_UnitMaster3" FromRole="I_UnitMaster" ToRole="I_InventoryItemMaster" />
+          <NavigationProperty Name="I_OrderItemCatalog" Relationship="InventoryModuleModel.FK_I_OrderItemCatalog_I_UnitMaster" FromRole="I_UnitMaster" ToRole="I_OrderItemCatalog" />
+          <NavigationProperty Name="I_RecipeDetails" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_UnitMaster" FromRole="I_UnitMaster" ToRole="I_RecipeDetails" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_InventoryItemMaster_I_ItemMater2">
+          <End Role="I_ItemMater" Type="Self.I_ItemMater" Multiplicity="1" />
+          <End Role="I_InventoryItemMaster" Type="Self.I_InventoryItemMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_ItemMater">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_InventoryItemMaster">
+              <PropertyRef Name="MajorItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_InventoryItemMaster_I_ItemMater3">
+          <End Role="I_ItemMater" Type="Self.I_ItemMater" Multiplicity="0..1" />
+          <End Role="I_InventoryItemMaster" Type="Self.I_InventoryItemMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_ItemMater">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_InventoryItemMaster">
+              <PropertyRef Name="MinorItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_InventoryItemMaster_I_UnitMaster1">
+          <End Role="I_UnitMaster" Type="Self.I_UnitMaster" Multiplicity="0..1" />
+          <End Role="I_InventoryItemMaster" Type="Self.I_InventoryItemMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_UnitMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_InventoryItemMaster">
+              <PropertyRef Name="PrimaryUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_InventoryItemMaster_I_UnitMaster2">
+          <End Role="I_UnitMaster" Type="Self.I_UnitMaster" Multiplicity="0..1" />
+          <End Role="I_InventoryItemMaster" Type="Self.I_InventoryItemMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_UnitMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_InventoryItemMaster">
+              <PropertyRef Name="ReportingUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_InventoryItemMaster_I_UnitMaster3">
+          <End Role="I_UnitMaster" Type="Self.I_UnitMaster" Multiplicity="0..1" />
+          <End Role="I_InventoryItemMaster" Type="Self.I_InventoryItemMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_UnitMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_InventoryItemMaster">
+              <PropertyRef Name="StoreUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="InventoryModuleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="I_InventoryItemMaster" EntityType="Self.I_InventoryItemMaster" />
+          <EntitySet Name="I_ItemMater" EntityType="Self.I_ItemMater" />
+          <EntitySet Name="I_MenuItems" EntityType="Self.I_MenuItems" />
+          <EntitySet Name="I_UnitMaster" EntityType="Self.I_UnitMaster" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_InventoryItemMaster_I_ItemMater2" Association="Self.FK_I_InventoryItemMaster_I_ItemMater2">
+            <End Role="I_ItemMater" EntitySet="I_ItemMater" />
+            <End Role="I_InventoryItemMaster" EntitySet="I_InventoryItemMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_InventoryItemMaster_I_ItemMater3" Association="Self.FK_I_InventoryItemMaster_I_ItemMater3">
+            <End Role="I_ItemMater" EntitySet="I_ItemMater" />
+            <End Role="I_InventoryItemMaster" EntitySet="I_InventoryItemMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_InventoryItemMaster_I_UnitMaster1" Association="Self.FK_I_InventoryItemMaster_I_UnitMaster1">
+            <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
+            <End Role="I_InventoryItemMaster" EntitySet="I_InventoryItemMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_InventoryItemMaster_I_UnitMaster2" Association="Self.FK_I_InventoryItemMaster_I_UnitMaster2">
+            <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
+            <End Role="I_InventoryItemMaster" EntitySet="I_InventoryItemMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_InventoryItemMaster_I_UnitMaster3" Association="Self.FK_I_InventoryItemMaster_I_UnitMaster3">
+            <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
+            <End Role="I_InventoryItemMaster" EntitySet="I_InventoryItemMaster" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <FunctionImport Name="MapAllMenuItems">
+          <Parameter Name="TargetStore" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="v_mi_def" EntityType="InventoryModuleModel.v_mi_def" />
+          <EntitySet Name="mi_def" EntityType="InventoryModuleModel.mi_def" />
+          <EntitySet Name="I_StockTaking" EntityType="InventoryModuleModel.I_StockTaking" />
+          <EntitySet Name="I_StockTakingItemCatalog" EntityType="InventoryModuleModel.I_StockTakingItemCatalog" />
+          <AssociationSet Name="FK_I_StockTakingItemCatalog_I_StockTaking" Association="InventoryModuleModel.FK_I_StockTakingItemCatalog_I_StockTaking">
+            <End Role="I_StockTaking" EntitySet="I_StockTaking" />
+            <End Role="I_StockTakingItemCatalog" EntitySet="I_StockTakingItemCatalog" />
+          </AssociationSet>
+          <EntitySet Name="I_RecievingItemCatalog" EntityType="InventoryModuleModel.I_RecievingItemCatalog" />
+          <EntitySet Name="I_StockInventory" EntityType="InventoryModuleModel.I_StockInventory" />
+          <EntitySet Name="I_StockTranferDetails" EntityType="InventoryModuleModel.I_StockTranferDetails" />
+          <AssociationSet Name="FK_I_StockTranferDetails_I_StockTranferDetails" Association="InventoryModuleModel.FK_I_StockTranferDetails_I_StockTranferDetails">
+            <End Role="I_StockTranferDetails" EntitySet="I_StockTranferDetails" />
+            <End Role="I_StockTranferDetails1" EntitySet="I_StockTranferDetails" />
+          </AssociationSet>
+          <EntitySet Name="I_OrderDetails" EntityType="InventoryModuleModel.I_OrderDetails" />
+          <EntitySet Name="I_OrderItemCatalog" EntityType="InventoryModuleModel.I_OrderItemCatalog" />
+          <EntitySet Name="I_VenderMaster" EntityType="InventoryModuleModel.I_VenderMaster" />
+          <AssociationSet Name="FK_I_OrderItemCatalog_I_OrderDetails" Association="InventoryModuleModel.FK_I_OrderItemCatalog_I_OrderDetails">
+            <End Role="I_OrderDetails" EntitySet="I_OrderDetails" />
+            <End Role="I_OrderItemCatalog" EntitySet="I_OrderItemCatalog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_OrderItemCatalog_I_UnitMaster" Association="InventoryModuleModel.FK_I_OrderItemCatalog_I_UnitMaster">
+            <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
+            <End Role="I_OrderItemCatalog" EntitySet="I_OrderItemCatalog" />
+          </AssociationSet>
+          <EntitySet Name="I_StockReqDetails" EntityType="InventoryModuleModel.I_StockReqDetails" />
+          <EntitySet Name="I_StockRequestItemCatalog" EntityType="InventoryModuleModel.I_StockRequestItemCatalog" />
+          <EntitySet Name="I_StockTransferItemCatalog" EntityType="InventoryModuleModel.I_StockTransferItemCatalog" />
+          <EntitySet Name="I_Recipe" EntityType="InventoryModuleModel.I_Recipe" />
+          <EntitySet Name="I_RecipeDetails" EntityType="InventoryModuleModel.I_RecipeDetails" />
+          <AssociationSet Name="FK_I_RecipeDetails_I_InventoryItemMaster" Association="InventoryModuleModel.FK_I_RecipeDetails_I_InventoryItemMaster">
+            <End Role="I_InventoryItemMaster" EntitySet="I_InventoryItemMaster" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_RecipeDetails_I_MenuItems" Association="InventoryModuleModel.FK_I_RecipeDetails_I_MenuItems">
+            <End Role="I_MenuItems" EntitySet="I_MenuItems" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_RecipeDetails_I_Recipe" Association="InventoryModuleModel.FK_I_RecipeDetails_I_Recipe">
+            <End Role="I_Recipe" EntitySet="I_Recipe" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_RecipeDetails_I_UnitMaster" Association="InventoryModuleModel.FK_I_RecipeDetails_I_UnitMaster">
+            <End Role="I_UnitMaster" EntitySet="I_UnitMaster" />
+            <End Role="I_RecipeDetails" EntitySet="I_RecipeDetails" />
+          </AssociationSet>
+          <EntitySet Name="Store_Details" EntityType="InventoryModuleModel.Store_Details" />
+          <AssociationSet Name="FK_I_OrderDetails_Store_Details" Association="InventoryModuleModel.FK_I_OrderDetails_Store_Details">
+            <End Role="Store_Details" EntitySet="Store_Details" />
+            <End Role="I_OrderDetails" EntitySet="I_OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_StockTaking_Store_Details" Association="InventoryModuleModel.FK_I_StockTaking_Store_Details">
+            <End Role="Store_Details" EntitySet="Store_Details" />
+            <End Role="I_StockTaking" EntitySet="I_StockTaking" />
+          </AssociationSet>
+          <EntitySet Name="I_WasteDetails" EntityType="InventoryModuleModel.I_WasteDetails" />
+          <AssociationSet Name="FK_I_WasteDetails_Store_Details" Association="InventoryModuleModel.FK_I_WasteDetails_Store_Details">
+            <End Role="Store_Details" EntitySet="Store_Details" />
+            <End Role="I_WasteDetails" EntitySet="I_WasteDetails" />
+          </AssociationSet>
+          <EntitySet Name="I_WasteItemCatalog" EntityType="InventoryModuleModel.I_WasteItemCatalog" />
+          <EntitySet Name="I_VendorItemCatalog" EntityType="InventoryModuleModel.I_VendorItemCatalog" />
+          </EntityContainer>
+        <EntityType Name="v_mi_def">
+          <Key>
+            <PropertyRef Name="v_mi_def_Id" />
+          </Key>
+          <Property Name="v_mi_def_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="storeid" Type="Int32" Nullable="false" />
+          <Property Name="mi_seq" Type="Int32" Nullable="false" />
+          <Property Name="obj_num" Type="Int32" />
+          <Property Name="name_1" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="name_2" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="maj_grp_seq" Type="Int32" />
+          <Property Name="fam_grp_seq" Type="Int32" />
+          <Property Name="mi_grp_seq" Type="Int32" />
+          <Property Name="mi_slu_seq" Type="Int32" />
+          <Property Name="price_grp_seq" Type="Int32" />
+          <Property Name="slu_priority" Type="Int32" />
+          <Property Name="nlu_grp" Type="Int32" />
+          <Property Name="nlu_num" Type="Decimal" Precision="12" Scale="0" />
+          <Property Name="key_num" Type="Int32" />
+          <Property Name="icon_id" Type="Int32" />
+          <Property Name="ob_mi31_chk_mi_avail" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_mi44_no_edit_in_mgr_proc" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_item_is_the_no_modifier" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_lite_mi_dirty" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd01" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd02" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd03" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd04" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="mi_type_seq" Type="Int32" />
+          <Property Name="cond_grp_mem_seq" Type="Int32" />
+          <Property Name="cond_req" Type="Int32" />
+          <Property Name="cond_allowed" Type="Int32" />
+          <Property Name="crs_mem_seq" Type="Int32" />
+          <Property Name="crs_sel_seq" Type="Int32" />
+          <Property Name="mlvl_class_seq" Type="Int32" />
+          <Property Name="prn_def_class_seq" Type="Int32" />
+          <Property Name="product_seq_1" Type="Int32" />
+          <Property Name="product_seq_2" Type="Int32" />
+          <Property Name="product_seq_3" Type="Int32" />
+          <Property Name="product_seq_4" Type="Int32" />
+          <Property Name="comm_amt" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="comm_pcnt" Type="Decimal" Precision="8" Scale="4" />
+          <Property Name="cross_ref1" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="cross_ref2" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ob_flags" Type="Int32" />
+          <Property Name="ob_workstation_only" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="mi_slu2_seq" Type="Int32" />
+          <Property Name="prep_time" Type="Int32" />
+          <Property Name="external_type" Type="Int32" />
+          <Property Name="topping_type_seq" Type="Int32" />
+          <Property Name="topping_modifier_seq" Type="Int32" />
+          <Property Name="last_updated_by" Type="Int32" />
+          <Property Name="last_updated_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="multi_user_access_seq" Type="Int32" />
+          <Property Name="build_screen_style_seq" Type="Int32" />
+          <Property Name="hht_build_screen_style_seq" Type="Int32" />
+          <Property Name="prefix_override_count" Type="Int32" />
+          <Property Name="prefix_override_level" Type="Int32" />
+          <Property Name="mi_slu3_seq" Type="Int32" />
+          <Property Name="mi_slu4_seq" Type="Int32" />
+          <Property Name="mi_slu5_seq" Type="Int32" />
+          <Property Name="mi_slu6_seq" Type="Int32" />
+          <Property Name="mi_slu7_seq" Type="Int32" />
+          <Property Name="mi_slu8_seq" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="ob_tax_1_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_2_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_3_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_4_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_5_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_6_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_7_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_8_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="mi_def">
+          <Key>
+            <PropertyRef Name="mi_def_Id" />
+          </Key>
+          <Property Name="mi_def_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="storeid" Type="Int32" Nullable="false" />
+          <Property Name="mi_seq" Type="Int32" Nullable="false" />
+          <Property Name="obj_num" Type="Int32" />
+          <Property Name="name_1" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="name_2" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="maj_grp_seq" Type="Int32" />
+          <Property Name="fam_grp_seq" Type="Int32" />
+          <Property Name="mi_grp_seq" Type="Int32" />
+          <Property Name="mi_slu_seq" Type="Int32" />
+          <Property Name="price_grp_seq" Type="Int32" />
+          <Property Name="slu_priority" Type="Int32" />
+          <Property Name="nlu_grp" Type="Int32" />
+          <Property Name="nlu_num" Type="Decimal" Precision="12" Scale="0" />
+          <Property Name="key_num" Type="Int32" />
+          <Property Name="icon_id" Type="Int32" />
+          <Property Name="ob_mi31_chk_mi_avail" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_mi44_no_edit_in_mgr_proc" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_item_is_the_no_modifier" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_lite_mi_dirty" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd01" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd02" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd03" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_rsvd04" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="mi_type_seq" Type="Int32" />
+          <Property Name="cond_grp_mem_seq" Type="Int32" />
+          <Property Name="cond_req" Type="Int32" />
+          <Property Name="cond_allowed" Type="Int32" />
+          <Property Name="crs_mem_seq" Type="Int32" />
+          <Property Name="crs_sel_seq" Type="Int32" />
+          <Property Name="mlvl_class_seq" Type="Int32" />
+          <Property Name="prn_def_class_seq" Type="Int32" />
+          <Property Name="product_seq_1" Type="Int32" />
+          <Property Name="product_seq_2" Type="Int32" />
+          <Property Name="product_seq_3" Type="Int32" />
+          <Property Name="product_seq_4" Type="Int32" />
+          <Property Name="comm_amt" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="comm_pcnt" Type="Decimal" Precision="8" Scale="4" />
+          <Property Name="cross_ref1" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="cross_ref2" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ob_flags" Type="Int32" />
+          <Property Name="ob_workstation_only" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="mi_slu2_seq" Type="Int32" />
+          <Property Name="prep_time" Type="Int32" />
+          <Property Name="external_type" Type="Int32" />
+          <Property Name="topping_type_seq" Type="Int32" />
+          <Property Name="topping_modifier_seq" Type="Int32" />
+          <Property Name="last_updated_by" Type="Int32" />
+          <Property Name="last_updated_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="multi_user_access_seq" Type="Int32" />
+          <Property Name="build_screen_style_seq" Type="Int32" />
+          <Property Name="hht_build_screen_style_seq" Type="Int32" />
+          <Property Name="prefix_override_count" Type="Int32" />
+          <Property Name="prefix_override_level" Type="Int32" />
+          <Property Name="mi_slu3_seq" Type="Int32" />
+          <Property Name="mi_slu4_seq" Type="Int32" />
+          <Property Name="mi_slu5_seq" Type="Int32" />
+          <Property Name="mi_slu6_seq" Type="Int32" />
+          <Property Name="mi_slu7_seq" Type="Int32" />
+          <Property Name="mi_slu8_seq" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="master_item_Id" Type="Int32" />
+          <Property Name="RecipeId" Type="Int32" />
+          <Property Name="ob_tax_1_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_2_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_3_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_4_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_5_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_6_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_7_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ob_tax_8_active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="I_StockTaking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InventoryTime" Type="Int32" Nullable="false" />
+          <Property Name="InventoryTimeValue" Type="Time" Precision="7" />
+          <Property Name="ClosingMethod" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="I_StockTakingItemCatalog" Relationship="InventoryModuleModel.FK_I_StockTakingItemCatalog_I_StockTaking" FromRole="I_StockTaking" ToRole="I_StockTakingItemCatalog" />
+          <NavigationProperty Name="Store_Details" Relationship="InventoryModuleModel.FK_I_StockTaking_Store_Details" FromRole="I_StockTaking" ToRole="Store_Details" />
+        </EntityType>
+        <EntityType Name="I_StockTakingItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockTakingId" Type="Int32" />
+          <Property Name="ItemGroupId" Type="Int32" />
+          <NavigationProperty Name="I_StockTaking" Relationship="InventoryModuleModel.FK_I_StockTakingItemCatalog_I_StockTaking" FromRole="I_StockTakingItemCatalog" ToRole="I_StockTaking" />
+        </EntityType>
+        <Association Name="FK_I_StockTakingItemCatalog_I_StockTaking">
+          <End Type="InventoryModuleModel.I_StockTaking" Role="I_StockTaking" Multiplicity="0..1" />
+          <End Type="InventoryModuleModel.I_StockTakingItemCatalog" Role="I_StockTakingItemCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_StockTaking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_StockTakingItemCatalog">
+              <PropertyRef Name="StockTakingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="I_RecievingItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ref" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveryDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="I_StockInventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="NetTotal" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="DiscountType" Type="Int32" />
+          <Property Name="DiscountValue" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Tax" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="OrderType" Type="Int32" Nullable="false" />
+          <Property Name="BusinessDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="OrderNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ref" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StoreId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="I_StockTranferDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SourceStore" Type="Int32" Nullable="false" />
+          <Property Name="TragetStore" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="I_StockTranferDetails1" Relationship="InventoryModuleModel.FK_I_StockTranferDetails_I_StockTranferDetails" FromRole="I_StockTranferDetails" ToRole="I_StockTranferDetails1" />
+          <NavigationProperty Name="I_StockTranferDetails2" Relationship="InventoryModuleModel.FK_I_StockTranferDetails_I_StockTranferDetails" FromRole="I_StockTranferDetails1" ToRole="I_StockTranferDetails" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="TranferNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_I_StockTranferDetails_I_StockTranferDetails">
+          <End Type="InventoryModuleModel.I_StockTranferDetails" Role="I_StockTranferDetails" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_StockTranferDetails" Role="I_StockTranferDetails1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="I_StockTranferDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_StockTranferDetails1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="I_OrderDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UerId" Type="Int32" />
+          <Property Name="Reason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VendorId" Type="Int32" />
+          <NavigationProperty Name="I_OrderItemCatalog" Relationship="InventoryModuleModel.FK_I_OrderItemCatalog_I_OrderDetails" FromRole="I_OrderDetails" ToRole="I_OrderItemCatalog" />
+          <NavigationProperty Name="Store_Details" Relationship="InventoryModuleModel.FK_I_OrderDetails_Store_Details" FromRole="I_OrderDetails" ToRole="Store_Details" />
+          <Property Name="TranferNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="I_OrderItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ItemsId" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="Int32" />
+          <Property Name="Qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="onHand" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="onOrder" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Vendor" Type="Int32" />
+          <Property Name="FixedorVariable" Type="Int32" />
+          <Property Name="TotalSum" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Createdby" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="I_OrderDetails" Relationship="InventoryModuleModel.FK_I_OrderItemCatalog_I_OrderDetails" FromRole="I_OrderItemCatalog" ToRole="I_OrderDetails" />
+          <NavigationProperty Name="I_UnitMaster" Relationship="InventoryModuleModel.FK_I_OrderItemCatalog_I_UnitMaster" FromRole="I_OrderItemCatalog" ToRole="I_UnitMaster" />
+        </EntityType>
+        <EntityType Name="I_VenderMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VenderName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GSTIN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_I_OrderItemCatalog_I_OrderDetails">
+          <End Type="InventoryModuleModel.I_OrderDetails" Role="I_OrderDetails" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_OrderItemCatalog" Role="I_OrderItemCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_OrderDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_OrderItemCatalog">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_OrderItemCatalog_I_UnitMaster">
+          <End Type="InventoryModuleModel.I_UnitMaster" Role="I_UnitMaster" Multiplicity="0..1" />
+          <End Type="InventoryModuleModel.I_OrderItemCatalog" Role="I_OrderItemCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_UnitMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_OrderItemCatalog">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="I_StockReqDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SourceStore" Type="Int32" Nullable="false" />
+          <Property Name="TragetStore" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="TranferNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="I_StockRequestItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ReqNo" Type="Int32" Nullable="false" />
+          <Property Name="ItemCode" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="I_StockTransferItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReqNo" Type="Int32" Nullable="false" />
+          <Property Name="ItemCode" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ReqQty" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="I_Recipe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecipeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="I_RecipeDetails" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_Recipe" FromRole="I_Recipe" ToRole="I_RecipeDetails" />
+        </EntityType>
+        <EntityType Name="I_RecipeDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemuItem" Type="Int32" />
+          <Property Name="RecipeId" Type="Int32" />
+          <Property Name="Article" Type="Int32" />
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="Qty" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Yield" Type="Int32" />
+          <Property Name="Unit" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="I_InventoryItemMaster" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_InventoryItemMaster" FromRole="I_RecipeDetails" ToRole="I_InventoryItemMaster" />
+          <NavigationProperty Name="I_MenuItems" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_MenuItems" FromRole="I_RecipeDetails" ToRole="I_MenuItems" />
+          <NavigationProperty Name="I_Recipe" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_Recipe" FromRole="I_RecipeDetails" ToRole="I_Recipe" />
+          <NavigationProperty Name="I_UnitMaster" Relationship="InventoryModuleModel.FK_I_RecipeDetails_I_UnitMaster" FromRole="I_RecipeDetails" ToRole="I_UnitMaster" />
+          <Property Name="ProdArt" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_I_RecipeDetails_I_InventoryItemMaster">
+          <End Type="InventoryModuleModel.I_InventoryItemMaster" Role="I_InventoryItemMaster" Multiplicity="0..1" />
+          <End Type="InventoryModuleModel.I_RecipeDetails" Role="I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_InventoryItemMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_RecipeDetails_I_MenuItems">
+          <End Type="InventoryModuleModel.I_MenuItems" Role="I_MenuItems" Multiplicity="0..1" />
+          <End Type="InventoryModuleModel.I_RecipeDetails" Role="I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_MenuItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="MemuItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_RecipeDetails_I_Recipe">
+          <End Type="InventoryModuleModel.I_Recipe" Role="I_Recipe" Multiplicity="0..1" />
+          <End Type="InventoryModuleModel.I_RecipeDetails" Role="I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_Recipe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="RecipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_RecipeDetails_I_UnitMaster">
+          <End Type="InventoryModuleModel.I_UnitMaster" Role="I_UnitMaster" Multiplicity="0..1" />
+          <End Type="InventoryModuleModel.I_RecipeDetails" Role="I_RecipeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_UnitMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="I_RecipeDetails">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Store_Details">
+          <Key>
+            <PropertyRef Name="storeId" />
+          </Key>
+          <Property Name="storeId" Type="Int32" Nullable="false" />
+          <Property Name="storename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="manager" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="I_OrderDetails" Relationship="InventoryModuleModel.FK_I_OrderDetails_Store_Details" FromRole="Store_Details" ToRole="I_OrderDetails" />
+          <NavigationProperty Name="I_StockTaking" Relationship="InventoryModuleModel.FK_I_StockTaking_Store_Details" FromRole="Store_Details" ToRole="I_StockTaking" />
+          <NavigationProperty Name="I_WasteDetails" Relationship="InventoryModuleModel.FK_I_WasteDetails_Store_Details" FromRole="Store_Details" ToRole="I_WasteDetails" />
+          <Property Name="isEM" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_I_OrderDetails_Store_Details">
+          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_OrderDetails" Role="I_OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_OrderDetails">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_StockTaking_Store_Details">
+          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_StockTaking" Role="I_StockTaking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_StockTaking">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="I_WasteDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" Nullable="false" />
+          <Property Name="WasteGroupId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WasteNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="Store_Details" Relationship="InventoryModuleModel.FK_I_WasteDetails_Store_Details" FromRole="I_WasteDetails" ToRole="Store_Details" />
+        </EntityType>
+        <Association Name="FK_I_WasteDetails_Store_Details">
+          <End Type="InventoryModuleModel.Store_Details" Role="Store_Details" Multiplicity="1" />
+          <End Type="InventoryModuleModel.I_WasteDetails" Role="I_WasteDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store_Details">
+              <PropertyRef Name="storeId" />
+            </Principal>
+            <Dependent Role="I_WasteDetails">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="I_WasteItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WasteNo" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Reason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="I_VendorItemCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <Property Name="Unit" Type="Int32" Nullable="false" />
+          <Property Name="FixedorVariable" Type="Int32" Nullable="false" />
+          <Property Name="DateEffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateEffectiveTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InventoryModuleModelStoreContainer" CdmEntityContainer="InventoryModuleEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="InventoryModuleModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="InventoryModuleModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="InventoryModuleModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="InventoryModuleModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="InventoryModuleModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_InventoryItemMaster">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_InventoryItemMaster">
+              <MappingFragment StoreEntitySet="I_InventoryItemMaster">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="MajorItemId" ColumnName="MajorItemId" />
+                <ScalarProperty Name="MinorItemId" ColumnName="MinorItemId" />
+                <ScalarProperty Name="PrimaryUnit" ColumnName="PrimaryUnit" />
+                <ScalarProperty Name="PrimaryUnitConv" ColumnName="PrimaryUnitConv" />
+                <ScalarProperty Name="ReportingUnit" ColumnName="ReportingUnit" />
+                <ScalarProperty Name="ReportingUnitConv" ColumnName="ReportingUnitConv" />
+                <ScalarProperty Name="StoreUnit" ColumnName="StoreUnit" />
+                <ScalarProperty Name="StoreUnitConv" ColumnName="StoreUnitConv" />
+                <ScalarProperty Name="LossPercentage" ColumnName="LossPercentage" />
+                <ScalarProperty Name="GainPercentage" ColumnName="GainPercentage" />
+                <ScalarProperty Name="ThersoldRecieving" ColumnName="ThersoldRecieving" />
+                <ScalarProperty Name="FixedorVariable" ColumnName="FixedorVariable" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_ItemMater">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_ItemMater">
+              <MappingFragment StoreEntitySet="I_ItemMater">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MajorItemId" ColumnName="MajorItemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_MenuItems">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_MenuItems">
+              <MappingFragment StoreEntitySet="I_MenuItems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_UnitMaster">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_UnitMaster">
+              <MappingFragment StoreEntitySet="I_UnitMaster">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="InventoryModuleModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="MapAllMenuItems" FunctionName="InventoryModuleModel.Store.MapAllMenuItems" />
+          <EntitySetMapping Name="v_mi_def">
+            <EntityTypeMapping TypeName="InventoryModuleModel.v_mi_def">
+              <MappingFragment StoreEntitySet="v_mi_def">
+                <ScalarProperty Name="ob_tax_8_active" ColumnName="ob_tax_8_active" />
+                <ScalarProperty Name="ob_tax_7_active" ColumnName="ob_tax_7_active" />
+                <ScalarProperty Name="ob_tax_6_active" ColumnName="ob_tax_6_active" />
+                <ScalarProperty Name="ob_tax_5_active" ColumnName="ob_tax_5_active" />
+                <ScalarProperty Name="ob_tax_4_active" ColumnName="ob_tax_4_active" />
+                <ScalarProperty Name="ob_tax_3_active" ColumnName="ob_tax_3_active" />
+                <ScalarProperty Name="ob_tax_2_active" ColumnName="ob_tax_2_active" />
+                <ScalarProperty Name="ob_tax_1_active" ColumnName="ob_tax_1_active" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="mi_slu8_seq" ColumnName="mi_slu8_seq" />
+                <ScalarProperty Name="mi_slu7_seq" ColumnName="mi_slu7_seq" />
+                <ScalarProperty Name="mi_slu6_seq" ColumnName="mi_slu6_seq" />
+                <ScalarProperty Name="mi_slu5_seq" ColumnName="mi_slu5_seq" />
+                <ScalarProperty Name="mi_slu4_seq" ColumnName="mi_slu4_seq" />
+                <ScalarProperty Name="mi_slu3_seq" ColumnName="mi_slu3_seq" />
+                <ScalarProperty Name="prefix_override_level" ColumnName="prefix_override_level" />
+                <ScalarProperty Name="prefix_override_count" ColumnName="prefix_override_count" />
+                <ScalarProperty Name="hht_build_screen_style_seq" ColumnName="hht_build_screen_style_seq" />
+                <ScalarProperty Name="build_screen_style_seq" ColumnName="build_screen_style_seq" />
+                <ScalarProperty Name="multi_user_access_seq" ColumnName="multi_user_access_seq" />
+                <ScalarProperty Name="last_updated_date" ColumnName="last_updated_date" />
+                <ScalarProperty Name="last_updated_by" ColumnName="last_updated_by" />
+                <ScalarProperty Name="topping_modifier_seq" ColumnName="topping_modifier_seq" />
+                <ScalarProperty Name="topping_type_seq" ColumnName="topping_type_seq" />
+                <ScalarProperty Name="external_type" ColumnName="external_type" />
+                <ScalarProperty Name="prep_time" ColumnName="prep_time" />
+                <ScalarProperty Name="mi_slu2_seq" ColumnName="mi_slu2_seq" />
+                <ScalarProperty Name="ob_workstation_only" ColumnName="ob_workstation_only" />
+                <ScalarProperty Name="ob_flags" ColumnName="ob_flags" />
+                <ScalarProperty Name="cross_ref2" ColumnName="cross_ref2" />
+                <ScalarProperty Name="cross_ref1" ColumnName="cross_ref1" />
+                <ScalarProperty Name="comm_pcnt" ColumnName="comm_pcnt" />
+                <ScalarProperty Name="comm_amt" ColumnName="comm_amt" />
+                <ScalarProperty Name="product_seq_4" ColumnName="product_seq_4" />
+                <ScalarProperty Name="product_seq_3" ColumnName="product_seq_3" />
+                <ScalarProperty Name="product_seq_2" ColumnName="product_seq_2" />
+                <ScalarProperty Name="product_seq_1" ColumnName="product_seq_1" />
+                <ScalarProperty Name="prn_def_class_seq" ColumnName="prn_def_class_seq" />
+                <ScalarProperty Name="mlvl_class_seq" ColumnName="mlvl_class_seq" />
+                <ScalarProperty Name="crs_sel_seq" ColumnName="crs_sel_seq" />
+                <ScalarProperty Name="crs_mem_seq" ColumnName="crs_mem_seq" />
+                <ScalarProperty Name="cond_allowed" ColumnName="cond_allowed" />
+                <ScalarProperty Name="cond_req" ColumnName="cond_req" />
+                <ScalarProperty Name="cond_grp_mem_seq" ColumnName="cond_grp_mem_seq" />
+                <ScalarProperty Name="mi_type_seq" ColumnName="mi_type_seq" />
+                <ScalarProperty Name="ob_rsvd04" ColumnName="ob_rsvd04" />
+                <ScalarProperty Name="ob_rsvd03" ColumnName="ob_rsvd03" />
+                <ScalarProperty Name="ob_rsvd02" ColumnName="ob_rsvd02" />
+                <ScalarProperty Name="ob_rsvd01" ColumnName="ob_rsvd01" />
+                <ScalarProperty Name="ob_lite_mi_dirty" ColumnName="ob_lite_mi_dirty" />
+                <ScalarProperty Name="ob_item_is_the_no_modifier" ColumnName="ob_item_is_the_no_modifier" />
+                <ScalarProperty Name="ob_mi44_no_edit_in_mgr_proc" ColumnName="ob_mi44_no_edit_in_mgr_proc" />
+                <ScalarProperty Name="ob_mi31_chk_mi_avail" ColumnName="ob_mi31_chk_mi_avail" />
+                <ScalarProperty Name="icon_id" ColumnName="icon_id" />
+                <ScalarProperty Name="key_num" ColumnName="key_num" />
+                <ScalarProperty Name="nlu_num" ColumnName="nlu_num" />
+                <ScalarProperty Name="nlu_grp" ColumnName="nlu_grp" />
+                <ScalarProperty Name="slu_priority" ColumnName="slu_priority" />
+                <ScalarProperty Name="price_grp_seq" ColumnName="price_grp_seq" />
+                <ScalarProperty Name="mi_slu_seq" ColumnName="mi_slu_seq" />
+                <ScalarProperty Name="mi_grp_seq" ColumnName="mi_grp_seq" />
+                <ScalarProperty Name="fam_grp_seq" ColumnName="fam_grp_seq" />
+                <ScalarProperty Name="maj_grp_seq" ColumnName="maj_grp_seq" />
+                <ScalarProperty Name="name_2" ColumnName="name_2" />
+                <ScalarProperty Name="name_1" ColumnName="name_1" />
+                <ScalarProperty Name="obj_num" ColumnName="obj_num" />
+                <ScalarProperty Name="mi_seq" ColumnName="mi_seq" />
+                <ScalarProperty Name="storeid" ColumnName="storeid" />
+                <ScalarProperty Name="v_mi_def_Id" ColumnName="v_mi_def_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mi_def">
+            <EntityTypeMapping TypeName="InventoryModuleModel.mi_def">
+              <MappingFragment StoreEntitySet="mi_def">
+                <ScalarProperty Name="ob_tax_8_active" ColumnName="ob_tax_8_active" />
+                <ScalarProperty Name="ob_tax_7_active" ColumnName="ob_tax_7_active" />
+                <ScalarProperty Name="ob_tax_6_active" ColumnName="ob_tax_6_active" />
+                <ScalarProperty Name="ob_tax_5_active" ColumnName="ob_tax_5_active" />
+                <ScalarProperty Name="ob_tax_4_active" ColumnName="ob_tax_4_active" />
+                <ScalarProperty Name="ob_tax_3_active" ColumnName="ob_tax_3_active" />
+                <ScalarProperty Name="ob_tax_2_active" ColumnName="ob_tax_2_active" />
+                <ScalarProperty Name="ob_tax_1_active" ColumnName="ob_tax_1_active" />
+                <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+                <ScalarProperty Name="master_item_Id" ColumnName="master_item_Id" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="mi_slu8_seq" ColumnName="mi_slu8_seq" />
+                <ScalarProperty Name="mi_slu7_seq" ColumnName="mi_slu7_seq" />
+                <ScalarProperty Name="mi_slu6_seq" ColumnName="mi_slu6_seq" />
+                <ScalarProperty Name="mi_slu5_seq" ColumnName="mi_slu5_seq" />
+                <ScalarProperty Name="mi_slu4_seq" ColumnName="mi_slu4_seq" />
+                <ScalarProperty Name="mi_slu3_seq" ColumnName="mi_slu3_seq" />
+                <ScalarProperty Name="prefix_override_level" ColumnName="prefix_override_level" />
+                <ScalarProperty Name="prefix_override_count" ColumnName="prefix_override_count" />
+                <ScalarProperty Name="hht_build_screen_style_seq" ColumnName="hht_build_screen_style_seq" />
+                <ScalarProperty Name="build_screen_style_seq" ColumnName="build_screen_style_seq" />
+                <ScalarProperty Name="multi_user_access_seq" ColumnName="multi_user_access_seq" />
+                <ScalarProperty Name="last_updated_date" ColumnName="last_updated_date" />
+                <ScalarProperty Name="last_updated_by" ColumnName="last_updated_by" />
+                <ScalarProperty Name="topping_modifier_seq" ColumnName="topping_modifier_seq" />
+                <ScalarProperty Name="topping_type_seq" ColumnName="topping_type_seq" />
+                <ScalarProperty Name="external_type" ColumnName="external_type" />
+                <ScalarProperty Name="prep_time" ColumnName="prep_time" />
+                <ScalarProperty Name="mi_slu2_seq" ColumnName="mi_slu2_seq" />
+                <ScalarProperty Name="ob_workstation_only" ColumnName="ob_workstation_only" />
+                <ScalarProperty Name="ob_flags" ColumnName="ob_flags" />
+                <ScalarProperty Name="cross_ref2" ColumnName="cross_ref2" />
+                <ScalarProperty Name="cross_ref1" ColumnName="cross_ref1" />
+                <ScalarProperty Name="comm_pcnt" ColumnName="comm_pcnt" />
+                <ScalarProperty Name="comm_amt" ColumnName="comm_amt" />
+                <ScalarProperty Name="product_seq_4" ColumnName="product_seq_4" />
+                <ScalarProperty Name="product_seq_3" ColumnName="product_seq_3" />
+                <ScalarProperty Name="product_seq_2" ColumnName="product_seq_2" />
+                <ScalarProperty Name="product_seq_1" ColumnName="product_seq_1" />
+                <ScalarProperty Name="prn_def_class_seq" ColumnName="prn_def_class_seq" />
+                <ScalarProperty Name="mlvl_class_seq" ColumnName="mlvl_class_seq" />
+                <ScalarProperty Name="crs_sel_seq" ColumnName="crs_sel_seq" />
+                <ScalarProperty Name="crs_mem_seq" ColumnName="crs_mem_seq" />
+                <ScalarProperty Name="cond_allowed" ColumnName="cond_allowed" />
+                <ScalarProperty Name="cond_req" ColumnName="cond_req" />
+                <ScalarProperty Name="cond_grp_mem_seq" ColumnName="cond_grp_mem_seq" />
+                <ScalarProperty Name="mi_type_seq" ColumnName="mi_type_seq" />
+                <ScalarProperty Name="ob_rsvd04" ColumnName="ob_rsvd04" />
+                <ScalarProperty Name="ob_rsvd03" ColumnName="ob_rsvd03" />
+                <ScalarProperty Name="ob_rsvd02" ColumnName="ob_rsvd02" />
+                <ScalarProperty Name="ob_rsvd01" ColumnName="ob_rsvd01" />
+                <ScalarProperty Name="ob_lite_mi_dirty" ColumnName="ob_lite_mi_dirty" />
+                <ScalarProperty Name="ob_item_is_the_no_modifier" ColumnName="ob_item_is_the_no_modifier" />
+                <ScalarProperty Name="ob_mi44_no_edit_in_mgr_proc" ColumnName="ob_mi44_no_edit_in_mgr_proc" />
+                <ScalarProperty Name="ob_mi31_chk_mi_avail" ColumnName="ob_mi31_chk_mi_avail" />
+                <ScalarProperty Name="icon_id" ColumnName="icon_id" />
+                <ScalarProperty Name="key_num" ColumnName="key_num" />
+                <ScalarProperty Name="nlu_num" ColumnName="nlu_num" />
+                <ScalarProperty Name="nlu_grp" ColumnName="nlu_grp" />
+                <ScalarProperty Name="slu_priority" ColumnName="slu_priority" />
+                <ScalarProperty Name="price_grp_seq" ColumnName="price_grp_seq" />
+                <ScalarProperty Name="mi_slu_seq" ColumnName="mi_slu_seq" />
+                <ScalarProperty Name="mi_grp_seq" ColumnName="mi_grp_seq" />
+                <ScalarProperty Name="fam_grp_seq" ColumnName="fam_grp_seq" />
+                <ScalarProperty Name="maj_grp_seq" ColumnName="maj_grp_seq" />
+                <ScalarProperty Name="name_2" ColumnName="name_2" />
+                <ScalarProperty Name="name_1" ColumnName="name_1" />
+                <ScalarProperty Name="obj_num" ColumnName="obj_num" />
+                <ScalarProperty Name="mi_seq" ColumnName="mi_seq" />
+                <ScalarProperty Name="storeid" ColumnName="storeid" />
+                <ScalarProperty Name="mi_def_Id" ColumnName="mi_def_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_StockTaking">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_StockTaking">
+              <MappingFragment StoreEntitySet="I_StockTaking">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ClosingMethod" ColumnName="ClosingMethod" />
+                <ScalarProperty Name="InventoryTimeValue" ColumnName="InventoryTimeValue" />
+                <ScalarProperty Name="InventoryTime" ColumnName="InventoryTime" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_StockTakingItemCatalog">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_StockTakingItemCatalog">
+              <MappingFragment StoreEntitySet="I_StockTakingItemCatalog">
+                <ScalarProperty Name="ItemGroupId" ColumnName="ItemGroupId" />
+                <ScalarProperty Name="StockTakingId" ColumnName="StockTakingId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_RecievingItemCatalog">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_RecievingItemCatalog">
+              <MappingFragment StoreEntitySet="I_RecievingItemCatalog">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DelieveryDate" ColumnName="DelieveryDate" />
+                <ScalarProperty Name="Ref" ColumnName="Ref" />
+                <ScalarProperty Name="ReceiptNo" ColumnName="ReceiptNo" />
+                <ScalarProperty Name="OrderIds" ColumnName="OrderIds" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_StockInventory">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_StockInventory">
+              <MappingFragment StoreEntitySet="I_StockInventory">
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Ref" ColumnName="Ref" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="ReceiptNo" ColumnName="ReceiptNo" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BusinessDate" ColumnName="BusinessDate" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="DiscountValue" ColumnName="DiscountValue" />
+                <ScalarProperty Name="DiscountType" ColumnName="DiscountType" />
+                <ScalarProperty Name="NetTotal" ColumnName="NetTotal" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_StockTranferDetails">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_StockTranferDetails">
+              <MappingFragment StoreEntitySet="I_StockTranferDetails">
+                <ScalarProperty Name="TranferNo" ColumnName="TranferNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TragetStore" ColumnName="TragetStore" />
+                <ScalarProperty Name="SourceStore" ColumnName="SourceStore" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_OrderDetails">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_OrderDetails">
+              <MappingFragment StoreEntitySet="I_OrderDetails">
+                <ScalarProperty Name="TranferNo" ColumnName="TranferNo" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="UerId" ColumnName="UerId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_OrderItemCatalog">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_OrderItemCatalog">
+              <MappingFragment StoreEntitySet="I_OrderItemCatalog">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Createdby" ColumnName="Createdby" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TotalSum" ColumnName="TotalSum" />
+                <ScalarProperty Name="FixedorVariable" ColumnName="FixedorVariable" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="onOrder" ColumnName="onOrder" />
+                <ScalarProperty Name="onHand" ColumnName="onHand" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemsId" ColumnName="ItemsId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_VenderMaster">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_VenderMaster">
+              <MappingFragment StoreEntitySet="I_VenderMaster">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="GSTIN" ColumnName="GSTIN" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+                <ScalarProperty Name="VenderName" ColumnName="VenderName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_StockReqDetails">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_StockReqDetails">
+              <MappingFragment StoreEntitySet="I_StockReqDetails">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TranferNo" ColumnName="TranferNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TragetStore" ColumnName="TragetStore" />
+                <ScalarProperty Name="SourceStore" ColumnName="SourceStore" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_StockRequestItemCatalog">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_StockRequestItemCatalog">
+              <MappingFragment StoreEntitySet="I_StockRequestItemCatalog">
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_StockTransferItemCatalog">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_StockTransferItemCatalog">
+              <MappingFragment StoreEntitySet="I_StockTransferItemCatalog">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ReqQty" ColumnName="ReqQty" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_Recipe">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_Recipe">
+              <MappingFragment StoreEntitySet="I_Recipe">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_RecipeDetails">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_RecipeDetails">
+              <MappingFragment StoreEntitySet="I_RecipeDetails">
+                <ScalarProperty Name="ProdArt" ColumnName="ProdArt" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Yield" ColumnName="Yield" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Article" ColumnName="Article" />
+                <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
+                <ScalarProperty Name="MemuItem" ColumnName="MemuItem" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Store_Details">
+            <EntityTypeMapping TypeName="InventoryModuleModel.Store_Details">
+              <MappingFragment StoreEntitySet="Store_Details">
+                <ScalarProperty Name="isEM" ColumnName="isEM" />
+                <ScalarProperty Name="manager" ColumnName="manager" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="storename" ColumnName="storename" />
+                <ScalarProperty Name="storeId" ColumnName="storeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_WasteDetails">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_WasteDetails">
+              <MappingFragment StoreEntitySet="I_WasteDetails">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="WasteNo" ColumnName="WasteNo" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="WasteGroupId" ColumnName="WasteGroupId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_WasteItemCatalog">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_WasteItemCatalog">
+              <MappingFragment StoreEntitySet="I_WasteItemCatalog">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="WasteNo" ColumnName="WasteNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_VendorItemCatalog">
+            <EntityTypeMapping TypeName="InventoryModuleModel.I_VendorItemCatalog">
+              <MappingFragment StoreEntitySet="I_VendorItemCatalog">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateEffectiveTo" ColumnName="DateEffectiveTo" />
+                <ScalarProperty Name="DateEffectiveFrom" ColumnName="DateEffectiveFrom" />
+                <ScalarProperty Name="FixedorVariable" ColumnName="FixedorVariable" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

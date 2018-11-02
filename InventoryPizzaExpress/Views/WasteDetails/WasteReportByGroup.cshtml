@@ -1,0 +1,90 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.Waste.WasteReportByGroup>
+
+<section class="content">
+    @using (Html.BeginForm("WasteReportByGroup", "WasteDetails", FormMethod.Get))
+    {
+        <table class="table" style="width:800px;">
+            <thead>
+                <tr>
+                    <th>Store</th>
+                    <th>Item</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DropDownList("StoreId", null, "Select Store", htmlAttributes: new { @class = "form-control" })</td>
+                    <td>@Html.DropDownList("ItemId", null, "Select Item", htmlAttributes: new { @class = "form-control" })</td>
+                    <td><input type="text" id="Date" class="form-control" name="Date" /></td>
+                    <td><input type="submit" name="submit" value="Search" class="btn btn-default" /></td>
+                </tr>
+            </tbody>
+        </table>
+    }
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow-x:auto;">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Store)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WasteGroup)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WasteNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.value)
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WasteGroup)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WasteNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.value)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            </div>
+        </div>
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Date').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy',
+            })
+        });
+    </script>
+</section>

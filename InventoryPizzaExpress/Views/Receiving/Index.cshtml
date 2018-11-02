@@ -1,0 +1,516 @@
+﻿@model IEnumerable<InventoryPizzaExpress.I_OrderDetails>
+
+@{
+    ViewBag.Title = "Index";
+}
+<section class="content">
+    <p>
+        @Html.ActionLink("Pending Receipts", "GetPendingOrders", new { }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Item Received", "ItemReceived", new { }, new { @class = "btn btn-default" })
+    </p>
+    
+    <div class="form-horizontal col-md-12">
+        <div class="form-group">
+            <h4> Search</h4>
+            <div class="col-md-2">
+
+                <b>Select Store:</b>
+                <select id="ddlStore"></select>
+            </div>
+            <div class="col-md-2">
+
+                <b>Select Vendor:</b>
+                <select id="ddlvendor"></select>
+            </div>
+
+
+            <div class="col-md-2">
+
+                <b>Date:</b>
+                <input class="form-control mytablecell" type="text" id="txtdate" placeholder='mm/dd/yyyy'>
+            </div>
+            <div class="col-md-2" style="margin-top:16px;">
+
+                <button id="btnSerach" class="btn btn-default">Search</button>
+            </div>
+        </div>
+        <div class="form-group"> <h4> Order List</h4>
+            <div class="box box-primary">
+
+                <div class="box-body" style="overflow-x:auto;">
+                    <table class="wp-list-table table" id="tblResult"></table>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="form-group" id="POCreate">
+           <h4> Create Receipt by Purchase order</h4>
+            <br />
+            <div class="col-md-4">
+
+                <b>Order Numbers</b><span style="color: red;"> * </span>
+             <input id="txtorderno" class="form-control" type="text" readonly/>
+            </div>
+     
+
+
+            <div class="col-md-2">
+
+                <b>Receipt No</b><span style="color: red;"> * </span>
+                <input class="form-control" type="text" id="txtreiptNumbers">
+            </div>
+            <div class="col-md-2">
+
+                <b>Delievery Date</b><span style="color: red;"> * </span>
+                <input class="form-control" type="text" id="txtDelieveryDate" placeholder='mm/dd/yyyy'>
+            </div>
+            <div class="col-md-2">
+
+                <b>Reference</b>
+                <input class="form-control" type="text" id="txtRef" >
+            </div>
+            <div class="col-md-2" style="margin-top:16px;">
+
+                <button id="btnCreate" class="btn btn-default">Create</button>
+                <button id="btnCancel" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+
+        function VendorDetails() {
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/GetVendors",
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var list;
+                    list = response;
+                    $('#ddlvendor').empty();
+                    $('#ddlvendor').append(
+                          $("<option></option>")
+                            .attr("value", 0)
+                            .text("Select Vendor")
+                      );
+                    $.each(list, function (key, value) {
+                        $('#ddlvendor').append(
+                            $("<option></option>")
+                              .attr("value", value.Value)
+                              .text(value.Text)
+                        );
+                    });
+                    $("#ddlvendor").prop('class', 'selectpicker form-control');
+                    $("#ddlvendor").attr('data-live-search', true);
+                    $('#ddlvendor').selectpicker();
+                    $("LockPanel").removeClass("LockOn")
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        function Stores() {
+            $.ajax({
+                type: "POST",
+                url: "/Store/GetStoresDetails",
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var list;
+                    list = response;
+                    $('#ddlStore').empty();
+                    $('#ddlStore').append(
+                          $("<option></option>")
+                            .attr("value", 0)
+                            .text("Select Store")
+                      );
+                    $.each(list, function (key, value) {
+                        $('#ddlStore').append(
+                            $("<option></option>")
+                              .attr("value", value.Value)
+                              .text(value.Text)
+                        );
+                    });
+                    $("#ddlStore").prop('class', 'selectpicker form-control');
+                    $("#ddlStore").attr('data-live-search', true);
+                    $('#ddlStore').selectpicker();
+                    $("LockPanel").removeClass("LockOn")
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        function GetItems() {
+            var obj = {};
+            $.ajax({
+                type: "POST",
+                url: "/OrderDetails/GetOrderedItems",
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    table(model);
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        var sVendor = "";
+        var aOrderNo = [];
+    
+        var sDelieveryDate = "";
+        var sRef = "";
+        function func(val) {
+             sVendor = "";
+             aOrderNo = [];
+          
+             sDelieveryDate = "";
+             sRef = "";
+             var checked = false;
+            $('#tblResult').find('tr').each(function () {
+                var row = $(this);
+
+                if (row.find('input[type="checkbox"]').is(':checked')) {
+                    checked = true;
+
+                    if (sVendor == "") {
+                        sVendor = row.find(("label[for=vendor]"))[0].innerText;
+                        var orderNo = row.find(("a[id=OrderName]"));
+                        aOrderNo.push(orderNo[0].innerText);
+                        sDelieveryDate = row.find(("label[for=DelieveryDate]"));
+                        sRef = row.find(("label[for=Ref]"));
+                    }
+
+                    if (sVendor.length > 0) {
+                        if (sVendor == row.find(("label[for=vendor]"))[0].innerText) {
+                            var orderNo = row.find(("a[id=OrderName]"));
+                            aOrderNo.push(orderNo[0].innerText);
+                        }                        
+                    }  
+                }
+                else {
+                    if (sVendor.length > 0) {
+                        if (sVendor == row.find(("label[for=vendor]"))[0].innerText) {
+                            //var orderNo = row.find(("a[id=OrderName]"));
+                            //aOrderNo.push(orderNo[0].innerText);
+
+                        }
+                        else {
+                            row.find('input[type="checkbox"]').attr("disabled", true);
+                        }
+                    }
+                }
+            });
+
+            $('#tblResult').find('tr').each(function () {
+                var row = $(this);
+                if (row.find(("label[for=vendor]")).length >0)
+                {
+                    if (sVendor != row.find(("label[for=vendor]"))[0].innerText) {
+                        row.find('input[type="checkbox"]').attr("disabled", true);
+
+                    }
+                }
+             
+              
+            });
+
+            if (checked == false) {
+                $("#POCreate").hide();
+                $('input[type="checkbox"]').removeAttr("disabled");
+                $("#txtorderno").val('');
+            }
+            else {
+                $("#POCreate").show();
+                var uniqueOrderName = [];
+                var OrderNo=""
+                $.each(aOrderNo, function (i, el) {
+                    if ($.inArray(el, uniqueOrderName) === -1) uniqueOrderName.push(el);
+                });
+
+                if (uniqueOrderName.length > 0)
+                {
+                    for (var i = 0; i < uniqueOrderName.length; i++) {
+                        OrderNo += uniqueOrderName[i] + ",";
+                    }
+                    $("#txtorderno").val(OrderNo.substring(0, OrderNo.length - 1));
+                }
+            }
+        }
+        function table(model)
+        {
+            if (model.length > 0) {
+                for (var i = 0; i < model.length; i++) {
+                    tr = $('<tr/>');
+                    var MyDate_DeliveryDate = model[i].DeliveryDate;
+                    var valueDeliveryDate = new Date
+                                (
+                                     parseInt(MyDate_DeliveryDate.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                    var myDeliveryDate = valueDeliveryDate.getMonth() +
+                                             1 +
+                                           "/" +
+                               valueDeliveryDate.getDate() +
+                                           "/" +
+                           valueDeliveryDate.getFullYear();
+
+
+                    var MyDate_CreatedOn = model[i].CreatedOn;
+                    var valueCreatedOn = new Date
+                                (
+                                     parseInt(MyDate_CreatedOn.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                    var myCreatedOn = valueCreatedOn.getMonth() +
+                                             1 +
+                                           "/" +
+                               valueCreatedOn.getDate() +
+                                           "/" +
+                           valueCreatedOn.getFullYear();
+
+                    tr.append("<td style='text-align: center;'> <input type='checkbox' users[] class='addValue' id='chk_" + i + "'  onclick = 'func(this);'/></td>");
+
+                    tr.append("<td style='text-align: center;'>" + model[i].id + "</td>");
+                    tr.append("<td style='text-align: left;'><label id='orderNo'>" + model[i].OrderId + "</label></td>");
+                    tr.append("<td><a id='OrderName'>" + model[i].OrderName + "</a></td>");
+                    tr.append("<td style='text-align: left;'><label for='store'>  " + model[i].StoreName + "</label></td>");
+                    tr.append("<td style='text-align: left;'><label for='vendor'> " + model[i].Vendor + "</label></td>");
+                    tr.append("<td style='text-align: left;'><label for='DelieveryDate'> " + myDeliveryDate + "</label></td>");
+                    tr.append("<td style='text-align: left;'>" + Number(model[i].Total).toFixed(3) + "</td>");
+                    if (model[i].Reference != null)
+                        tr.append("<td style='text-align: left;'><label for='Ref'> " + model[i].Reference + "</label></td>");
+                    else
+                        tr.append("<td style='text-align: left;'><label for='Ref'> </label></td>");
+                    tr.append("<td style='text-align: left;'>" + model[i].CreatedBy + "</td>");
+                    tr.append("<td style='text-align: left;'>" + myCreatedOn + "</td>");
+
+                    $('#tblResult').append(tr);
+                    var table = document.getElementById("tblResult");
+                    if (!table.tHead) {
+                        var header = table.createTHead();
+
+                        // Create an empty <tr> element and add it to the first position of <thead>:
+                        var row = header.insertRow(0);
+
+                        // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                        var cellSelect = row.insertCell(0);
+                        var cellId = row.insertCell(1);
+                        var cellOrderId = row.insertCell(2);
+                        var cellOrderName = row.insertCell(3);
+                        var cellStoreName = row.insertCell(4);
+                        var cellVendor = row.insertCell(5);
+                        var cellDeliveryDate = row.insertCell(6);
+                        var cellTotal = row.insertCell(7);
+                        var cellRef = row.insertCell(8);
+                        var cellCreatedBy = row.insertCell(9);
+                        var cellCreatedOn = row.insertCell(10);
+
+                        // Add some bold text in the new cell:
+                        cellSelect.innerHTML = "<b>Select</b>";
+                        cellId.innerHTML = "<b>ID</b>";
+                        cellOrderId.innerHTML = "<b>OrderId</b>";
+                        cellOrderName.innerHTML = "<b>OrderName</b>";
+                        cellStoreName.innerHTML = "<b>StoreName</b>";
+                        cellVendor.innerHTML = "<b>Vendor</b>";
+                        cellDeliveryDate.innerHTML = "<b>DeliveryDate</b>";
+                        cellTotal.innerHTML = "<b>Total Amount</b>";
+                        cellRef.innerHTML = "<b>Ref</b>";
+                        cellCreatedBy.innerHTML = "<b>Last Updated By</b>";
+                        cellCreatedOn.innerHTML = "<b>Last Updated On</b>";
+                    }
+                    var colToHide = $("#tblResult tr th:nth-child(2), table tr td:nth-child(2)");
+                    colToHide.hide()
+                    var colToHideid = $("#tblResult tr th:nth-child(3), table tr td:nth-child(3)");
+                    colToHideid.hide()
+                }
+            }
+            else {
+            }
+        }
+
+        $("#btnCreate").click(function () {
+            var strMessage = "";
+            if ($('#txtorderno').val() == "") {
+                strMessage += "Please select any Order.\n";
+                $("#txtorderno").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else
+                $("#txtorderno").css('border', '');
+
+            if ($('#txtreiptNumbers').val() == "") {
+                strMessage += "Please enter any receipt number.\n";
+                $("#txtreiptNumbers").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else
+                $("#txtreiptNumbers").css('border', '');
+
+            if ($('#txtDelieveryDate').val() == "") {
+                strMessage += "Please enter delievery date.\n";
+                $("#txtDelieveryDate").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else
+                $("#txtDelieveryDate").css('border', '');
+
+
+            if (strMessage != "") {
+                alert(strMessage);
+                return false;
+            }
+            else {
+                var objItems = [];
+                objItems.push({ 'OrderIds': $('#txtorderno').val(), 'ReceiptNo': $('#txtreiptNumbers').val(), 'Ref': $('#txtRef').val(), 'DelieveryDate': $('#txtDelieveryDate').val() })
+                var data1 = { 'listObject': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/Receiving/AddItems",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alert('Item Submit Successfully');
+                          
+                            window.open("/Receiving/ReceivingItemCatalog?id=" + response.data.Id, '_self');
+                            GetItems();
+                            $("#LockPanel").removeClass("LockOn");
+                        }
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                })
+            }
+        })
+        $("#btnSerach").click(function () {
+            $("#POCreate").hide();
+            $('input[type="checkbox"]').removeAttr("disabled");
+            $("#txtorderno").val('');
+            $('#tblResult').find('tr').each(function () {
+                var row = $(this);
+
+                if (row.find('input[type="checkbox"]').is(':checked')) {
+                    row.find('input[type="checkbox"]').attr("checked", false);
+
+                }
+
+
+            });
+
+            var obj = {};
+            obj.storeId = $("#ddlStore").val();
+            obj.vendorId = $("#ddlvendor").val();
+            obj.Date = $("#txtdate").val();
+
+            if (obj.storeId == "0" && obj.vendorId == "0" && obj.Date == "") {
+                alert("Please select any search option");
+                return false
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/OrderDetails/GetSearchOrderedItems",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+                        var model;
+                        model = response;
+                        $("#tblResult tbody").empty();
+                        table(model);
+                      
+                        $("#LockPanel").removeClass("LockOn");
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+
+
+        });
+        $("#btnCancel").click(function () {
+            $("#POCreate").hide();
+            $('input[type="checkbox"]').removeAttr("disabled");
+            $("#txtorderno").val('');
+            $('#tblResult').find('tr').each(function () {
+                var row = $(this);
+              
+                if (row.find('input[type="checkbox"]').is(':checked')) {
+                    row.find('input[type="checkbox"]').attr("checked", false);
+
+                    }
+            
+
+            });
+        })
+        $(document).ready(function () {
+            $("#POCreate").hide();
+            VendorDetails();
+            GetItems();
+            Stores();
+            $('#txtdate').datepicker({
+                changeMonth: true,
+                changeYear: true,             
+                dateFormat: 'mm/dd/yy'
+            }).datepicker("setDate", new Date());
+            $('#txtDelieveryDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: 0,
+                dateFormat: 'mm/dd/yy'
+            }).datepicker("setDate", new Date());
+            
+        })
+    </script>
+</section>

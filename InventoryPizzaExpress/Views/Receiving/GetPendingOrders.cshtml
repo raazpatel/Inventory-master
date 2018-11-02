@@ -1,0 +1,52 @@
+﻿@model IEnumerable<InventoryPizzaExpress.I_RecievingItemCatalog>
+
+@{
+    ViewBag.Title = "GetPendingOrders";
+}
+
+
+<section class="content">
+   <p>@Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })</p>
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow:auto;">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderIds)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReceiptNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ref)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DelieveryDate)
+                    </th>
+                   
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>                         
+                            <a class="v-patient pointer" data-id="item.Id" href="@Url.Action("ReceivingItemCatalog", "Receiving", new {id= item.Id })" >@item.OrderIds</a>                        
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiptNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ref)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DelieveryDate)
+                        </td>
+                      
+                    </tr>
+                }
+
+            </table>
+            </div>
+        </div>
+</section>

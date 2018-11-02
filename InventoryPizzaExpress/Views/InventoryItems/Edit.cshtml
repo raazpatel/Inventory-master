@@ -1,0 +1,350 @@
+﻿@model InventoryPizzaExpress.I_InventoryItemMaster
+
+@{
+    ViewBag.Title = "Edit";
+}
+<section class="content">
+  
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+         
+         
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)        
+                          <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ItemCode, "Item Code", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ItemCode, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ItemCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ItemName, "Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "form-control" , @maxlength = "15" } })
+                            @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MajorItemId, "Major Item", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("MajorItemId", null, "Select Unit", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MajorItemId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MinorItemId, "Minor Item", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("MinorItemId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MinorItemId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PrimaryUnit, "Primary Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("PrimaryUnit", null, "Select Unit", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PrimaryUnit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PrimaryUnitConv, "Pri Unit Conv", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PrimaryUnitConv, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PrimaryUnitConv, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ReportingUnit, "Reporting Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ReportingUnit", null, "Select Unit", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ReportingUnit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ReportingUnitConv, "Rep Unit Conv", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ReportingUnitConv, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ReportingUnitConv, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StoreUnit, "Store Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("StoreUnit", null, "Select Unit", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.StoreUnit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StoreUnitConv, "Store Unit Conv Code", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.StoreUnitConv, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.StoreUnitConv, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LossPercentage, "Loss %", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.LossPercentage, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LossPercentage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GainPercentage, "Gain %", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.GainPercentage, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.GainPercentage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ThersoldRecieving, "Thersold Receiving", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ThersoldRecieving, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ThersoldRecieving, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FixedorVariable,"Price Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*Fixed:  @if (ViewBag.Price == 0) {  @Html.RadioButton("FixedorVariable", "0",new { Checked = "checked" })}
+                            Variable:@if (ViewBag.Price == 1) { @Html.RadioButton("Price", "1", new { Checked = "checked" })}*@
+                            Fixed: @Html.RadioButtonFor(m => m.FixedorVariable, 0, ViewBag.Price == 0 ? new { @checked = "checked" } : null)
+                            Variable: @Html.RadioButtonFor(m => m.FixedorVariable, 1, ViewBag.Price == 1 ? new { @checked = "checked" } : null)
+                            @*@Html.DropDownList("FixedorVariable", null,  htmlAttributes: new { @class = "form-control" })*@
+                            @Html.ValidationMessageFor(model => model.FixedorVariable, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden">
+                        @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden">
+                        @Html.LabelFor(model => model.ModifiedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ModifiedBy, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ModifiedBy, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden">
+                        @Html.LabelFor(model => model.ModifiedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ModifiedOn, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ModifiedOn, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+     
+    }
+
+   
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript">
+      
+
+        $(function () {
+            
+            $('#PrimaryUnitConv').keypress(function (event) {
+
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    //alert('hello');
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1)) {
+                        //do nothing
+                    }
+                    event.preventDefault();
+                }
+                if (this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
+                    //do nothing
+                    event.preventDefault();
+                }
+            });
+            $('#ThersoldRecieving').keypress(function (event) {
+
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    //alert('hello');
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1)) {
+                        //do nothing
+                    }
+                    event.preventDefault();
+                }
+                if (this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
+                    //do nothing
+                    event.preventDefault();
+                }
+            });
+            $('#GainPercentage').keypress(function (event) {
+
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    //alert('hello');
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1)) {
+                        //do nothing
+                    }
+                    event.preventDefault();
+                }
+                if (this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
+                    //do nothing
+                    event.preventDefault();
+                }
+            });
+            $('#LossPercentage').keypress(function (event) {
+
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    //alert('hello');
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1)) {
+                        //do nothing
+                    }
+                    event.preventDefault();
+                }
+                if (this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
+                    //do nothing
+                    event.preventDefault();
+                }
+            });
+            $('#Price').keypress(function (event) {
+
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    //alert('hello');
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1)) {
+                       //do nothing
+                    }
+                    event.preventDefault();
+                }
+                if (this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
+                  //do nothing
+                    event.preventDefault();
+                }
+            });
+            $('#ReportingUnitConv').keypress(function (event) {
+
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    //alert('hello');
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1)) {
+                        //do nothing
+                    }
+                    event.preventDefault();
+                }
+                if (this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
+                    //do nothing
+                    event.preventDefault();
+                }
+            });
+            $('#StoreUnitConv').keypress(function (event) {
+
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    //alert('hello');
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1)) {
+                        //do nothing
+                    }
+                    event.preventDefault();
+                }
+                if (this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
+                    //do nothing
+                    event.preventDefault();
+                }
+            });
+            $("#MajorItemId").change(function () {
+                var value = 0;
+                if ($(this).val() != "") {
+                    value = $(this).val();
+                }
+                var id = $(this).attr("id");
+                $.ajax({
+                    type: "POST",
+                    url: "/InventoryItems/AjaxMethod",
+                    data: '{type: "' + id + '", value: ' + value + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        debugger;
+                        var list;
+
+                        list = response;
+                        DisableDropDown("#MinorItemId");
+
+                        PopulateDropDown("#MinorItemId", list);
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+
+        function DisableDropDown(dropDownId) {
+            $(dropDownId).attr("disabled", "disabled");
+            $(dropDownId).empty().append('<option selected="selected" value="0">Please select</option>');
+        }
+
+        function PopulateDropDown(dropDownId, list) {
+            if (list != null && list.length > 0) {
+                $(dropDownId).removeAttr("disabled");
+                $.each(list, function () {
+                    $(dropDownId).append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            }
+        }
+
+
+    </script>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</section>

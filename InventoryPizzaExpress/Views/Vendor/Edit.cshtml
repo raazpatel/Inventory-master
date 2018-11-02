@@ -1,0 +1,270 @@
+﻿@model InventoryPizzaExpress.Models.Vendor.Vendor
+
+@{
+    ViewBag.Title = "Edit";
+}
+<section class="content">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                <div> @Html.LabelFor(model => model.VenderName,"Vendor Name", htmlAttributes: new { @class = "control-label col-md-2" })</div>
+
+                <div class="col-md-4">
+
+                    @Html.EditorFor(model => model.VenderName, new { htmlAttributes = new { @class = "form-control", @maxlength = "100" } })
+                    @Html.ValidationMessageFor(model => model.VenderName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AddressLine,"Address", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+
+                    @Html.TextAreaFor(model => model.AddressLine, new { @class = "form-control", @maxlength = "10", @cols = 35, @rows = 3 })
+                    @Html.ValidationMessageFor(model => model.AddressLine, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GSTIN, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.GSTIN, new { htmlAttributes = new { @class = "form-control", @maxlength = "49" } })
+                    @Html.ValidationMessageFor(model => model.GSTIN, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @maxlength = "49" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", @maxlength = "49" } })
+                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @maxlength = "49" } })
+                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @maxlength = "10", @onkeypress = "return isNumberKey(event,this)" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @maxlength = "49" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div style="display:none">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ModifiedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ModifiedBy, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ModifiedBy, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ModifiedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ModifiedOn, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ModifiedOn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" onclick="return Validate();"/>
+                    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+        <div class="glow-alert" style="display: none;"></div>
+    }
+
+    
+
+        @Scripts.Render("~/bundles/jquery")
+        <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery.dataTables.min.js"></script>
+        <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+        <script>
+            function Validate() {
+                var strMessage = "";
+                var VendorName = $("#VenderName").val();
+                var AddressLine = $("#AddressLine").val();
+                var GSTIN = $("#GSTIN").val();
+                var City = $("#City").val();
+                var State = $("#State").val();
+                var City = $("#City").val();
+                var Country = $("#Country").val();
+                var Phone = $("#Phone").val();
+                var Email = $("#Email").val();
+                if (VendorName.trim() == "") {
+                    strMessage += "Please enter vendor name.<br />";
+                    $("#VenderName").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#VenderName").css('border', '');
+                }
+
+
+                if (AddressLine.trim() == "") {
+                    strMessage += "Please enter address.<br />";
+                    $("#AddressLine").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#AddressLine").css('border', '');
+                }
+
+                if (GSTIN.trim() == "") {
+                    strMessage += "Please enter GSTIN.<br />";
+                    $("#GSTIN").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#GSTIN").css('border', '');
+                }
+
+                if (City.trim() == "") {
+                    strMessage += "Please enter city.<br />";
+                    $("#City").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#City").css('border', '');
+                }
+
+                if (State.trim() == "") {
+                    strMessage += "Please enter state.<br />";
+                    $("#State").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#State").css('border', '');
+                }
+
+
+                if (Country.trim() == "") {
+                    strMessage += "Please enter country.<br />";
+                    $("#Country").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#Country").css('border', '');
+                }
+                if (Phone.trim() == "") {
+                    strMessage += "Please enter phone number.<br />";
+                    $("#Phone").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else if (Phone.trim().length < 10) {
+                    strMessage += "Please enter valid phone number.<br />";
+                    $("#Phone").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#Phone").css('border', '');
+                }
+
+                if (Email.trim() == "") {
+                    strMessage += "Please enter email.<br />";
+                    $("#Email").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else if (IsEmail(Email.trim()) == false) {
+                    strMessage += "Please enter valid email.<br />";
+                    $("#Email").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    $("#Email").css('border', '');
+                }
+                if (strMessage != "") {
+                    alertGlow(strMessage);
+                    return false;
+                }
+                else { return true; }
+
+            }
+            function alertGlow(msg) {
+                $(".glow-alert").html(msg);
+                $(".glow-alert").delay(200).fadeIn().delay(4000).fadeOut();
+            };
+            function IsEmail(email) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if (!regex.test(email)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        function isNumberKey(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
+                return false;
+            else {
+                var len = $(element).val().length;
+                var index = $(element).val().indexOf('.');
+                if (index > 0 && charCode == 46) {
+                    return false;
+                }
+                if (index > 0) {
+                    var CharAfterdot = (len + 1) - index;
+                    if (CharAfterdot > 4) {
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+        }
+        $(document).ready(function () {
+            $('#Phone').val(Math.round($('#Phone').val()));
+            $('#CreatedOn').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy'
+            }).datepicker("setDate", new Date());
+        });
+        </script>
+
+      
+    </section>

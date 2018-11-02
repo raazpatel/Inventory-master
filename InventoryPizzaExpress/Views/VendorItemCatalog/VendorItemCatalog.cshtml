@@ -1,0 +1,1063 @@
+﻿@{
+    ViewBag.Title = "VendorItemCatalog";
+}
+<section class="content">
+    <style type="text/css">
+
+        .LockOff {
+            display: none;
+            visibility: hidden;
+        }
+
+        .LockOn {
+            display: block;
+            visibility: visible;
+            position: fixed;
+            z-index: 999;
+            top: 0px;
+            left: 0px;
+            width: 105%;
+            height: 105%;
+            background-color: #ccc;
+            text-align: center;
+            padding-top: 20%;
+            filter: alpha(opacity=75);
+            opacity: 0.75;
+        }
+    </style>
+    <div class="col-md-12 card">
+        <div id="dvsearch">
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label class="control-label" for="">
+                                    <b>Select Vendor:</b> <span style="color: red;">* </span>
+                                </label>
+                                <select id="ddlVendor" class="form-control"></select>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label" for="">
+                                    <b>Select Item Group:</b><span style="color: red;"> * </span>
+                                </label>
+                                <select id="ddlItemGroup" class="form-control"></select>
+                            </div>
+                            <div class="col-md-2" style="margin-top: 4px;">
+                                <br />
+                                <button id="btnSearch" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <br>
+
+        </div>
+        <div class="box box-primary">
+            <div class="box-body" style="overflow-x:auto; ">
+                <div class="col-md-12">
+                    <div id="LockPanel" class="LockOff">
+                        <h2>Please wait...</h2>
+                    </div>
+                    <div id="LockPanelSaveItem" class="LockOff">
+                        <h2>Please wait...</h2>
+                    </div>
+                </div>
+                <div class="nav-tabs-custom" id="Tabs">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a id="Tab1" href="#tab_1" data-toggle="tab" aria-expanded="true">Map Items</a></li>
+                        <li class=""><a id="Tab2" href="#tab_2" data-toggle="tab" aria-expanded="false">Release Items</a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <table id="tblResult" class="table table-bordered dataTable no-footer"></table>
+                        </div>
+                        <div class="tab-pane active" id="tab_2">
+                            <table id="tblMappedResult" class="table table-bordered dataTable no-footer"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-default" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Map Item</h4>
+                    <div><label for="merror"></label></div>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">Item Code</div>
+                            <div class="col-md-8">
+                                <label for="mItemId"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Item Name</div>
+                            <div class="col-md-8">
+
+                                <label for="mItemName"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Custom Item Code</div>
+                            <div class="col-md-6">
+                                <input id="mItemCode" type="text" class="form-control code" onkeypress="return IsAlphaNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder='Item Code' />
+                            </div>
+                            <div class="col-md-2">
+                                <label class="hidden" for="mPrimaryUnit"></label>
+                                <label for="mUnitName"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Price</div>
+
+                            <div class="col-md-8">
+                                <input id="mItemPrice" type="number" class="form-control code" placeholder='Item Price' />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Fixed Price</div>
+
+                            <div class="col-md-8">
+                                <input type="checkbox" id='mIsFixed' checked />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Date Effective From</div>
+
+                            <div class="col-md-8">
+                                <input class='form-control mytablecell' type='text' id='mdatepickerFrom' placeholder='mm/dd/yyyy'>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Date Effective To</div>
+
+                            <div class="col-md-8">
+                                <input class='form-control mytablecell' type='text' id='mdatepickerTo' placeholder='mm/dd/yyyy'>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnClose" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="NewAddSave()" id="Save">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+
+    <script type="text/javascript">
+        var specialKeys = new Array();
+        specialKeys.push(8); //Backspace
+        specialKeys.push(9); //Tab
+        specialKeys.push(46); //Delete
+        specialKeys.push(36); //Home
+        specialKeys.push(35); //End
+        specialKeys.push(37); //Left
+        specialKeys.push(39); //Right
+        function IsAlphaNumeric(e) {
+            var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+            var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+            return ret;
+        }
+    </script>
+
+
+
+    <script>
+
+        function vendors() {
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/GetVendors",
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var list;
+                    list = response;
+                    $('#ddlVendor').empty();
+                    $('#ddlVendor').append(
+                        $("<option></option>")
+                            .attr("value", 0)
+                            .text("Select Vendor")
+                    );
+                    $.each(list, function (key, value) {
+                        $('#ddlVendor').append(
+                            $("<option></option>")
+                                .attr("value", value.Value)
+                                .text(value.Text)
+                        );
+                    });
+                    $("#ddlVendor").prop('class', 'selectpicker form-control');
+                    $("#ddlVendor").attr('data-live-search', true);
+                    $('#ddlVendor').selectpicker();
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+        function isNumberWithDecimal(txt, evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode == 46) {
+                //Check if the text already contains the . character
+                if (txt.value.indexOf('.') === -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                if (charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                    return false;
+            }
+            return true;
+        }
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        function GetItems() {
+            var value = $('#ddlItemGroup').val();
+            var obj = {};
+            obj.value = value;
+            obj.vendor = $('#ddlVendor').val();;
+
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/GetItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    if (response.length > 0)
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+
+                            tr.append("<td style='text-align: center;'> <label id='Id'>" + model[i].Id + "</label></td>");
+                            tr.append("<td style='text-align: center;'> <label id='ItemId'>" + model[i].ItemCode + "</label></td>");
+                            tr.append("<td><label id='ItemName'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'>  <input type='text'  id='ItemCode' min='1000' step='1'  class='form-control code' onkeypress='return IsAlphaNumeric(event);' ondrop='return false;' onpaste = 'return false;'/></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId' min='1000' step='1' value='" + model[i].PrimaryUnitId + "'  class='form-control hidden'/> " + model[i].PrimaryUnit + "</td>");
+                            tr.append("<td style='text-align: left;'>  <input type='text' id='ItemPrice' min='1' step='1' value='" + model[i].Price + "' class='form-control price' onkeypress='return isNumberWithDecimal(this, event)' /></td>");
+                            if (model[i].FixedorVariable == 1)
+                                tr.append("<td style='text-align: center;'>  <input type='checkbox' id='isFixed' checked ='true' /></td>");
+                            else
+                                tr.append("<td style='text-align: center;'>  <input type='checkbox' id='isFixed' checked  /></td>");
+                            tr.append("<td style='text-align: left;'>  <input class='form-control mytablecell' type='text' id='datepickerFrom_" + i + "' placeholder='mm/dd/yyyy'> </td>");
+                            tr.append("<td style='text-align: left;'>  <input class='form-control mytablecell' type='text' id='datepickerTo_" + i + "' placeholder='mm/dd/yyyy'> </td>");
+                            tr.append("<td style='text-align: left;'>   <button id='btnSubmit' class='btn btn-primary'  onclick='submit(this)'>Map</button> </td>");
+                            $('#tblResult').append(tr);
+                            var table = document.getElementById("tblResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                //  var cellSelect = row.insertCell(0);
+                                var cellId = row.insertCell(0);
+                                var cellItemCode = row.insertCell(1);
+                                var cellItemName = row.insertCell(2);
+                                var cellCustomeItemCode = row.insertCell(3);
+                                var cellItemUnit = row.insertCell(4);
+                                var cellItemPrice = row.insertCell(5);
+                                var cellItemisFixed = row.insertCell(6);
+                                var cellDateEffectiveFrom = row.insertCell(7);
+                                var cellDateEffectiveTo = row.insertCell(8);
+                                var cellAction = row.insertCell(9);
+                                // Add some bold text in the new cell:
+                                //   cellSelect.innerHTML = "<b style='text-align: center;'><input type='checkbox' onchange='checkAll(this)' name='chk[]'/></b>";
+
+                                cellId.innerHTML = "<b>ID</b>";
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellCustomeItemCode.innerHTML = "<b>Custom ItemCode</b>";
+                                cellItemUnit.innerHTML = "<b>Unit</b>";
+                                cellItemPrice.innerHTML = "<b>Price</b>";
+                                cellItemisFixed.innerHTML = "<b>FixedPrice</b>";
+                                cellDateEffectiveFrom.innerHTML = "<b>DateEffective From</b>";
+                                cellDateEffectiveTo.innerHTML = "<b>DateEffective To</b>";
+                                cellAction.innerHTML = "<b>Action</b>";
+                            }
+                            var colToHide = $("#tblResult tr th:nth-child(1), table tr td:nth-child(1)");
+
+                            colToHide.hide()
+
+                        }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+        function isoDateReviver(value) {
+            if (typeof value === 'string') {
+                var a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)(?:([\+-])(\d{2})\:(\d{2}))?Z?$/.exec(value);
+                if (a) {
+                    var utcMilliseconds = Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4], +a[5], +a[6]);
+                    return new Date(utcMilliseconds);
+                }
+            }
+            return value;
+        }
+
+        function GetMappedItems() {
+
+            var obj = {};
+            obj.value = $('#ddlVendor').val();;
+
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/GetVendoeItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblMappedResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            var MyDate_String_ValueFrom = model[i].DateEffectiveFrom;
+                            var valueFrom = new Date
+                                (
+                                parseInt(MyDate_String_ValueFrom.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                            var myDateFrom = valueFrom.getMonth() +
+                                1 +
+                                "/" +
+                                valueFrom.getDate() +
+                                "/" +
+                                valueFrom.getFullYear();
+                            var MyDate_String_ValueTo = model[i].DateEffectiveTo;
+                            var valueTo = new Date
+                                (
+                                parseInt(MyDate_String_ValueTo.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                            var myDateTo = valueTo.getMonth() +
+                                1 +
+                                "/" +
+                                valueTo.getDate() +
+                                "/" +
+                                valueTo.getFullYear();
+
+
+                            tr = $('<tr/>');
+
+                            tr.append("<td style='text-align: center;'> <label id='Id1'>" + model[i].Id + "</label></td>");
+                            tr.append("<td style='text-align: center;'><label id='ItemId1'>" + model[i].ItemId + "</label></td>");
+                            tr.append("<td><label id='ItemName1'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='text' id='ItemCode1' min='1000' step='1' value='" + model[i].ItemCode + "'  class='form-control code' onkeypress='return IsAlphaNumeric(event);' ondrop='return false;' onpaste = 'return false;'/></td>");
+                            tr.append("<td style='text-align: left;'> <label id='UnitName1'>" + model[i].PrimaryUnit + "</label><input type='number' id='UnitId1' min='1000' step='1' value='" + model[i].PrimaryUnitId + "'  class='form-control hidden'/> </td>");
+                            tr.append("<td style='text-align: left;'>  <input type='number' id='ItemPrice1' min='1' step='1' value='" + model[i].Price + "' class='form-control price'  onkeypress='return isNumberWithDecimal(this, event)' /></td>");
+                            if (model[i].FixedorVariable == 1)
+                                tr.append("<td style='text-align: center;'>  <input type='checkbox' id='isFixed1' checked ='true' /></td>");
+                            else
+                                tr.append("<td style='text-align: center;'>  <input type='checkbox' id='isFixed1' checked  /></td>");
+                            tr.append("<td style='text-align: left;'>  <input class='form-control mytablecell'  type='text' id='datepickerFrom1_" + i + "' value='" + myDateFrom + "' placeholder='mm/dd/yyyy'> </td>");
+                            tr.append("<td style='text-align: left;'>  <input class='form-control mytablecell'  type='text' id='datepickerTo1_" + i + "' value='" + myDateTo + "' placeholder='mm/dd/yyyy'> </td>");
+                            tr.append("<td style='text-align: left;'>   <button id='btnSubmit1' class='btn btn-primary'  onclick='edit(this)'>Edit</button>  <button id='btnSubmit' class='btn btn-primary'  onclick='relase(" + model[i].Id + ")'>Release</button>" +
+                                "  <button id='btnSubmit1' class='btn btn-primary'  onclick='NewAdd(this)' data-toggle='modal' data-target='#modal-default'>Add</button>"
+                                + "</td > ");
+                            $('#tblMappedResult').append(tr);
+                            var table = document.getElementById("tblMappedResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                //  var cellSelect = row.insertCell(0);
+                                var cellId = row.insertCell(0);
+                                var cellItemCode = row.insertCell(1);
+                                var cellItemName = row.insertCell(2);
+                                var cellCustomeItemCode = row.insertCell(3);
+                                var cellPrimaryUnit = row.insertCell(4);
+                                var cellItemPrice = row.insertCell(5);
+                                var cellItemisFixed = row.insertCell(6);
+                                var cellDateEffectiveFrom = row.insertCell(7);
+                                var cellDateEffectiveTo = row.insertCell(8);
+                                var cellAction = row.insertCell(9);
+                                // Add some bold text in the new cell:
+                                //   cellSelect.innerHTML = "<b style='text-align: center;'><input type='checkbox' onchange='checkAll(this)' name='chk[]'/></b>";
+
+                                cellId.innerHTML = "<b>ID</b>";
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellCustomeItemCode.innerHTML = "<b>Custom ItemCode</b>";
+                                cellItemPrice.innerHTML = "<b>Unit</b>";
+                                cellItemPrice.innerHTML = "<b>Price</b>";
+                                cellItemisFixed.innerHTML = "<b>FixedPrice</b>";
+                                cellDateEffectiveFrom.innerHTML = "<b>DateEffective From</b>";
+                                cellDateEffectiveTo.innerHTML = "<b>DateEffective To</b>";
+                                cellAction.innerHTML = "<b>Action</b>";
+                            }
+                            var colToHide = $("#tblMappedResult tr th:nth-child(1), table tr td:nth-child(1)");
+
+                            colToHide.hide()
+
+                        }
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+        function relase(id) {
+            var obj = {};
+            obj.id = id;
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/Remove",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+
+                    if (response.success) {
+                        alert('Item removed Successfully');
+                    }
+                    GetMappedItems();
+                    GetItems();
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                    $("#LockPanel").removeClass("LockOn");
+
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#LockPanel").removeClass("LockOn");
+
+                }
+            });
+            return false;
+        }
+
+        function submit(ele) {
+            var strMessage = "";
+            var value = $(ele).attr("id");
+            var currentIdx = $(ele).closest('tr').index();
+            var row = $(ele).closest("tr");
+            var ItemId = row.find("[id=ItemId]").text();
+            var ItemName = row.find("[id=ItemName]").text();
+            var ItemCode = row.find("[id=ItemCode]").val();
+            var ItemPrice = row.find("[id=ItemPrice]").val();
+            var Unit = row.find("[id=UnitId]").val();
+            var fixedorvariable = 0;
+            if (row.find("[id=isFixed]").prop('checked') == true)
+                var fixedorvariable = 1
+
+            var DateEffectivefrom = row.find("[id*=datepickerFrom_]").val();
+            var DateEffectiveto = row.find("[id*=datepickerTo_]").val();;
+
+
+            row.find("[id=ItemCode]").css('border', '');
+            row.find("[id=ItemPrice]").css('border', '');
+            row.find("[id=datepicker_]").css('border', '');
+
+            if (ItemPrice == "") {
+                strMessage += "Please enter item price.\n";
+                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else if (ItemPrice <= 0) {
+                strMessage += "Item price should be greater than zero.\n";
+                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+            }
+
+            if (DateEffectivefrom == "") {
+                strMessage += "Please enter date effective from.\n";
+                row.find("[id*=datepickerFrom_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else
+                row.find("[id*=datepickerFrom_]").css({ "border": "" });
+            if (DateEffectiveto == "") {
+                strMessage += "Please enter date effective to.\n";
+                row.find("[id*=datepickerTo_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else
+                row.find("[id*=datepickerTo_]").css({ "border": "" });
+
+
+            if (DateEffectivefrom != "" && DateEffectiveto != "") {
+                if (Date.parse(DateEffectivefrom) > Date.parse(DateEffectiveto)) {
+                    strMessage += "Date effective to should be greater than date effective froms.\n";
+                    row.find("[id*=datepickerFrom_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    row.find("[id*=datepickerTo_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    row.find("[id*=datepickerFrom_]").css({ "border": "" });
+                    row.find("[id*=datepickerTo_]").css({ "border": "" });
+
+                }
+            }
+            if (strMessage != "") {
+                alert(strMessage);
+                return false;
+            }
+            else {
+                $("#LockPanel").addClass("LockOn");
+                var obj = {};
+                obj.Id = 0;
+                obj.itemId = ItemId;
+                obj.ItemName = ItemName;
+                obj.ItemCode = ItemCode == "" ? 0 : ItemCode;
+                obj.ItemPrice = ItemPrice;
+                obj.effectiveDate = DateEffectivefrom;
+                obj.effectiveDateTo = row.find("[id*=datepickerTo_]").val();;
+                obj.VendorId = $("#ddlVendor").val();
+                obj.Unit = Unit;
+                obj.fixedorvariable = fixedorvariable;
+                obj.status = 1;
+                $.ajax({
+                    type: "POST",
+                    url: "/VendorItemCatalog/AddItems",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alert('Item Submit Successfully');
+
+                        }
+
+                        GetItems();
+                        $("#LockPanel").removeClass("LockOn");
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+                return false;
+
+            }
+        }
+
+        function edit(ele) {
+            flag = 0;
+            var strMessage = "";
+            var value = $(ele).attr("id");
+            var currentIdx = $(ele).closest('tr').index();
+            var row = $(ele).closest("tr");
+            var Id = row.find("[id=Id1]").text();
+            var ItemId = row.find("[id=ItemId1]").text();
+            var ItemName = row.find("[id=ItemName1]").text();
+            var ItemCode = row.find("[id=ItemCode1]").val();
+            var ItemPrice = row.find("[id=ItemPrice1]").val();
+
+            var DateEffectivefrom = row.find("[id*=datepickerFrom1_]").val();
+            var DateEffectiveto = row.find("[id*=datepickerTo1_]").val();
+
+            var fixedorvariable = 0;
+            if (row.find("[id=isFixed1]").prop('checked') == true)
+                var fixedorvariable = 1
+
+            var Unit = row.find("[id=UnitId1]").val();
+            row.find("[id=ItemCode1]").css('border', '');
+            row.find("[id=ItemPrice1]").css('border', '');
+            row.find("[id*=datepicker1_]").css('border', '');
+            if (ItemPrice == "") {
+                strMessage += "Please enter item price.\n";
+                row.find("[id=ItemPrice1]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else if (ItemPrice <= 0) {
+                strMessage += "Item price should be greater than zero.\n";
+                row.find("[id=ItemPrice1]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+            }
+
+            if (DateEffectivefrom == "") {
+                strMessage += "Please enter date effective from.\n";
+                row.find("[id*=datepickerFrom1_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else
+                row.find("[id*=datepickerFrom1_]").css({ "border": "" });
+            if (DateEffectiveto == "") {
+                strMessage += "Please enter date effective to.\n";
+                row.find("[id*=datepickerTo1_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else
+                row.find("[id*=datepickerTo1_]").css({ "border": "" });
+
+
+            if (DateEffectivefrom != "" && DateEffectiveto != "") {
+                if (Date.parse(DateEffectivefrom) > Date.parse(DateEffectiveto)) {
+                    strMessage += "Date effective to should be greater than date effective froms.\n";
+                    row.find("[id*=datepickerFrom1_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    row.find("[id*=datepickerTo1_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else {
+                    row.find("[id*=datepickerFrom1_]").css({ "border": "" });
+                    row.find("[id*=datepickerTo1_]").css({ "border": "" });
+
+                }
+            }
+            DateValidation(Id, ItemId, DateEffectivefrom, DateEffectiveto)
+            if (flag == 1) {
+                strMessage += "Select date are conflict with other date for same item code";
+                row.find("[id*=datepickerFrom1_]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            if (strMessage != "") {
+                alert(strMessage);
+                return false;
+            }
+            else {
+                $("#LockPanel").addClass("LockOn");
+                var obj = {};
+                obj.Id = Id;
+                obj.itemId = ItemId;
+                obj.ItemName = ItemName;
+                obj.ItemCode = ItemCode == "" ? 0 : ItemCode;
+                obj.ItemPrice = ItemPrice;
+                obj.effectiveDate = DateEffectivefrom;
+                obj.effectiveDateTo = row.find("[id*=datepickerTo1_]").val();;
+                obj.Unit = Unit;
+                obj.fixedorvariable = fixedorvariable;
+                obj.VendorId = $("#ddlVendor").val();
+                obj.status = 1;
+                $.ajax({
+                    type: "POST",
+                    url: "/VendorItemCatalog/AddItems",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alert('Item Submit Successfully');
+
+                        }
+                        GetMappedItems();
+                        GetItems();
+                        $("#LockPanel").removeClass("LockOn");
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+                return false;
+
+            }
+        }
+
+        function NewAdd(ele) {
+
+
+            $('#mItemCode').val('');
+            $('#mItemPrice').val('');
+            $('#mdatepickerFrom').val('');
+            $('#mdatepickerTo').val('');
+
+            $("label[for='merror']").html('');
+            var row = $(ele).closest("tr");
+            var ItemId = row.find("[id=ItemId1]").text();
+            var ItemName = row.find("[id=ItemName1]").text();
+            var Unit = row.find("[id=UnitId1]").val();
+            var UnitName = row.find("[id=UnitName1]").text();
+            $("label[for='mItemId']").html(ItemId);
+            $("label[for='mItemName']").html(ItemName);
+            $("label[for='mPrimaryUnit']").html(Unit);
+            $("label[for='mUnitName']").html(UnitName);
+
+        }
+
+        function NewAddSave() {
+            flag = 0;
+            var strMessage = "";
+            var ItemId = $("label[for='mItemId']").text();
+            var ItemName = $("label[for='mItemName']").text();
+            var Unit = $("label[for='mPrimaryUnit']").text();
+            var ItemCode = $('#mItemCode').val();
+            var ItemPrice = $('#mItemPrice').val();
+            var fixedorvariable = 0;
+            if ($('#mIsFixed').is(":checked")) { fixedorvariable = 1 }
+            var DateEffectivefrom = $('#mdatepickerFrom').val();
+            var DateEffectiveto = $('#mdatepickerTo').val();
+            if (ItemPrice == "") {
+                strMessage += "Please enter item price.\n";
+            }
+            else if (ItemPrice <= 0) {
+                strMessage += "Item price should be greater than zero.\n";
+            }
+            if (DateEffectivefrom == "") {
+                strMessage += "Please enter date effective from.\n";
+            }
+            if (DateEffectiveto == "") {
+                strMessage += "Please enter date effective to.\n";
+            }
+
+            if (DateEffectivefrom != "" && DateEffectiveto != "") {
+                if (Date.parse(DateEffectivefrom) > Date.parse(DateEffectiveto)) {
+                    strMessage += "Date effective to should be greater than date effective froms.\n";
+                }
+            }
+
+            DateValidation(0, ItemId, DateEffectivefrom, DateEffectiveto)
+            if (flag == 1) {
+                strMessage += "Select date are conflict with other date for same item code";
+            }
+            if (strMessage != "") {
+                $("label[for='merror']").html(strMessage);
+                return false;
+            }
+
+
+
+            else {
+                $("#LockPanel").addClass("LockOn");
+                var obj = {};
+                obj.Id = 0;
+                obj.itemId = ItemId;
+                obj.ItemName = ItemName;
+                obj.ItemCode = ItemCode == "" ? 0 : ItemCode;
+                obj.ItemPrice = ItemPrice;
+                obj.effectiveDate = DateEffectivefrom;
+                obj.effectiveDateTo = DateEffectiveto;
+                obj.VendorId = $("#ddlVendor").val();
+                obj.Unit = Unit;
+                obj.fixedorvariable = fixedorvariable;
+                obj.status = 1;
+                $.ajax({
+                    type: "POST",
+                    url: "/VendorItemCatalog/AddNewItems",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+                        if (response.success) {
+                            alert('Item Submit Successfully');
+                        }
+                        $('#mItemCode').val('');
+                        $('#mItemPrice').val('');
+                        $('#mdatepickerFrom').val('');
+                        $('#mdatepickerTo').val('');                       
+                        $('#modal-default').modal('toggle');
+                        GetMappedItems();
+                        //GetItems();
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+                return false;
+
+            }
+        }
+        var flag;
+        function DateValidation(Id, ItemId, FromDate, ToDate) {
+            $('#tblMappedResult tr').each(function (i, r) {
+                if (i > 0) {
+                    var vId = $.trim($(this).children("td:eq(0)").text());
+                    var vItemId = $.trim($(this).children("td:eq(1)").text());
+                    var Fdate = $(this).find("td").eq(7).find(":text").val();
+                    var Tdate = $(this).find("td").eq(8).find(":text").val();
+
+                    if (ItemId == vItemId && Id != vId) {
+                        if (((Date.parse(FromDate) < Date.parse(Fdate)) && (Date.parse(ToDate) < Date.parse(Fdate))) || ((Date.parse(FromDate) > Date.parse(Tdate)) && (Date.parse(ToDate) > Date.parse(Tdate)))) {
+
+                        }
+                        else {
+                            flag = 1;
+
+                        }
+                    }
+
+                }
+
+            })
+        }
+
+        function save(ele) {
+            var strMessage = "";
+            var value = $(ele).attr("id");
+            var currentIdx = $(ele).closest('tr').index();
+            var row = $(ele).closest("tr");
+            var ItemId = row.find("[id=ItemId]").text();
+            var ItemName = row.find("[id=ItemName]").text();
+            var ItemCode = row.find("[id=ItemCode]").val();
+            var ItemPrice = row.find("[id=ItemPrice]").val();
+            var DateEffective = row.find("[id=datepicker]").val();
+            row.find("[id=ItemCode]").css('border', '');
+            row.find("[id=ItemPrice]").css('border', '');
+            row.find("[id=DateEffective]").css('border', '');
+            if (ItemPrice == "") {
+                strMessage += "Please enter item price.\n";
+                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            else if (ItemPrice <= 0) {
+                strMessage += "Item price should be greater than zero.\n";
+                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+            }
+            if (DateEffective == "") {
+                strMessage += "Please enter date effective.\n";
+                row.find("[id=datepicker]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+            }
+            if (strMessage != "") {
+                alert(strMessage);
+                return false;
+            }
+            else {
+                $("#LockPanel").addClass("LockOn");
+                var obj = {};
+                obj.itemId = ItemId;
+                obj.ItemName = ItemName;
+                obj.ItemCode = ItemCode == "" ? 0 : ItemCode;
+                obj.ItemPrice = ItemPrice;
+                obj.effectiveDate = DateEffective;
+                obj.status = 0;
+                $.ajax({
+                    type: "POST",
+                    url: "/VendorItemCatalog/AddItems",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alert('Item Save Successfully')
+                        }
+
+                        $("#LockPanel").removeClass("LockOn");
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+                return false;
+
+            }
+
+        }
+
+        function checkAll(ele) {
+            var checkboxes = document.getElementsByClassName('chk');
+            if (ele.checked) {
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = true;
+                    }
+                }
+            } else {
+                for (var i = 0; i < checkboxes.length; i++) {
+
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = false;
+                    }
+                }
+            }
+        }
+
+        function ListGroup() {
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/GetMinorGroups",
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var list;
+                    list = response;
+                    $('#ddlItemGroup').empty();
+                    $('#ddlItemGroup').append(
+                        $("<option></option>")
+                            .attr("value", 0)
+                            .text("Select Item Group")
+                    );
+                    $.each(list, function (key, value) {
+                        $('#ddlItemGroup').append(
+                            $("<option></option>")
+                                .attr("value", value.Value)
+                                .text(value.Text)
+                        );
+                    });
+                    $("#ddlItemGroup").prop('class', 'selectpicker form-control');
+                    $("#ddlItemGroup").attr('data-live-search', true);
+                    $('#ddlItemGroup').selectpicker();
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+            $("#Tabs").hide();
+            $("#Tab2").click(function () {
+                $("#LockPanel").addClass("LockOn");
+                GetMappedItems();
+
+            })
+
+            $("#ddlVendor").change(function () {
+                $("#tblResult").empty();
+                $("#tblMappedResult").empty();
+                $("#Tabs").hide();
+            })
+            $("#ddlItemGroup").change(function () {
+                $("#tblResult").empty();
+                $("#tblMappedResult").empty();
+                $("#Tabs").hide();
+            })
+            vendors();
+            ListGroup();
+            $('body').on('focus', ".mytablecell", function () {
+                $(this).datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'mm/dd/yy'
+                });
+            });
+            $(".mytablecell").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy'
+            });
+
+            $("#btnSearch").click(function () {
+                var strMessage = "";
+                if ($('#ddlVendor').val() == "0") {
+                    strMessage += "Please select Vendor.\n";
+                    $("#ddlVendor").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else
+                    $("#ddlVendor").css('border', '');
+
+
+                if ($('#ddlItemGroup').val() == "0") {
+                    strMessage += "Please select Item Group.\n";
+                    $("#ddlItemGroup").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else
+                    $("#ddlItemGroup").css('border', '');
+                if (strMessage != "") {
+                    alert(strMessage);
+                    return false;
+                }
+                else {
+                    $("#LockPanel").addClass("LockOn");
+                    $("#Tabs").show();
+                    GetItems();
+
+                    return false;
+
+                }
+
+
+            });
+        });
+    </script>
+
+</section>

@@ -1,0 +1,514 @@
+﻿@model InventoryPizzaExpress.v_mi_def
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>v_mi_def</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.storeid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.storeid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.obj_num)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.obj_num)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name_2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name_2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.maj_grp_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.maj_grp_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fam_grp_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fam_grp_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_grp_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_grp_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.price_grp_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.price_grp_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.slu_priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.slu_priority)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nlu_grp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nlu_grp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nlu_num)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nlu_num)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.key_num)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.key_num)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.icon_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.icon_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_mi31_chk_mi_avail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_mi31_chk_mi_avail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_mi44_no_edit_in_mgr_proc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_mi44_no_edit_in_mgr_proc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_item_is_the_no_modifier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_item_is_the_no_modifier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_lite_mi_dirty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_lite_mi_dirty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_rsvd01)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_rsvd01)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_rsvd02)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_rsvd02)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_rsvd03)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_rsvd03)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_rsvd04)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_rsvd04)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_type_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_type_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cond_grp_mem_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cond_grp_mem_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cond_req)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cond_req)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cond_allowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cond_allowed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.crs_mem_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.crs_mem_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.crs_sel_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.crs_sel_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mlvl_class_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mlvl_class_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prn_def_class_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prn_def_class_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product_seq_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product_seq_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product_seq_2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product_seq_2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product_seq_3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product_seq_3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product_seq_4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product_seq_4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comm_amt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comm_amt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comm_pcnt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comm_pcnt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cross_ref1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cross_ref1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cross_ref2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cross_ref2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_flags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_flags)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ob_workstation_only)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ob_workstation_only)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu2_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu2_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prep_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prep_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.external_type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.external_type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.topping_type_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.topping_type_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.topping_modifier_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.topping_modifier_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.last_updated_by)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.last_updated_by)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.last_updated_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.last_updated_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.multi_user_access_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.multi_user_access_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.build_screen_style_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.build_screen_style_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hht_build_screen_style_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hht_build_screen_style_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prefix_override_count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prefix_override_count)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prefix_override_level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prefix_override_level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu3_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu3_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu4_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu4_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu5_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu5_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu6_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu6_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu7_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu7_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mi_slu8_seq)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mi_slu8_seq)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.master_item_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.master_item_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecipeId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.v_mi_def_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

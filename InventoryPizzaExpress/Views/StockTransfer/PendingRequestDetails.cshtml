@@ -1,0 +1,262 @@
+﻿@model InventoryPizzaExpress.Models.Stock.StockRequestModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<section class="content">
+    <style>
+        .LockOff {
+            display: none;
+            visibility: hidden;
+        }
+
+        .modal-dialog {
+            width: 70%;
+        }
+
+        .LockOn {
+            display: block;
+            visibility: visible;
+            position: fixed;
+            z-index: 999;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: #FDFDFD;
+            height: 100%;
+            text-align: center;
+            padding-top: 150px;
+            filter: alpha(opacity=75);
+            opacity: 0.75;
+        }
+
+        .form-horizontal .control-label {
+            padding-left: 0px;
+        }
+    </style>
+    <div class="form-horizontal">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.TransferNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.TransferNo, new { htmlAttributes = new { @class = "form-control", @ReadOnly = "true" } })
+
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.SourceStore, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.SourceStore, new { htmlAttributes = new { @class = "form-control", @ReadOnly = "true" } })
+
+                    </div>
+                    <div class="hidden">
+                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.SourceStoreId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.TragetStoreId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.TragetStore, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.TragetStore, new { htmlAttributes = new { @class = "form-control", @ReadOnly = "true" } })
+
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @{
+                            string parameterValue = Model.Date.ToShortDateString();
+                        }
+                        @Html.EditorFor(model => parameterValue, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Reference, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        
+                        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <table id="tblResult" class="table"></table>
+                    </div>
+                </div>
+                <div class="modal fade" id="modal-default" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title">Add Items</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+
+                                        <div class="col-md-12" style="max-height:500px;overflow-y:auto;">
+                                            <table id="tblMappedResult" class="table"></table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="Save">Add Items</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+
+                    <div class="col-md-2">
+                        <label>
+                            Total Quantity
+                        </label>
+
+                        <input type="text" class="form-control totalqty" value="" name="" readonly />
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="glow-alert" style="display: none;"></div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+        $("#btnAdItem").click(function () {
+            GetItems();
+            $('#modal-default').modal('show');
+
+        })
+
+  
+        function GetMappedItems() {
+
+            var obj = {};
+            obj.Req = $('#Id').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/StockReq/GetMappedItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+                         
+
+                            tr.append("<td style='text-align: left;'><label id='Id1'  class='hidden'>" + model[i].Id + "</label><label id='ItemId1'>" + model[i].ItemId + "</label></td>");
+                            tr.append("<td><label id='ItemName1'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId1'  min='1000' step='1' value='" + model[i].UnitId + "'  class='form-control hidden'/><label id='UnitName1'>" + model[i].UnitName + "</label></td>");
+                            tr.append("<td style='text-align: left;'>  <input type='number' min='1' id='ItemQty1'  onkeypress='return isNumberKey(event,this)'  style='width:100px;' name='qty' class='form-control qty'   value='" + model[i].Qty + "'  disabled/></td>");
+
+
+                            $('#tblResult').append(tr);
+                            var table = document.getElementById("tblResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                           
+
+                                var cellItemCode = row.insertCell(0);
+                                var cellItemName = row.insertCell(1);
+                                var cellUnit = row.insertCell(2);
+                                var cellItemQty = row.insertCell(3);
+
+
+
+                                // Add some bold text in the new cell:
+                               
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellUnit.innerHTML = "<b>Unit</b>";
+                                cellItemQty.innerHTML = "<b>ReqQty</b>";
+                            }
+
+                        }
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        function isNumberKey(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
+                return false;
+            else {
+                var len = $(element).val().length;
+                var index = $(element).val().indexOf('.');
+                if (index > 0 && charCode == 46) {
+                    return false;
+                }
+                if (index > 0) {
+                    var CharAfterdot = (len + 1) - index;
+                    if (CharAfterdot > 4) {
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+        }
+        function alertGlow(msg) {
+            $(".glow-alert").html(msg);
+            $(".glow-alert").delay(200).fadeIn().delay(4000).fadeOut();
+        };
+
+        $(document).ready(function () {
+            $('#parameterValue').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy'
+            }).datepicker("setDate", new Date());
+
+            GetMappedItems();
+        });
+    </script>
+</section>

@@ -1,0 +1,747 @@
+﻿@model InventoryPizzaExpress.I_WasteDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<section class="content">
+    <div>
+
+        <dl class="dl-horizontal hidden">
+            <dt>
+                @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayNameFor(model => model.WasteGroupId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WasteGroupId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Reference)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Reference)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WasteNo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WasteNo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedOn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedOn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedOn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Store_Details.storename)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Store_Details.storename)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-3">
+
+                        <div><b><span>Store</span></b></div>
+
+                        @Html.DropDownList("StoreId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger" })
+
+
+                    </div>
+                    <div class="col-md-3">
+
+                        <div><b><span>Waste Group</span></b></div>
+
+                        @Html.DropDownList("WasteGroupId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.WasteGroupId, "", new { @class = "text-danger" })
+
+
+                    </div>
+                    <div class="col-md-3">
+
+                        <b><span>Date</span></b>
+                        @{
+                            string parameterValue = Model.Date.ToShortDateString();
+                        }
+                        @Html.EditorFor(model => parameterValue, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <b><span>Ref</span></b>
+
+                        @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.Reference, "", new { @class = "text-danger" })
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="box box-primary">
+
+                    <div class="box-body" style="overflow:auto;max-height:400px">
+                        <table class="wp-list-table table" id="tblResult"></table>
+                    </div>
+                    <div class="modal fade" id="modal-default" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title">Add Items</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="row">
+
+                                            <div class="col-md-12" style="max-height:500px;overflow-y:auto;">
+                                                <table id="tblMappedResult" class="table"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="Save">Add Items</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @{
+                        var trClass = (Model.Status == 1) ? "" : "hide";
+                    }
+                    
+                        <div class="col-md-12 form-horizontal @trClass">
+
+                            <input type="submit" value="Add Items" class="btn btn-default open-AddBookDialog" data-toggle="modal" id="btnAdItem" />
+                            <button id="btnSavewaste" class="btn btn-default">Save</button>
+                            <button id="btnbookwaste" class="btn btn-default">Book</button>
+                            <button id="btnDelete" class="btn btn-default">Delete</button>
+                            @Html.ActionLink("Edit Waste", "Edit", new { id = Model.Id }, new { @class = "btn btn-default" })
+
+                            @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+                        </div>
+
+</div>
+            </div>
+            </div>
+        </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <div class="glow-alert" style="display: none;"></div>
+
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+        $("#btnAdItem").click(function () {
+            GetItems();
+            $('#modal-default').modal('show');
+
+        })
+
+        function GetItems() {
+
+            var obj = {};
+            obj.Store = $('#StoreId').val();;
+
+            $.ajax({
+                type: "POST",
+                url: "/StockReq/GetItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblMappedResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+                            tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk'  /></td>");
+
+                            tr.append("<td style='text-align: left;'><label id='ItemId'>" + model[i].ItemId + "</label></td>");
+                            tr.append("<td><label id='ItemName'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId'  min='1000' step='1' value='" + model[i].UnitId + "'  class='form-control hidden'/><label id='UnitName'>" + model[i].UnitName + "</label></td>");
+                            tr.append("<td style='text-align: left;'>  <input type='number' min='1' id='ItemQty'  onkeypress='return isNumberKey(event,this)'  style='width:100px;' name='qty' class='form-control qty'  value='' /></td>");
+
+
+                            $('#tblMappedResult').append(tr);
+                            var table = document.getElementById("tblMappedResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                var cellSelect = row.insertCell(0);
+
+                                var cellItemCode = row.insertCell(1);
+                                var cellItemName = row.insertCell(2);
+                                var cellUnit = row.insertCell(3);
+                                var cellItemQty = row.insertCell(4);
+
+
+
+                                // Add some bold text in the new cell:
+                                cellSelect.innerHTML = "<b>Select</b>";
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellUnit.innerHTML = "<b>Unit</b>";
+                                cellItemQty.innerHTML = "<b>Qty</b>";
+
+                            }
+
+
+                        }
+
+
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alertGlow(response.responseText);
+                },
+                error: function (response) {
+                    alertGlow(response.responseText);
+                }
+            });
+
+        }
+        function GetMappedItems() {
+
+            var obj = {};
+            obj.Req = $('#Id').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/WasteDetails/GetMappedItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+                            if (model[i].Status == 1) {
+                                tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk' checked/></td>");
+
+                            }
+                            else
+                                tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk'  disabled/></td>");
+                            tr.append("<td style='text-align: left;'><label id='Id1'  class='hidden'>" + model[i].Id + "</label><label id='ItemId1'>" + model[i].ItemId + "</label></td>");
+                            tr.append("<td><label id='ItemName1'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId1'  min='1000' step='1' value='" + model[i].UnitId + "'  class='form-control hidden'/><label id='UnitName1'>" + model[i].UnitName + "</label></td>");
+                            tr.append("<td style='text-align: left;'>  <input type='number' min='1' id='ItemQty1'  onkeypress='return isNumberKey(event,this)'  style='width:100px;' name='qty' class='form-control qty'   value='" + model[i].Qty + "'  /></td>");
+                            if (model[i].Reason == null)
+                                model[i].Reason = '';
+                            tr.append("<td style='text-align: left;'>  <input type='text' id='Reason'   style='width:100px;' name='Reason' class='form-control qty'   value='" + model[i].Reason  + "'  /></td>");
+                            tr.append("<td style='text-align: left;'>  <label id='price'   style='width:100px;'>" + model[i].Cost + "</label></td>");
+                            tr.append("<td style='text-align: left;'>  <label id='Total'   style='width:100px;'>" + model[i].Total + "</label></td>");
+                            $('#tblResult').append(tr);
+                            var table = document.getElementById("tblResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                var cellSelect = row.insertCell(0);
+
+                                var cellItemCode = row.insertCell(1);
+                                var cellItemName = row.insertCell(2);
+                                var cellUnit = row.insertCell(3);
+                                var cellItemQty = row.insertCell(4);
+                                var cellReason = row.insertCell(5);
+                                var cellCost = row.insertCell(6);
+                                var cellTotal = row.insertCell(7);
+
+
+                                // Add some bold text in the new cell:
+                                cellSelect.innerHTML = "<b>Select</b>";
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellUnit.innerHTML = "<b>Unit</b>";
+                                cellItemQty.innerHTML = "<b>Qty</b>";
+                                cellReason.innerHTML = "<b>Reason</b>";
+                                cellCost.innerHTML = "<b>Cost</b>";
+                                cellTotal.innerHTML = "<b>Total</b>";
+                            }
+
+                        }
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        function isNumberKey(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
+                return false;
+            else {
+                var len = $(element).val().length;
+                var index = $(element).val().indexOf('.');
+                if (index > 0 && charCode == 46) {
+                    return false;
+                }
+                if (index > 0) {
+                    var CharAfterdot = (len + 1) - index;
+                    if (CharAfterdot > 4) {
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+        }
+        function alertGlow(msg) {
+            $(".glow-alert").html(msg);
+            $(".glow-alert").delay(200).fadeIn().delay(4000).fadeOut();
+        };
+
+        $("#btnDelete").click(function () {
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alertGlow('Please select any item to delete');
+                return false;
+            }
+            $('#tblResult tbody tr').each(function () {
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+                var Id = row.find("#Id1").text();
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    var id = Number(Id);
+                    objItems.push(id)
+                }
+            });
+            if (objItems.length > 0) {
+
+                var data1 = { 'id': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/WasteDetails/DeleteConfirmed",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+                        alertGlow('Item removed successfully');
+                        GetMappedItems();
+                    },
+                    failure: function (response) {
+                        alertGlow(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alertGlow(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+
+        })
+
+        $('#Save').click(function () {
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblMappedResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alertGlow('Please select any item to add');
+                return false;
+            }
+
+
+            $('#tblMappedResult tbody tr').each(function () {
+
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+                var ReqNo = $("#Id").val();
+                var UnitId = row.find("#UnitId").val();
+                var UnitName = row.find("#UnitName").text();
+                var ItemId = row.find("#ItemId").text();
+                var ItemName = row.find("#ItemName").text();
+                var Qty = row.find("#ItemQty").val();
+                if (row.find("[id=chk]").prop('checked') == true) {
+
+                    if (Qty == "") {
+                        strMessage += "Please enter item qty.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    else if (Number(Qty) <= 0) {
+                        strMessage += "Item qty should be greater than zero.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    if (strMessage != "") {
+                        if (strMessage != "") {
+                            alertGlow(strMessage);
+                            return false;
+                        }
+                    }
+                    else {
+                        $("#LockPanel").addClass("LockOn");
+                        objItems.push({ 'ItemId': ItemId, 'ItemName': ItemName, 'Qty': Qty, 'UnitId': UnitId, 'UnitName': UnitName, 'WasteNo': ReqNo, 'Status': 1 })
+                    }
+                }
+
+
+            });
+
+            if (strMessage == "") {
+                var data1 = { 'WasteItems': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/WasteDetails/AddItems",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alertGlow('Item added successfully');
+                            GetMappedItems();
+                            $('#modal-default').modal('hide');
+                        }
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+
+
+
+        })
+
+        $("#btnbookwaste").click(function () {
+         
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alertGlow('Please select any item to add');
+                return false;
+            }
+
+
+            $('#tblResult tbody tr').each(function () {
+
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+                var ReqNo = $("#Id").val();
+                var UnitId = row.find("#UnitId1").val();
+                var UnitName = row.find("#UnitName1").text();
+                var ItemId = row.find("#ItemId1").text();
+                var ItemName = row.find("#ItemName1").text();
+                var Qty = row.find("#ItemQty1").val();
+                if (row.find("[id=chk]").prop('checked') == true) {
+
+                    if (Qty == "") {
+                        strMessage += "Please enter item qty.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    else if (Number(Qty) <= 0) {
+                        strMessage += "Item qty should be greater than zero.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    if (strMessage != "") {
+                        if (strMessage != "") {
+                            alertGlow(strMessage);
+                            return false;
+                        }
+                    }
+                    else {
+                        $("#LockPanel").addClass("LockOn");
+                        objItems.push({ 'ItemId': ItemId, 'ItemName': ItemName, 'Qty': Qty, 'UnitId': UnitId, 'UnitName': UnitName, 'WasteNo': ReqNo,'Status':2 })
+                    }
+                }
+
+
+            });
+
+            if (strMessage == "") {
+                var data1 = { 'WasteItems': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/WasteDetails/AddItems",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alertGlow('Item booked successfully');
+                            GetMappedItems();
+                            $('#modal-default').modal('hide');
+                            window.location.href = 'Index';
+                        }
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+        })
+        $("#btnSavewaste").click(function () {
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alertGlow('Please select any item to add');
+                return false;
+            }
+
+
+            $('#tblResult tbody tr').each(function () {
+
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+                var ReqNo = $("#Id").val();
+                var UnitId = row.find("#UnitId1").val();
+                var UnitName = row.find("#UnitName1").text();
+                var ItemId = row.find("#ItemId1").text();
+                var ItemName = row.find("#ItemName1").text();
+                var Qty = row.find("#ItemQty1").val();
+                if (row.find("[id=chk]").prop('checked') == true) {
+
+                    if (Qty == "") {
+                        strMessage += "Please enter item qty.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    else if (Number(Qty) <= 0) {
+                        strMessage += "Item qty should be greater than zero.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    if (strMessage != "") {
+                        if (strMessage != "") {
+                            alertGlow(strMessage);
+                            return false;
+                        }
+                    }
+                    else {
+                        $("#LockPanel").addClass("LockOn");
+                        objItems.push({ 'ItemId': ItemId, 'ItemName': ItemName, 'Qty': Qty, 'UnitId': UnitId, 'UnitName': UnitName, 'WasteNo': ReqNo, 'Status': 1 })
+                    }
+                }
+
+
+            });
+
+            if (strMessage == "") {
+                var data1 = { 'WasteItems': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/WasteDetails/AddItems",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alertGlow('Item added successfully');
+                            GetMappedItems();
+                            $('#modal-default').modal('hide');
+                        }
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+        })
+        $(document).ready(function () {
+          
+           GetMappedItems();
+        });
+    </script>
+</section>

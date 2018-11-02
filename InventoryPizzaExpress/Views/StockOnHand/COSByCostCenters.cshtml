@@ -1,0 +1,104 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.Stock.COSCostCenter>
+<section class="content">
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow-x:auto;">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StoreName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OpeningValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Receipts)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Transfers)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Production)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Closing)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ActualCost)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ActualCostPec)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TheoCost)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TheoCostPec)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Variace)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VariacePec)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NetSales)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SalesDays)
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StoreName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OpeningValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Receipts)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Transfers)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Production)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Closing)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActualCost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActualCostPec)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TheoCost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TheoCostPec)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Variace)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VariacePec)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NetSales)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItems => item.SalesDays)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</section>

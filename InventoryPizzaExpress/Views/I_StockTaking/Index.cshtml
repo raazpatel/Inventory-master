@@ -1,0 +1,110 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content">
+    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-default" })
+   
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow-x:auto; ">
+            <table id="tblResult" class="table table-bordered table-condensed table-hover table-striped"></table>
+            </div>
+        </div>
+            @Scripts.Render("~/bundles/jquery")
+
+
+            <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+            <script src="~/Scripts/jquery.dataTables.min.js"></script>
+            <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+            <script>
+                function GetStockTaking() {
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/I_stockTaking/GetItems",
+                        data: '',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response, status) {
+                            var model;
+                            model = response;
+                            $("#tblResult tbody").empty();
+                            if (response.length > 0)
+                                for (var i = 0; i < model.length; i++) {
+                                    tr = $('<tr/>');
+
+                                    tr.append("<td style='text-align: center;'><a href='/I_StockTaking/Details?id=" + model[i].Id + "'>" + model[i].Count + "</a></td>");
+                                    //tr.append("<td style='text-align: center;'>" + model[i].Id + "</td>");
+                                    tr.append("<td> " + model[i].StoreName + "</td>");
+                                    tr.append("<td>" + model[i].Date + "</td>");
+                                    tr.append("<td>" + model[i].InventoryTime + "</td>");
+                                    tr.append("<td>" + model[i].ClosingMethod + "</td>");
+                                    tr.append("<td>" + model[i].CreatedBy + "</td>");
+                                    tr.append("<td>" + model[i].CreatedOn + "</td>");
+                                    //tr.append("<td>" + model[i].ModifiedBy + "</td>");
+                                    //tr.append("<td>" + model[i].Modifiedon + "</td>");
+
+                                    $('#tblResult').append(tr);
+                                    var table = document.getElementById("tblResult");
+                                    if (!table.tHead) {
+                                        var header = table.createTHead();
+
+                                        // Create an empty <tr> element and add it to the first position of <thead>:
+                                        var row = header.insertRow(0);
+
+                                        // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                        //  var cellSelect = row.insertCell(0);
+                                        var cellId = row.insertCell(0);
+                                        var cellStoreName = row.insertCell(1);
+                                        var cellDate = row.insertCell(2);
+                                        var cellInventoryTime = row.insertCell(3);
+                                        var cellClosingMethod = row.insertCell(4);
+                                        var cellCreatedBy = row.insertCell(5);
+                                        var cellCreatedOn = row.insertCell(6);
+                                        //var cellModifiedBy = row.insertCell(7);
+                                        //var cellModifiedOn= row.insertCell(8);
+
+                                        // Add some bold text in the new cell:
+                                        //   cellSelect.innerHTML = "<b style='text-align: center;'><input type='checkbox' onchange='checkAll(this)' name='chk[]'/></b>";
+
+                                        cellId.innerHTML = "<b>InventoryName</b>";
+                                        cellStoreName.innerHTML = "<b>StoreName</b>";
+                                        cellDate.innerHTML = "<b>Date</b>";
+                                        cellInventoryTime.innerHTML = "<b>Inventory Time</b>";
+                                        cellClosingMethod.innerHTML = "<b>Closing Method</b>";
+                                        cellCreatedBy.innerHTML = "<b>CreatedBy</b>";
+                                        cellCreatedOn.innerHTML = "<b>CreatedOn</b>";
+                                        //cellModifiedBy.innerHTML = "<b>ModifiedBy</b>";
+                                        //cellModifiedOn.innerHTML = "<b>ModifiedOn</b>";
+
+                                    }
+
+                                   
+
+
+                                }
+                            $("#LockPanel").removeClass("LockOn");
+
+
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+
+                } $(document).ready(function () {
+                    GetStockTaking();
+
+                });
+            </script>
+</section>

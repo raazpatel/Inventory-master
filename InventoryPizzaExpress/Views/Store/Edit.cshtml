@@ -1,0 +1,90 @@
+﻿@model InventoryPizzaExpress.Models.Store.StoreDetails
+
+@{
+    ViewBag.Title = "Edit";
+}
+<section class="content">
+    <h2>Edit</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Cost center Detail</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.storeId)
+            @Html.HiddenFor(model => model.storename)
+            <div class="form-group">
+                <span class="control-label col-md-2">Cost center</span>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.storename)
+                    @Html.ValidationMessageFor(model => model.storename, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="control-label col-md-2">Address</span>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="control-label col-md-2">City</span>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="control-label col-md-2">State</span>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="control-label col-md-2">Email</span>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="control-label col-md-2">Phone No.</span>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="control-label col-md-2"> Manager</span>
+
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.manager, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.manager, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</section>

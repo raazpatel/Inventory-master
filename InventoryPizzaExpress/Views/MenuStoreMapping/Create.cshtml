@@ -1,0 +1,69 @@
+﻿@model InventoryPizzaExpress.Models.Mapping.MenuStoreMapping
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<section class="content">
+    <div id="myLoadingElement" class="hidden">
+        <div class="overlay" style="display: block; position: fixed; background-color: white; z-index: 2147483647 !important; opacity: 0.9; overflow: hidden; text-align: center; height: 100%; width: 100%; padding-top: 15%; padding-right: 10%">
+            <i class="fa fa-refresh fa-4x fa-spin"></i>
+        </div>
+    </div>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal col-lg-6">
+        <h4>StoreDetail</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SourceStore, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownList("SourceStore", null, htmlAttributes: new { @class = "form-control" })
+              
+                @Html.ValidationMessageFor(model => model.SourceStore, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TargetStore, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownList("TargetStore", null, htmlAttributes: new { @class = "form-control" })
+               
+                @Html.ValidationMessageFor(model => model.TargetStore, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                <input type="submit" value="Map" class="btn btn-default"  onclick="return DisplayProgressMessage(this, 'Saving...');" />
+            </div>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+}
+
+  
+    
+@section Scripts {
+  
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        function DisplayProgressMessage(ctl, msg) {
+           var value = confirm('Do you want to overrite the mapping?');
+           if (value == true)
+            $("#myLoadingElement").removeClass("hidden");
+           return value;
+  }
+    </script>
+}
+    
+</section>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e76ed4abe9944bb0bb6c52508246971d" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="InventoryModuleModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.AspNetRole" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.AspNetUser" Width="1.5" PointX="10" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_InventoryItemMaster" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_ItemMater" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_MenuItems" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_UnitMaster" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="InventoryModuleModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryModuleModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_InventoryItemMaster_I_ItemMater2" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_InventoryItemMaster_I_ItemMater3" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_InventoryItemMaster_I_UnitMaster1" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_InventoryItemMaster_I_UnitMaster2" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_InventoryItemMaster_I_UnitMaster3" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryModuleModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="InventoryModuleModel.v_mi_def" Width="1.5" PointX="10.375" PointY="8.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.mi_def" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_StockTaking" Width="1.5" PointX="7.625" PointY="0.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_StockTakingItemCatalog" Width="1.5" PointX="10.75" PointY="1.25" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_StockTakingItemCatalog_I_StockTaking" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_RecievingItemCatalog" Width="1.5" PointX="14.375" PointY="5.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_StockInventory" Width="1.5" PointX="14.375" PointY="8.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_StockTranferDetails" Width="1.5" PointX="16.375" PointY="0.75" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_StockTranferDetails_I_StockTranferDetails" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_OrderDetails" Width="1.5" PointX="0.75" PointY="13.875" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_OrderItemCatalog" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_VenderMaster" Width="1.5" PointX="12.375" PointY="19.375" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_OrderItemCatalog_I_OrderDetails" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_OrderItemCatalog_I_UnitMaster" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_StockReqDetails" Width="1.5" PointX="14.375" PointY="15.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_StockRequestItemCatalog" Width="1.5" PointX="3.375" PointY="16.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_StockTransferItemCatalog" Width="1.5" PointX="16.375" PointY="5.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_Recipe" Width="1.5" PointX="16.375" PointY="10.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_RecipeDetails" Width="1.5" PointX="18.625" PointY="6.25" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_RecipeDetails_I_InventoryItemMaster" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_RecipeDetails_I_MenuItems" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_RecipeDetails_I_Recipe" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_RecipeDetails_I_UnitMaster" />
+        <EntityTypeShape EntityType="InventoryModuleModel.Store_Details" Width="1.5" PointX="0.75" PointY="7.75" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_OrderDetails_Store_Details" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_StockTaking_Store_Details" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_WasteDetails" Width="1.5" PointX="3" PointY="21.625" />
+        <AssociationConnector Association="InventoryModuleModel.FK_I_WasteDetails_Store_Details" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_WasteItemCatalog" Width="1.5" PointX="16.375" PointY="14.75" />
+        <EntityTypeShape EntityType="InventoryModuleModel.I_VendorItemCatalog" Width="1.5" PointX="18.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

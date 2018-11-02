@@ -1,0 +1,26 @@
+﻿@model InventoryPizzaExpress.StoreDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StoreDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.storename)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.storename)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.storeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

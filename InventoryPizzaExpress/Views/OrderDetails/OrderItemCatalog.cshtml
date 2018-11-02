@@ -1,0 +1,703 @@
+﻿@model InventoryPizzaExpress.I_OrderDetails
+
+@{
+    ViewBag.Title = "OrderItemCatalog";
+}
+
+<section class="content">
+    <style>
+        .LockOff {
+            display: none;
+            visibility: hidden;
+        }
+
+        .modal-dialog {
+            width: 70%;
+        }
+
+        .LockOn {
+            display: block;
+            visibility: visible;
+            position: fixed;
+            z-index: 999;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: #FDFDFD;
+            height: 100%;
+            text-align: center;
+            padding-top: 150px;
+            filter: alpha(opacity=75);
+            opacity: 0.75;
+        }
+
+        .form-horizontal .control-label {
+            padding-left: 0px;
+        }
+    </style>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-3">
+
+                           <div>@Html.LabelFor(model => model.StoreId, "StoreName", htmlAttributes: new { @class = "control-label col-md-3" })</div>
+
+                            @Html.DropDownList("StoreId", null, htmlAttributes: new { @class = "form-control" , @disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="col-md-3">
+
+                            @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @{
+                                string parameterValue = Model.DeliveryDate.ToShortDateString();
+                            }
+                            @Html.EditorFor(model => parameterValue, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            @Html.LabelFor(model => model.Reference, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                            @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Reference, "", new { @class = "text-danger" })
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        @{
+                            var trClass = (Model.Status == 3 || Model.Status == 1) ? "hide" : "";
+                        }
+                        <div class="col-md-10">
+                            <input type="submit" value="Add Items" class="btn btn-default open-AddBookDialog @trClass" data-toggle="modal" data-target="#modal-default" id="btnAdItem" />
+                            @*<input type="submit" value="Delete Items" class="btn btn-default @trClass" />
+
+                            <input type="submit" value="Save" class="btn btn-default @trClass" />*@
+                            <input type="submit" id="btnorder" value="Book" class="btn btn-default @trClass" />
+                            @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table id="tblResult" class="table"></table>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modal-default" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title">Add Items</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-4">Selected store</div>
+                                            <div class="col-md-12">
+                                                <label for="Store"></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">Select Vendor</div>
+                                            <div class="col-md-12">
+                                                <select id="ddlvendor"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">Select Items to Map</div>
+                                            <div class="col-md-12" style="max-height:500px;overflow-y:auto;">
+                                                <table id="tblMappedResult" class="table"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="Save">Add Items</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                           <label>Total Amount</label> 
+
+                            <input type="text" class="form-control grdtot" value="" name="" readonly />
+                        </div>
+                        <div class="col-md-2">
+                            <label>
+                                Total Quantity</label>
+
+                                <input type="text" class="form-control totalqty" value="" name="" readonly />
+</div>
+                        </div>
+                    </div>
+               
+            </div>
+        </div>
+    }
+    <div id="LockPanel" class="LockOff">
+        <h2>Please wait...</h2>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+   
+    <script>
+        function VendorDetails() {
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/GetVendors",
+                data: '',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var list;
+                    list = response;
+                    $('#ddlvendor').empty();
+                    $('#ddlvendor').append(
+                          $("<option></option>")
+                            .attr("value", 0)
+                            .text("Select Vendor")
+                      );
+                    $.each(list, function (key, value) {
+                        $('#ddlvendor').append(
+                            $("<option></option>")
+                              .attr("value", value.Value)
+                              .text(value.Text)
+                        );
+                    });
+                    $("#ddlvendor").prop('class', 'selectpicker form-control');
+                    $("#ddlvendor").attr('data-live-search', true);
+                    $('#ddlvendor').selectpicker();
+                    $("LockPanel").removeClass("LockOn")
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        function GetMappedItems() {
+
+            var obj = {};
+            obj.value = $('#ddlvendor').val();
+            obj.order = $('#Id').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/VendorItemCatalog/GetVendoeItemsOrder",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblMappedResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+                            tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk' /></td>");
+                            tr.append("<td style='text-align: center;'>" + model[i].Id + "</td>");
+                            tr.append("<td style='text-align: left;'><label id='ItemId'>" + model[i].ItemId + "</label></td>");
+                            tr.append("<td><label id='ItemName'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId'  min='1000' step='1' value='" + model[i].PrimaryUnitId + "'  class='form-control hidden'/> " + model[i].PrimaryUnit + "</td>");
+                            tr.append("<td style='text-align: left;'>  <input type='number' id='ItemQty' style='width:100px;' class='form-control price' /></td>");
+                            if (model[i].FixedorVariable == 1)
+                                tr.append("<td style='text-align: left;'> <input type='number' id='FixedorVariable'  min='1000' step='1' value='" + model[i].FixedorVariable + "'  class='form-control hidden'/><input type='number'style='width:100px;' id='ItemPrice' min='1' step='1' value='" + model[i].Price + "' class='form-control price' disabled /></td>");
+                            else
+                                tr.append("<td style='text-align: left;'> <input type='number' id='FixedorVariable'  min='1000' step='1' value='" + model[i].FixedorVariable + "'  class='form-control hidden'/>  <input type='number'style='width:100px;' id='ItemPrice' min='1' step='1' value='" + model[i].Price + "' class='form-control price' /></td>");
+
+
+                            $('#tblMappedResult').append(tr);
+                            var table = document.getElementById("tblMappedResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                  var cellSelect = row.insertCell(0);
+                                var cellId = row.insertCell(1);
+                                var cellItemCode = row.insertCell(2);
+                                var cellItemName = row.insertCell(3);
+                                var cellUnit = row.insertCell(4);
+                                var cellItemQty = row.insertCell(5);
+                                var cellItemPrice = row.insertCell(6);
+
+
+
+                                // Add some bold text in the new cell:
+                                 cellSelect.innerHTML = "<b>Select</b>";
+
+                                cellId.innerHTML = "<b>ID</b>";
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellUnit.innerHTML = "<b>Unit</b>";
+                                cellItemQty.innerHTML = "<b>Qty</b>";
+                                cellItemPrice.innerHTML = "<b>Price</b>";
+                            }
+                            var colToHide = $("#tblMappedResult tr th:nth-child(2), table tr td:nth-child(2)");
+
+                            colToHide.hide()
+
+                        }
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+        function AutoCalculate()
+        {
+            //*Auto Calculation*//
+            $(function () {
+                //debugger;
+                var $tblrows = $("#tblResult tbody tr");
+                $tblrows.each(function (index) {
+                    var $tblrow = $(this);
+                    $tblrow.find('.qty').on('keyup', function () {
+
+                        var qty = $tblrow.find("[name=qty]").val();
+                        var price = $tblrow.find("[name=itemprice]").val();
+                        var subTotal = parseInt(qty, 10) * parseFloat(price);
+
+                        if (!isNaN(subTotal)) {
+
+                            $tblrow.find('.subtot').val(subTotal.toFixed(2));
+                            var grandTotal = 0;
+                            var grandqty = 0;
+
+                            $(".subtot").each(function () {
+                                var stval = parseFloat($(this).val());
+                                grandTotal += isNaN(stval) ? 0 : stval;
+                            });
+                            $(".qty").each(function () {
+                                var stval = parseFloat($(this).val());
+                                grandqty += isNaN(stval) ? 0 : stval;
+                            });
+
+                            $('.grdtot').val(grandTotal.toFixed(2));
+                            $('.totalqty').val(grandqty.toFixed(2));
+                        }
+                    });
+                });
+            });
+            //End
+        }
+
+        function AutoCalculateonload() {
+            //*Auto Calculation*//
+                var $tblrows = $("#tblResult tbody tr");
+                $tblrows.each(function (index) {
+                    var $tblrow = $(this);
+                        var qty = $tblrow.find("[name=qty]").val();
+                        var price = $tblrow.find("[name=itemprice]").val();
+                        var subTotal = parseInt(qty, 10) * parseFloat(price);
+                        if (!isNaN(subTotal)) {
+
+                            $tblrow.find('.subtot').val(subTotal.toFixed(2));
+                            var grandTotal = 0;
+                            var grandqty = 0;
+
+                            $(".subtot").each(function () {
+                                var stval = parseFloat($(this).val());
+                                grandTotal += isNaN(stval) ? 0 : stval;
+                            });
+                            $(".qty").each(function () {
+                                var stval = parseFloat($(this).val());
+                                grandqty += isNaN(stval) ? 0 : stval;
+                            });
+
+                            $('.grdtot').val(grandTotal.toFixed(2));
+                            $('.totalqty').val(grandqty.toFixed(2));
+                        }
+
+                });
+
+            //End
+        }
+
+        function GetItems() {
+
+            var obj = {};
+            obj.value = $('#Id').val();;
+
+            $.ajax({
+                type: "POST",
+                url: "/OrderDetails/GetItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+                            if (model[i].Status == 1)
+                                tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk' disabled /></td>");
+                            else
+                                tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk' /></td>");
+
+                            tr.append("<td style='text-align: center;'>" + model[i].Id + "</td>");
+                            tr.append("<td style='text-align: left;'><label id='ItemId'>" + model[i].ItemsId + "</label></td>");
+                            tr.append("<td><label id='ItemName'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId'  min='1000' step='1' value='" + model[i].Unit + "'  class='form-control hidden'/> " + model[i].UnitName + "</td>");
+                            if(model[i].Status == 1)
+                                tr.append("<td style='text-align: left;'>  <input type='number' id='ItemQty' style='width:100px;' name='qty' class='form-control qty' disabled  value='" + model[i].Qty + "' /></td>");
+                            else
+                                tr.append("<td style='text-align: left;'>  <input type='number' id='ItemQty' style='width:100px;' name='qty' class='form-control qty'  value='" + model[i].Qty + "' /></td>");
+                            if (model[i].FixedorVariable == 1 || (model[i].Status == 0))
+                                tr.append("<td style='text-align: left;'><input type='number'style='width:100px;' id='ItemPrice' min='1' name='itemprice' step='1' value='" + model[i].Price + "' class='form-control price itemprice' disabled /></td>");
+                            else
+                                tr.append("<td style='text-align: left;'>  <input type='number'style='width:100px;' id='ItemPrice' min='1' name='itemprice' step='1' value='" + model[i].Price + "' class='form-control price itemprice' /></td>");
+                            tr.append("<td style='text-align: left;'><input type='number' id='FixedorVariable'  style='width:100px;'  value='" + model[i].FixedorVariable + "' class='form-control hidden'  /><input type='number' id='vendorid'  style='width:100px;'  value='" + model[i].VendorId + "' class='form-control hidden'  />  <input type='number' id='TotalSum' style='width:100px;' class='form-control subtot' disabled /></td>");
+
+                            $('#tblResult').append(tr);
+                            var table = document.getElementById("tblResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                var cellSelect = row.insertCell(0);
+                                var cellId = row.insertCell(1);
+                                var cellItemCode = row.insertCell(2);
+                                var cellItemName = row.insertCell(3);
+                                var cellUnit = row.insertCell(4);
+                                var cellItemQty = row.insertCell(5);
+                                var cellItemPrice = row.insertCell(6);
+                                var cellItemSum = row.insertCell(7);
+
+
+                                // Add some bold text in the new cell:
+                                cellSelect.innerHTML = "<b>Select</b>";
+
+                                cellId.innerHTML = "<b>ID</b>";
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellUnit.innerHTML = "<b>Unit</b>";
+                                cellItemQty.innerHTML = "<b>Qty</b>";
+                                cellItemPrice.innerHTML = "<b>Price</b>";
+                                cellItemSum.innerHTML = "<b>Sum</b>";
+                            }
+                            var colToHide = $("#tblResult tr th:nth-child(2), table tr td:nth-child(2)");
+
+                            colToHide.hide()
+
+                        }
+                        AutoCalculate();
+                        AutoCalculateonload();
+                 
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+
+            $(document).ready(function () {
+                $('[name^=DeliveryDate]').datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: 0,
+                    dateFormat: 'mm/dd/yyyy'
+                });
+                $('#ddlvendor').change(function () {
+                    GetMappedItems();
+                });
+                GetItems();
+
+
+
+                $('#btnorder').click(function () {
+                    var objItems = [];
+                    var check = false;
+                    var strMessage = '';
+                    $('#tblResult tbody tr').each(function () {
+                        var strMessage = '';
+
+                        var currentIdx = $(this).closest('tr').index();
+                        var row = $(this).closest("tr");
+
+
+                        if (row.find("[id=chk]").prop('checked') == true) {
+                            check = true;
+                        }
+
+
+                    });
+                    if (check == false) {
+                        alert('Please select any item to add');
+                        return false;
+                    }
+
+
+                    $('#tblResult tbody tr').each(function () {
+                        var currentIdx = $(this).closest('tr').index();
+                        var row = $(this).closest("tr");
+                        var Unit = row.find("#UnitId").val();
+
+                        var ItemId = row.find("#ItemId").text();
+                        var ItemName = row.find("#ItemName").text();
+                        var Qty = row.find("#ItemQty").val();
+                        var Price = row.find("#ItemPrice").val();
+                        var FixedorVariable = row.find("#FixedorVariable").val();
+                        if (row.find("[id=chk]").prop('checked') == true) {
+
+                            if (Qty == "") {
+                                strMessage += "Please enter item qty.\n";
+                                row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                            }
+                            else if (Number(Qty) <= 0) {
+                                strMessage += "Item qty should be greater than zero.\n";
+                                row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+                            }
+
+                            if (Price == "") {
+                                strMessage += "Please enter item price.\n";
+                                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                            }
+                            else if (Number(Price) <= 0) {
+                                strMessage += "Item price should be greater than zero.\n";
+                                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+                            }
+                            if (strMessage != "") {
+
+
+                            }
+                            else {
+                                $("#LockPanel").addClass("LockOn");
+                                objItems.push({ 'itemId': ItemId, 'ItemName': ItemName, 'ItemPrice': Price, 'Qty': Qty, 'VendorId': $("#vendorid").val(), 'Unit': Unit, 'OrdNo': $("#Id").val(), 'total': 0, 'status': 1, 'FixedorVariable': FixedorVariable })
+
+                            }
+
+                        }
+                    });
+                    if (strMessage == "")
+                    {
+                        if (objItems.length > 0) {
+                            var data1 = { 'listObject': objItems };
+                            var data = JSON.stringify(data1)
+                            $.ajax({
+                                type: "POST",
+                                url: "/OrderDetails/AddItems",
+                                data: data,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (response, status) {
+
+                                    if (response.success) {
+                                        alert('Item Submit Successfully');
+                                        GetItems();
+                                        $("#LockPanel").removeClass("LockOn");
+                                    }
+
+
+
+                                },
+                                failure: function (response) {
+                                    alert(response.responseText);
+                                    $("#LockPanel").removeClass("LockOn");
+
+                                },
+                                error: function (response) {
+                                    alert(response.responseText);
+                                    $("#LockPanel").removeClass("LockOn");
+
+                                }
+                            });
+                        }
+                    }
+
+
+                });
+                $('#Save').click(function () {
+                    var objItems = [];
+                    var check = false;
+                    var strMessage = '';
+                    $('#tblMappedResult tbody tr').each(function () {
+                        var strMessage = '';
+
+                        var currentIdx = $(this).closest('tr').index();
+                        var row = $(this).closest("tr");
+
+
+                        if (row.find("[id=chk]").prop('checked') == true) {
+                            check = true;
+                        }
+
+
+                    });
+                    if (check == false) {
+                        alert('Please select any item to add');
+                        return false;
+                    }
+
+
+                    $('#tblMappedResult tbody tr').each(function () {
+
+
+                        var currentIdx = $(this).closest('tr').index();
+                        var row = $(this).closest("tr");
+                        var Unit = row.find("#UnitId").val();
+
+                        var ItemId = row.find("#ItemId").text();
+                        var ItemName = row.find("#ItemName").text();
+                        var Qty = row.find("#ItemQty").val();
+                        var Price = row.find("#ItemPrice").val();
+                        var FixedorVariable = row.find("#FixedorVariable").val();
+                        if (row.find("[id=chk]").prop('checked') == true) {
+
+                            if (Qty == "") {
+                                strMessage += "Please enter item qty.\n";
+                                row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                            }
+                            else if (Number(Qty) <= 0) {
+                                strMessage += "Item qty should be greater than zero.\n";
+                                row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+                            }
+
+                            if (Price == "") {
+                                strMessage += "Please enter item price.\n";
+                                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                            }
+                            else if (Number(Price) <= 0) {
+                                strMessage += "Item price should be greater than zero.\n";
+                                row.find("[id=ItemPrice]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+                            }
+
+                            if (strMessage != "") {
+
+
+                            }
+                            else {
+                                $("#LockPanel").addClass("LockOn");
+                                objItems.push({ 'itemId': ItemId, 'ItemName': ItemName, 'ItemPrice': Price, 'Qty': Qty, 'VendorId': $("#ddlvendor").val(), 'Unit': Unit, 'OrdNo': $("#Id").val(), 'total': 0, 'status': 0, 'FixedorVariable': FixedorVariable })
+
+                            }
+                        }
+
+
+                    });
+
+                    if (strMessage == "") {
+                        var data1 = { 'listObject': objItems };
+                        var data = JSON.stringify(data1)
+                        $.ajax({
+                            type: "POST",
+                            url: "/OrderDetails/AddItems",
+                            data: data,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (response, status) {
+
+                                if (response.success) {
+                                    alert('Item Submit Successfully');
+                                    GetMappedItems();
+                                    GetItems();
+                                }
+
+
+
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                                $("#LockPanel").removeClass("LockOn");
+
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                                $("#LockPanel").removeClass("LockOn");
+
+                            }
+                        });
+                    }
+
+
+
+                })
+                $(document).on("click", ".open-AddBookDialog", function () {
+                    $("LockPanel").addClass("LockOn")
+                    var id = $('#Id').val();
+                    var store = $('#StoreId option:selected').text();
+                    $("label[for='Store']").html(store);
+                    VendorDetails();
+
+                });
+
+
+
+            });
+    </script>
+
+
+</section>

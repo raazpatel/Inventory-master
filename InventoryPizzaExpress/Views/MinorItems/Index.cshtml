@@ -1,0 +1,110 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.Items_Major>
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    table th, tr {
+        text-align: center;
+    }
+</style>
+<section class="content">
+   
+    <p>
+          
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "MinorItems")';return false;">Add</button>
+          
+</p>
+      
+
+    <div class="box box-primary">
+
+        <div class="box-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <span>Major Items</span>
+                            @*@Html.DisplayNameFor(model => model.MajorItemId)*@
+                        </th>
+                        <th>
+                            <span>Minor Items</span>
+                            @*@Html.DisplayNameFor(model => model.ItemName)*@
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemDescription)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedOn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ModifiedBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ModifiedOn)
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MajorItem)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemDescription)
+                            </td>
+                            <td>
+                                @if (item.Status == true)
+                                {
+                                    <span>Active</span>}
+                                else
+                                { <span>InActive</span>
+                                }
+
+                                @*@Html.DisplayFor(modelItem => item.Status)*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |                              
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </div>
+        </div>
+            @Scripts.Render("~/bundles/jquery")
+            <script src="~/Scripts/jquery.dataTables.min.js"></script>
+            <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+            <script>
+
+                $('.table').DataTable({"columnDefs": [ {
+                    "targets": 8,
+                    "orderable": false
+                } ]});
+            </script>
+</section>

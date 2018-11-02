@@ -1,0 +1,164 @@
+﻿@model IEnumerable<InventoryPizzaExpress.I_InventoryItemMaster>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content">  
+    <p>
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "InventoryItems")';return false;">Add</button>
+    </p>
+    @*@using (Html.BeginForm("Index", "InventoryItems", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="postedFile" />
+        <input type="submit" value="Import" />
+    }*@
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow-x:auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemName)
+                        </th>
+                        <th>
+                           <span>Major Items</span> 
+                        </th>
+                        <th>
+                            <span>Minor Items</span>   
+                        </th>
+                        <th>
+                            <span>Primary Units</span>
+                        </th>
+                        <th>
+                            <span>Reportig Units</span>
+                        </th>
+                        <th>
+                          <span> Store Units</span>
+                        </th>
+                        <th>
+                           <span>Loss %</span> @*@Html.DisplayNameFor(model => model.LossPercentage)*@
+                        </th>
+                        <th>
+                            <span>Gain %</span>  @*@Html.DisplayNameFor(model => model.GainPercentage)*@
+                        </th>
+                        <th>
+                            <span>Thersold Receiving</span>   @*@Html.DisplayNameFor(model => model.ThersoldRecieving)*@
+                        </th>
+                        <th>
+                            <span> Type</span>    @*@Html.DisplayNameFor(model => model.FixedorVariable)*@
+                        </th>
+                        <th>
+                            <span>Price</span>    @*@Html.DisplayNameFor(model => model.FixedorVariable)*@
+                        </th>
+                        @*<th>
+                            @Html.DisplayNameFor(model => model.CreatedBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedOn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ModifiedBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ModifiedOn)
+                        </th>*@
+                       
+                       
+                       
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.I_ItemMater.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.I_ItemMater1.ItemName)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.PrimaryUnitConv)*@ 
+                    
+                     @Html.DisplayFor(modelItem => item.I_UnitMaster.UnitName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReportingUnitConv) (@Html.DisplayFor(modelItem => item.I_UnitMaster1.UnitName))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoreUnitConv) (@Html.DisplayFor(modelItem => item.I_UnitMaster2.UnitName))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LossPercentage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GainPercentage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThersoldRecieving)
+                </td>
+                <td>
+
+                    @if (item.FixedorVariable == 1)
+                    {
+<span>Variable</span>
+                    }
+                    else
+                    {
+                        <span>Fixed</span>
+                    }
+                    @*@Html.DisplayFor(modelItem => item.FixedorVariable)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedOn)
+                </td>*@
+               
+               
+              
+               
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                  
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+            }
+                </tbody>
+            </table>
+            @Scripts.Render("~/bundles/jquery")
+            <script src="~/Scripts/jquery.dataTables.min.js"></script>
+            <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+            <script>
+
+                $('.table').DataTable({"columnDefs": [ {
+                    "targets": 12,
+                    "orderable": false
+                } ]});
+            </script>
+            </div>
+        </div>
+</section>

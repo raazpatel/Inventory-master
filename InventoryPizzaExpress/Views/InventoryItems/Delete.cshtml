@@ -1,0 +1,168 @@
+﻿@model InventoryPizzaExpress.I_InventoryItemMaster
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>I_InventoryItemMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimaryUnitConv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimaryUnitConv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportingUnitConv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportingUnitConv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreUnitConv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreUnitConv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LossPercentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LossPercentage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GainPercentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GainPercentage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThersoldRecieving)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThersoldRecieving)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FixedorVariable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FixedorVariable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.I_ItemMater.ItemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.I_ItemMater.ItemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.I_ItemMater1.ItemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.I_ItemMater1.ItemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.I_UnitMaster.UnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.I_UnitMaster.UnitName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.I_UnitMaster1.UnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.I_UnitMaster1.UnitName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.I_UnitMaster2.UnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.I_UnitMaster2.UnitName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

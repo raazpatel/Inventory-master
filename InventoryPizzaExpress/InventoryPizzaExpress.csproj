@@ -1,0 +1,961 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{932FAA69-B2A6-40E5-815B-6A6EDAF6F9F6}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InventoryPizzaExpress</RootNamespace>
+    <AssemblyName>InventoryPizzaExpress</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44333</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AspNetRole.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUser.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserClaim.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetUserLogin.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\Minor\MinorGroupController.cs" />
+    <Compile Include="Controllers\API\Order\OrderDetailsController.cs" />
+    <Compile Include="Controllers\API\Stock Taking\APIStockReqDetailsController.cs" />
+    <Compile Include="Controllers\API\Stock Taking\StockTakingController.cs" />
+    <Compile Include="Controllers\API\Stock Taking\StockTakingItemCatalogController.cs" />
+    <Compile Include="Controllers\API\Store\StoresController.cs" />
+    <Compile Include="Controllers\API\Vendor\VendorController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Mapping\MenuRecipeController.cs" />
+    <Compile Include="Controllers\Mapping\MenuStoreMappingController.cs" />
+    <Compile Include="Controllers\Masters\InventoryItemsController.cs" />
+    <Compile Include="Controllers\Masters\MajorItemsController.cs" />
+    <Compile Include="Controllers\Masters\MinorItemsController.cs" />
+    <Compile Include="Controllers\Masters\VendorController.cs" />
+    <Compile Include="Controllers\API\Receipt\RecievingItemCatalogController.cs" />
+    <Compile Include="Controllers\Receiving\ReceivingController.cs" />
+    <Compile Include="Controllers\Recipe\RecipeController.cs" />
+    <Compile Include="Controllers\Masters\UnitsController.cs" />
+    <Compile Include="Controllers\Stock Taking\I_StockTakingController.cs" />
+    <Compile Include="Controllers\Orders\OrderDetailsController.cs" />
+    <Compile Include="Controllers\Stock Taking\StockReqController.cs" />
+    <Compile Include="Controllers\Stock Taking\StockTransferController.cs" />
+    <Compile Include="Controllers\StockOnHandController.cs" />
+    <Compile Include="Controllers\Store\StoreController.cs" />
+    <Compile Include="Controllers\Vendor\VendorItemCatalogController.cs" />
+    <Compile Include="Controllers\WasteDetailsController.cs" />
+    <Compile Include="C__MigrationHistory.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="InventoryModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="I_InventoryItemMaster.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_ItemMater.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_MenuItems.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_OrderDetails.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_OrderItemCatalog.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_RecievingItemCatalog.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_Recipe.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_RecipeDetails.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_StockInventory.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_StockReqDetails.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_StockRequestItemCatalog.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_StockTaking.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_StockTakingItemCatalog.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_StockTranferDetails.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_StockTransferItemCatalog.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_UnitMaster.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="I_VenderMaster.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_VendorItemCatalog.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_WasteDetails.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="I_WasteItemCatalog.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mi_def.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Inventory\InventoryItemMaster.cs" />
+    <Compile Include="Models\Inventory\InventoryItems.cs" />
+    <Compile Include="Models\Item\Items.cs" />
+    <Compile Include="Models\Item\Items_Major.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Mapping\MappedMenuItems.cs" />
+    <Compile Include="Models\Mapping\MenuRecipe.cs" />
+    <Compile Include="Models\Mapping\MenuStoreMapping.cs" />
+    <Compile Include="Models\Mapping\UnMappedMenuItems.cs" />
+    <Compile Include="Models\Order\FinalOrder.cs" />
+    <Compile Include="Models\Order\Orders.cs" />
+    <Compile Include="Models\Recipe\RecipeDetails.cs" />
+    <Compile Include="Models\Recipe\RecipeItems.cs" />
+    <Compile Include="Models\StockOnHand.cs" />
+    <Compile Include="Models\StockTaking.cs" />
+    <Compile Include="Models\Stock\COSCostCenter.cs" />
+    <Compile Include="Models\Stock\ItemInStock.cs" />
+    <Compile Include="Models\Stock\StockRequestModel.cs" />
+    <Compile Include="Models\Stock\StockTransferModel.cs" />
+    <Compile Include="Models\Store\Stock.cs" />
+    <Compile Include="Models\Store\StoreDetails.cs" />
+    <Compile Include="Models\Units\Unit.cs" />
+    <Compile Include="Models\Vendor\Vendor.cs" />
+    <Compile Include="Models\Vendor\VendorItemCatalog.cs" />
+    <Compile Include="Models\Waste\WasteModel.cs" />
+    <Compile Include="Models\Waste\WasteReportByGroup.cs" />
+    <Compile Include="Models\Waste\WasteReportByItem.cs" />
+    <Compile Include="ModelView\MenuItemVM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Store_Details.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="v_mi_def.cs">
+      <DependentUpon>InventoryModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\AdminLTE.min.css" />
+    <Content Include="Content\bootstrap-datepicker.css" />
+    <Content Include="Content\bootstrap-duallistbox.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\dist\js\npm.js" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\Gruntfile.js" />
+    <Content Include="Content\bootstrap\grunt\bs-commonjs-generator.js" />
+    <Content Include="Content\bootstrap\grunt\bs-glyphicons-data-generator.js" />
+    <Content Include="Content\bootstrap\grunt\bs-lessdoc-parser.js" />
+    <Content Include="Content\bootstrap\grunt\bs-raw-files-generator.js" />
+    <Content Include="Content\bootstrap\grunt\change-version.js" />
+    <Content Include="Content\bootstrap\js\affix.js" />
+    <Content Include="Content\bootstrap\js\alert.js" />
+    <Content Include="Content\bootstrap\js\button.js" />
+    <Content Include="Content\bootstrap\js\carousel.js" />
+    <Content Include="Content\bootstrap\js\collapse.js" />
+    <Content Include="Content\bootstrap\js\dropdown.js" />
+    <Content Include="Content\bootstrap\js\modal.js" />
+    <Content Include="Content\bootstrap\js\popover.js" />
+    <Content Include="Content\bootstrap\js\scrollspy.js" />
+    <Content Include="Content\bootstrap\js\tab.js" />
+    <Content Include="Content\bootstrap\js\tooltip.js" />
+    <Content Include="Content\bootstrap\js\transition.js" />
+    <Content Include="Content\bootstrap\package.js" />
+    <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\dist\css\AdminLTE.css" />
+    <Content Include="Content\dist\css\AdminLTE.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-bootstrap-social.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-bootstrap-social.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-fullcalendar.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-fullcalendar.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-select2.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-select2.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-without-plugins.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-without-plugins.min.css" />
+    <Content Include="Content\dist\css\skins\skin-black-light.css" />
+    <Content Include="Content\dist\css\skins\skin-black-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-black.css" />
+    <Content Include="Content\dist\css\skins\skin-black.min.css" />
+    <Content Include="Content\dist\css\skins\skin-blue-light.css" />
+    <Content Include="Content\dist\css\skins\skin-blue-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-blue.css" />
+    <Content Include="Content\dist\css\skins\skin-blue.min.css" />
+    <Content Include="Content\dist\css\skins\skin-green-light.css" />
+    <Content Include="Content\dist\css\skins\skin-green-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-green.css" />
+    <Content Include="Content\dist\css\skins\skin-green.min.css" />
+    <Content Include="Content\dist\css\skins\skin-purple-light.css" />
+    <Content Include="Content\dist\css\skins\skin-purple-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-purple.css" />
+    <Content Include="Content\dist\css\skins\skin-purple.min.css" />
+    <Content Include="Content\dist\css\skins\skin-red-light.css" />
+    <Content Include="Content\dist\css\skins\skin-red-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-red.css" />
+    <Content Include="Content\dist\css\skins\skin-red.min.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow-light.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow.min.css" />
+    <Content Include="Content\dist\css\skins\_all-skins.css" />
+    <Content Include="Content\dist\css\skins\_all-skins.min.css" />
+    <Content Include="Content\dist\img\avatar.png" />
+    <Content Include="Content\dist\img\avatar04.png" />
+    <Content Include="Content\dist\img\avatar2.png" />
+    <Content Include="Content\dist\img\avatar3.png" />
+    <Content Include="Content\dist\img\avatar5.png" />
+    <Content Include="Content\dist\img\boxed-bg.jpg" />
+    <Content Include="Content\dist\img\boxed-bg.png" />
+    <Content Include="Content\dist\img\credit\american-express.png" />
+    <Content Include="Content\dist\img\credit\cirrus.png" />
+    <Content Include="Content\dist\img\credit\mastercard.png" />
+    <Content Include="Content\dist\img\credit\mestro.png" />
+    <Content Include="Content\dist\img\credit\paypal.png" />
+    <Content Include="Content\dist\img\credit\paypal2.png" />
+    <Content Include="Content\dist\img\credit\visa.png" />
+    <Content Include="Content\dist\img\default-50x50.gif" />
+    <Content Include="Content\dist\img\icons.png" />
+    <Content Include="Content\dist\img\photo1.png" />
+    <Content Include="Content\dist\img\photo2.png" />
+    <Content Include="Content\dist\img\photo3.jpg" />
+    <Content Include="Content\dist\img\photo4.jpg" />
+    <Content Include="Content\dist\img\user1-128x128.jpg" />
+    <Content Include="Content\dist\img\user2-160x160.jpg" />
+    <Content Include="Content\dist\img\user3-128x128.jpg" />
+    <Content Include="Content\dist\img\user4-128x128.jpg" />
+    <Content Include="Content\dist\img\user5-128x128.jpg" />
+    <Content Include="Content\dist\img\user6-128x128.jpg" />
+    <Content Include="Content\dist\img\user7-128x128.jpg" />
+    <Content Include="Content\dist\img\user8-128x128.jpg" />
+    <Content Include="Content\dist\js\adminlte.js" />
+    <Content Include="Content\dist\js\adminlte.min.js" />
+    <Content Include="Content\dist\js\demo.js" />
+    <Content Include="Content\dist\js\pages\dashboard.js" />
+    <Content Include="Content\dist\js\pages\dashboard2.js" />
+    <Content Include="Content\dual-listbox.css" />
+    <Content Include="Content\fixedHeader.dataTables.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\.gitignore" />
+    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Content\images\minus.png" />
+    <Content Include="Content\images\plus.png" />
+    <Content Include="Content\ionicons.min.css" />
+    <Content Include="Content\jquery.dataTables-1.10.12.min.css" />
+    <Content Include="Content\jquery.dataTables-1.10.13.min.css" />
+    <Content Include="Content\select2.min.css" />
+    <Content Include="Content\skin-black-light.css" />
+    <Content Include="Content\skin-black-light.min.css" />
+    <Content Include="Content\skin-black.css" />
+    <Content Include="Content\skin-black.min.css" />
+    <Content Include="Content\skin-blue-light.css" />
+    <Content Include="Content\skin-blue-light.min.css" />
+    <Content Include="Content\skin-blue.css" />
+    <Content Include="Content\skin-blue.min.css" />
+    <Content Include="Content\skin-green-light.css" />
+    <Content Include="Content\skin-green-light.min.css" />
+    <Content Include="Content\skin-green.css" />
+    <Content Include="Content\skin-green.min.css" />
+    <Content Include="Content\skin-purple-light.css" />
+    <Content Include="Content\skin-purple-light.min.css" />
+    <Content Include="Content\skin-purple.css" />
+    <Content Include="Content\skin-purple.min.css" />
+    <Content Include="Content\skin-red-light.css" />
+    <Content Include="Content\skin-red-light.min.css" />
+    <Content Include="Content\skin-red.css" />
+    <Content Include="Content\skin-red.min.css" />
+    <Content Include="Content\skin-yellow-light.css" />
+    <Content Include="Content\skin-yellow-light.min.css" />
+    <Content Include="Content\skin-yellow.css" />
+    <Content Include="Content\skin-yellow.min.css" />
+    <Content Include="Content\_all-skins.css" />
+    <Content Include="Content\_all-skins.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="InventoryModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventoryModel.edmx</DependentUpon>
+      <LastGenOutput>InventoryModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="InventoryModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventoryModel.edmx</DependentUpon>
+      <LastGenOutput>InventoryModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\adminlte.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-duallistbox.css" />
+    <Content Include="Scripts\bootstrap-duallistbox.min.css" />
+    <Content Include="Scripts\bootstrap-multiselect.js" />
+    <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\.bower.json" />
+    <Content Include="Content\bootstrap\bower.json" />
+    <Content Include="Content\bootstrap\CHANGELOG.md" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap\Gemfile" />
+    <Content Include="Content\bootstrap\Gemfile.lock" />
+    <Content Include="Content\bootstrap\grunt\.jshintrc" />
+    <Content Include="Content\bootstrap\grunt\configBridge.json" />
+    <Content Include="Content\bootstrap\grunt\npm-shrinkwrap.json" />
+    <Content Include="Content\bootstrap\grunt\sauce_browsers.yml" />
+    <Content Include="Content\bootstrap\ISSUE_TEMPLATE.md" />
+    <Content Include="Content\bootstrap\js\.jscsrc" />
+    <Content Include="Content\bootstrap\js\.jshintrc" />
+    <Content Include="Content\bootstrap\less\.csscomb.json" />
+    <Content Include="Content\bootstrap\less\.csslintrc" />
+    <Content Include="Content\bootstrap\less\alerts.less" />
+    <Content Include="Content\bootstrap\less\badges.less" />
+    <Content Include="Content\bootstrap\less\bootstrap.less" />
+    <Content Include="Content\bootstrap\less\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\less\button-groups.less" />
+    <Content Include="Content\bootstrap\less\buttons.less" />
+    <Content Include="Content\bootstrap\less\carousel.less" />
+    <Content Include="Content\bootstrap\less\close.less" />
+    <Content Include="Content\bootstrap\less\code.less" />
+    <Content Include="Content\bootstrap\less\component-animations.less" />
+    <Content Include="Content\bootstrap\less\dropdowns.less" />
+    <Content Include="Content\bootstrap\less\forms.less" />
+    <Content Include="Content\bootstrap\less\glyphicons.less" />
+    <Content Include="Content\bootstrap\less\grid.less" />
+    <Content Include="Content\bootstrap\less\input-groups.less" />
+    <Content Include="Content\bootstrap\less\jumbotron.less" />
+    <Content Include="Content\bootstrap\less\labels.less" />
+    <Content Include="Content\bootstrap\less\list-group.less" />
+    <Content Include="Content\bootstrap\less\media.less" />
+    <Content Include="Content\bootstrap\less\mixins.less" />
+    <Content Include="Content\bootstrap\less\mixins\alerts.less" />
+    <Content Include="Content\bootstrap\less\mixins\background-variant.less" />
+    <Content Include="Content\bootstrap\less\mixins\border-radius.less" />
+    <Content Include="Content\bootstrap\less\mixins\buttons.less" />
+    <Content Include="Content\bootstrap\less\mixins\center-block.less" />
+    <Content Include="Content\bootstrap\less\mixins\clearfix.less" />
+    <Content Include="Content\bootstrap\less\mixins\forms.less" />
+    <Content Include="Content\bootstrap\less\mixins\gradients.less" />
+    <Content Include="Content\bootstrap\less\mixins\grid-framework.less" />
+    <Content Include="Content\bootstrap\less\mixins\grid.less" />
+    <Content Include="Content\bootstrap\less\mixins\hide-text.less" />
+    <Content Include="Content\bootstrap\less\mixins\image.less" />
+    <Content Include="Content\bootstrap\less\mixins\labels.less" />
+    <Content Include="Content\bootstrap\less\mixins\list-group.less" />
+    <Content Include="Content\bootstrap\less\mixins\nav-divider.less" />
+    <Content Include="Content\bootstrap\less\mixins\nav-vertical-align.less" />
+    <Content Include="Content\bootstrap\less\mixins\opacity.less" />
+    <Content Include="Content\bootstrap\less\mixins\pagination.less" />
+    <Content Include="Content\bootstrap\less\mixins\panels.less" />
+    <Content Include="Content\bootstrap\less\mixins\progress-bar.less" />
+    <Content Include="Content\bootstrap\less\mixins\reset-filter.less" />
+    <Content Include="Content\bootstrap\less\mixins\reset-text.less" />
+    <Content Include="Content\bootstrap\less\mixins\resize.less" />
+    <Content Include="Content\bootstrap\less\mixins\responsive-visibility.less" />
+    <Content Include="Content\bootstrap\less\mixins\size.less" />
+    <Content Include="Content\bootstrap\less\mixins\tab-focus.less" />
+    <Content Include="Content\bootstrap\less\mixins\table-row.less" />
+    <Content Include="Content\bootstrap\less\mixins\text-emphasis.less" />
+    <Content Include="Content\bootstrap\less\mixins\text-overflow.less" />
+    <Content Include="Content\bootstrap\less\mixins\vendor-prefixes.less" />
+    <Content Include="Content\bootstrap\less\modals.less" />
+    <Content Include="Content\bootstrap\less\navbar.less" />
+    <Content Include="Content\bootstrap\less\navs.less" />
+    <Content Include="Content\bootstrap\less\normalize.less" />
+    <Content Include="Content\bootstrap\less\pager.less" />
+    <Content Include="Content\bootstrap\less\pagination.less" />
+    <Content Include="Content\bootstrap\less\panels.less" />
+    <Content Include="Content\bootstrap\less\popovers.less" />
+    <Content Include="Content\bootstrap\less\print.less" />
+    <Content Include="Content\bootstrap\less\progress-bars.less" />
+    <Content Include="Content\bootstrap\less\responsive-embed.less" />
+    <Content Include="Content\bootstrap\less\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\less\scaffolding.less" />
+    <Content Include="Content\bootstrap\less\tables.less" />
+    <Content Include="Content\bootstrap\less\theme.less" />
+    <Content Include="Content\bootstrap\less\thumbnails.less" />
+    <Content Include="Content\bootstrap\less\tooltip.less" />
+    <Content Include="Content\bootstrap\less\type.less" />
+    <Content Include="Content\bootstrap\less\utilities.less" />
+    <Content Include="Content\bootstrap\less\variables.less" />
+    <Content Include="Content\bootstrap\less\wells.less" />
+    <Content Include="Content\bootstrap\LICENSE" />
+    <Content Include="Content\bootstrap\nuget\bootstrap.less.nuspec" />
+    <Content Include="Content\bootstrap\nuget\bootstrap.nuspec" />
+    <Content Include="Content\bootstrap\nuget\MyGet.ps1" />
+    <Content Include="Content\bootstrap\package.json" />
+    <Content Include="Content\bootstrap\README.md" />
+    <Content Include="Content\dist\css\adminlte.css.map" />
+    <Content Include="Content\dist\css\adminlte.min.css.map" />
+    <Content Include="Content\font-awesome\.bower.json" />
+    <Content Include="Content\font-awesome\.npmignore" />
+    <Content Include="Content\font-awesome\bower.json" />
+    <Content Include="Content\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\less\animated.less" />
+    <Content Include="Content\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome\less\core.less" />
+    <Content Include="Content\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\font-awesome\less\icons.less" />
+    <Content Include="Content\font-awesome\less\larger.less" />
+    <Content Include="Content\font-awesome\less\list.less" />
+    <Content Include="Content\font-awesome\less\mixins.less" />
+    <Content Include="Content\font-awesome\less\path.less" />
+    <Content Include="Content\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome\less\screen-reader.less" />
+    <Content Include="Content\font-awesome\less\stacked.less" />
+    <Content Include="Content\font-awesome\less\variables.less" />
+    <Content Include="Content\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome\scss\_animated.scss" />
+    <Content Include="Content\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome\scss\_core.scss" />
+    <Content Include="Content\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\font-awesome\scss\_list.scss" />
+    <Content Include="Content\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome\scss\_path.scss" />
+    <Content Include="Content\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Content\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\adminlte.css.map" />
+    <Content Include="Content\adminlte.min.css.map" />
+    <Content Include="Scripts\dist\css\bootstrap-select.css.map" />
+    <Content Include="Scripts\dist\js\bootstrap-select.js.map" />
+    <EntityDeploy Include="InventoryModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InventoryModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="InventoryModel.edmx.diagram">
+      <DependentUpon>InventoryModel.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\dist\css\bootstrap-select.css" />
+    <Content Include="Scripts\dist\css\bootstrap-select.min.css" />
+    <Content Include="Scripts\dist\js\bootstrap-select.js" />
+    <Content Include="Scripts\dist\js\bootstrap-select.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ar_AR.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ar_AR.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-bg_BG.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-bg_BG.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-cro_CRO.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-cro_CRO.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-cs_CZ.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-cs_CZ.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-da_DK.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-da_DK.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-de_DE.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-de_DE.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-en_US.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-en_US.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-es_CL.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-es_CL.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-eu.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-eu.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-fa_IR.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-fa_IR.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-fi_FI.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-fi_FI.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-fr_FR.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-fr_FR.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-hu_HU.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-hu_HU.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-id_ID.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-id_ID.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-it_IT.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-it_IT.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ko_KR.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ko_KR.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-lt_LT.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-lt_LT.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-nb_NO.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-nb_NO.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-nl_NL.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-nl_NL.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-pl_PL.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-pl_PL.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-pt_BR.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-pt_BR.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-pt_PT.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-pt_PT.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ro_RO.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ro_RO.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ru_RU.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ru_RU.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-sk_SK.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-sk_SK.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-sl_SI.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-sl_SI.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-sv_SE.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-sv_SE.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-tr_TR.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-tr_TR.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ua_UA.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-ua_UA.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-zh_CN.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-zh_CN.min.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-zh_TW.js" />
+    <Content Include="Scripts\dist\js\i18n\defaults-zh_TW.min.js" />
+    <Content Include="Scripts\dual-listbox.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery.bootstrap-duallistbox.js" />
+    <Content Include="Scripts\jquery.bootstrap-duallistbox.min.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\MajorItem\create.cshtml" />
+    <Content Include="Views\MajorItem\createMinor.cshtml" />
+    <Content Include="Views\MajorItem\Delete.cshtml" />
+    <Content Include="Views\MajorItem\Edit.cshtml" />
+    <Content Include="Views\MajorItem\Index.cshtml" />
+    <Content Include="Views\MenuItem\Approve.cshtml" />
+    <Content Include="Views\MenuItem\Index.cshtml" />
+    <Content Include="Views\MenuItem\MajorMinor.cshtml" />
+    <Content Include="Views\MinorItems\Create.cshtml" />
+    <Content Include="Views\Units\Create.cshtml" />
+    <Content Include="Views\Units\Delete.cshtml" />
+    <Content Include="Views\Units\Details.cshtml" />
+    <Content Include="Views\Units\Edit.cshtml" />
+    <Content Include="Views\Units\Index.cshtml" />
+    <Content Include="Views\MajorItems\Create.cshtml" />
+    <Content Include="Views\MajorItems\Delete.cshtml" />
+    <Content Include="Views\MajorItems\Details.cshtml" />
+    <Content Include="Views\MajorItems\Edit.cshtml" />
+    <Content Include="Views\MajorItems\Index.cshtml" />
+    <Content Include="Views\MinorItems\Delete.cshtml" />
+    <Content Include="Views\MinorItems\Details.cshtml" />
+    <Content Include="Views\MinorItems\Edit.cshtml" />
+    <Content Include="Views\MinorItems\Index.cshtml" />
+    <Content Include="Views\InventoryItems\Create.cshtml" />
+    <Content Include="Views\InventoryItems\Delete.cshtml" />
+    <Content Include="Views\InventoryItems\Details.cshtml" />
+    <Content Include="Views\InventoryItems\Edit.cshtml" />
+    <Content Include="Views\InventoryItems\Index.cshtml" />
+    <Content Include="Views\Recipe\Create.cshtml" />
+    <Content Include="Views\Recipe\Delete.cshtml" />
+    <Content Include="Views\Recipe\Details.cshtml" />
+    <Content Include="Views\Recipe\EditRecipe.cshtml" />
+    <Content Include="Views\Recipe\Index.cshtml" />
+    <Content Include="Views\Recipe\PartialIndex.cshtml" />
+    <Content Include="Views\Recipe\CreateRecipe.cshtml" />
+    <Content Include="Views\MenuStoreMapping\Create.cshtml" />
+    <Content Include="Views\MenuStoreMapping\Delete.cshtml" />
+    <Content Include="Views\MenuStoreMapping\Details.cshtml" />
+    <Content Include="Views\MenuStoreMapping\Edit.cshtml" />
+    <Content Include="Views\MenuStoreMapping\Index.cshtml" />
+    <Content Include="Views\MenuRecipe\Create.cshtml" />
+    <Content Include="Views\MenuRecipe\Delete.cshtml" />
+    <Content Include="Views\MenuRecipe\Details.cshtml" />
+    <Content Include="Views\MenuRecipe\Edit.cshtml" />
+    <Content Include="Views\MenuRecipe\Index.cshtml" />
+    <Content Include="Views\Store\Create.cshtml" />
+    <Content Include="Views\Store\Edit.cshtml" />
+    <Content Include="Views\Store\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Vendor\Create.cshtml" />
+    <Content Include="Views\Vendor\Delete.cshtml" />
+    <Content Include="Views\Vendor\Details.cshtml" />
+    <Content Include="Views\Vendor\Edit.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\VendorItemCatalog\VendorItemCatalog.cshtml" />
+    <Content Include="Views\I_StockTaking\Create.cshtml" />
+    <Content Include="Views\I_StockTaking\Delete.cshtml" />
+    <Content Include="Views\I_StockTaking\Details.cshtml" />
+    <Content Include="Views\I_StockTaking\Edit.cshtml" />
+    <Content Include="Views\I_StockTaking\Index.cshtml" />
+    <Content Include="Views\OrderDetails\Create.cshtml" />
+    <Content Include="Views\OrderDetails\Delete.cshtml" />
+    <Content Include="Views\OrderDetails\Details.cshtml" />
+    <Content Include="Views\OrderDetails\Edit.cshtml" />
+    <Content Include="Views\OrderDetails\Index.cshtml" />
+    <Content Include="Views\OrderDetails\OrderItemCatalog.cshtml" />
+    <Content Include="Views\Receiving\Index.cshtml" />
+    <Content Include="Views\Receiving\ReceivingItemCatalog1.cshtml" />
+    <Content Include="Views\Receiving\ReceivingItemCatalog.cshtml" />
+    <Content Include="Views\Receiving\GetPendingOrders.cshtml" />
+    <Content Include="Views\StockTransfer\Create.cshtml" />
+    <Content Include="Views\StockTransfer\Delete.cshtml" />
+    <Content Include="Views\StockTransfer\Details.cshtml" />
+    <Content Include="Views\StockTransfer\Edit.cshtml" />
+    <Content Include="Views\StockTransfer\Index.cshtml" />
+    <Content Include="Views\StockReq\Create.cshtml" />
+    <Content Include="Views\StockReq\Delete.cshtml" />
+    <Content Include="Views\StockReq\Details.cshtml" />
+    <Content Include="Views\StockReq\Edit.cshtml" />
+    <Content Include="Views\StockReq\Index.cshtml" />
+    <Content Include="Views\StockTransfer\PendingRequests.cshtml" />
+    <Content Include="Views\StockTransfer\PendingRequestDetails.cshtml" />
+    <Content Include="Views\Receiving\ItemReceived.cshtml" />
+    <Content Include="Views\I_StockTaking\CountSheet.cshtml" />
+    <Content Include="Views\WasteDetails\Create.cshtml" />
+    <Content Include="Views\WasteDetails\Delete.cshtml" />
+    <Content Include="Views\WasteDetails\Details.cshtml" />
+    <Content Include="Views\WasteDetails\Edit.cshtml" />
+    <Content Include="Views\WasteDetails\Index.cshtml" />
+    <Content Include="Views\StockOnHand\Index.cshtml" />
+    <Content Include="Views\WasteDetails\WasteReportByGroup.cshtml" />
+    <Content Include="Views\WasteDetails\WasteReportByItem.cshtml" />
+    <Content Include="Views\StockOnHand\COSByCostCenters.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\Ionicons\" />
+    <Folder Include="Controllers\API\OrderAPI\" />
+    <Folder Include="Views\ItemMaster\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2425</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2425/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:2425/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

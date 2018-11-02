@@ -1,0 +1,119 @@
+﻿@model IEnumerable<InventoryPizzaExpress.I_ReceiptDetails>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content">
+    <style>
+        .LockOff {
+            display: none;
+            visibility: hidden;
+        }
+
+        .modal-dialog {
+            width: 70%;
+        }
+
+        .LockOn {
+            display: block;
+            visibility: visible;
+            position: fixed;
+            z-index: 999;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: #FDFDFD;
+            height: 100%;
+            text-align: center;
+            padding-top: 150px;
+            filter: alpha(opacity=75);
+            opacity: 0.75;
+        }
+
+        .form-horizontal .control-label {
+            padding-left: 0px;
+        }
+    </style>
+    <p>
+        @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-default" })
+    </p>
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow-x:auto; ">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.I_VenderMaster.VenderName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Receipt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DeliveryDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Reference)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.I_VenderMaster.VenderName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Receipt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliveryDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reference)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedOn)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            </div>
+        </div>
+</section>

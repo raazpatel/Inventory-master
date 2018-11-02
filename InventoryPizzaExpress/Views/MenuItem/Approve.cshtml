@@ -1,0 +1,146 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.MenuItemMasterApproval>
+
+@{
+    ViewBag.Title = "Approve";
+}
+
+<h2>Approve</h2>
+
+<div class="form-group">
+    <div style="padding-top:20px">
+        <input type="submit" id="Create" value="Add User(s)" class="btn btn-default" />
+    </div>
+</div>
+
+<table class="table" id="ADUsers">
+    <thead>
+        <tr>
+            <th>
+                <span>Select </span>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.majorItem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinorItem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PLUSKU)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.itemType)
+            </th>
+         
+        
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                
+                <td><input type="checkbox" class="checkBox" value=item.PLUSKU /></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.majorItem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinorItem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PLUSKU)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.itemType)
+                </td>
+              
+               
+            </tr>
+        }
+    </tbody>
+
+</table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css" />
+    <!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $('#ADUsers').dataTable({
+             
+              
+        });
+
+        $("#Create").click(function (event) {
+            debugger;
+            var oTable = $('#ADUsers').dataTable();
+            var rowcollection = oTable.$('tr', { "page": "all" });
+            var rowcollectionCheckbox = oTable.$('input[type = "checkbox"]', { "page": "all" });
+
+            var flag = 0;
+            var PendingIds = "";
+            var myColumnDefs = [];
+            if (rowcollection.length > 0) {
+                for (i = 0; i < rowcollectionCheckbox.length -10 ; i++) {
+                    if ($(rowcollection[i].cells[0]).find('input[type="checkbox"]')[0].checked == true) {
+                        myColumnDefs.push({ '_id': rowcollection[i].cells[1].innerText.trim()})
+                    }
+                }
+            }
+
+            if (myColumnDefs == "") {
+
+
+                alert('Please select any Menu Item(s)');
+                event.preventDefault();
+            }
+            debugger;
+            var data1 = { 'listObject': myColumnDefs };
+            var data = JSON.stringify(data1)
+            alert(data);
+            var options = {};
+            options.url = "/MenuItem/Save";
+            options.type = "POST";
+            options.data = data;
+            options.contentType = "application/json";
+            options.dataType = "json";
+            options.success = function (msg) {
+                alert("Record saved successfully.");
+            };
+            options.error = function () {
+                alert("Error while adding the records!");
+            };
+            $.ajax(options);
+
+        });
+    });
+</script>
+}

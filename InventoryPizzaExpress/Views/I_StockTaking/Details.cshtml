@@ -1,0 +1,150 @@
+﻿@model InventoryPizzaExpress.Models.Store.Stock
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<section class="content">
+
+    <div class="hidden">
+
+        
+    </div>
+    <div class="form-horizontal col-md-12">
+        <div class="form-group">
+            <h4> Inventory Details:</h4>
+            <div class="col-md-2">
+
+                <b>InventoryName</b>
+               <div class="hidden">@Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</div>
+                @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+            <div class="col-md-2">
+
+                <b>Date:</b>
+                @{
+                    string Date = Convert.ToDateTime( Model.Date).ToShortDateString();
+                }
+                @Html.EditorFor(model => Date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            
+            </div>
+
+
+            <div class="col-md-2">
+
+                <b>Store Name:</b>
+                @Html.EditorFor(model => model.StoreName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>          
+
+        </div>
+        <div class="form-group">
+            <h4> Item Groups:</h4>
+            <p>
+                @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+            </p>
+            <div class="box box-primary">
+
+                <div class="box-body" style="overflow:auto;max-height:400px">
+                    <table class="table" id="tblResult"></table>
+                </div>
+            </div>
+            </div>
+        </div>
+     
+
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+        function table(model) {
+            if (model.length > 0) {
+                for (var i = 0; i < model.length; i++) {                   
+                    tr = $('<tr/>');
+                                        
+                        tr.append("<td style='text-align: center;'>" + model[i].Id + "</td>");
+                        tr.append("<td style='text-align: left;'><label id='ItemId'>" + model[i].ItemId + "</label></td>");
+                        tr.append("<td style='text-align: left;'><a id='ItemId' href='/I_StockTaking/CountSheet?id=" + $("#Id").val() + "&GroupId=" + model[i].ItemId + "'>" + model[i].ItemName + "</a></td>");
+                        tr.append("<td style='text-align: left;'><label id='ActValue'>" + model[i].ActualValue + "</label></td>");
+                        tr.append("<td style='text-align: left;'><label id='TheoValue'>" + model[i].TheoValue + "</label></td>");
+                        tr.append("<td style='text-align: left;'><label id='Diff'>  " + model[i].Diff + "</label></td>");
+                        tr.append("<td style='text-align: left;'><label id='Counted'> " + model[i].Counted + "</label></td>");
+                        $('#tblResult').append(tr);
+                        var table = document.getElementById("tblResult");
+                        if (!table.tHead) {
+                            var header = table.createTHead();
+
+                            // Create an empty <tr> element and add it to the first position of <thead>:
+                            var row = header.insertRow(0);
+
+                            // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                     
+                            var cellId = row.insertCell(0);
+                            var cellItemGroupId = row.insertCell(1);
+                            var cellItemGroupName = row.insertCell(2);
+                            var cellActualValue = row.insertCell(3);
+                            var cellTheoValue = row.insertCell(4);
+                            var cellDiff = row.insertCell(5);
+                            var cellCounted = row.insertCell(6);
+                          
+                            // Add some bold text in the new cell:
+                         
+                            cellId.innerHTML = "<b>ID</b>";
+                            cellItemGroupId.innerHTML = "<b>Item ID</b>";
+                            cellItemGroupName.innerHTML = "<b>Item Name</b>";
+                            cellActualValue.innerHTML = "<b>Act Value</b>";
+                            cellTheoValue.innerHTML = "<b>Theo Value</b>";
+                            cellDiff.innerHTML = "<b>Diff</b>";
+                            cellCounted.innerHTML = "<b>Counted</b>";
+                            
+
+                        }
+                        var colToHide = $("#tblResult tr th:nth-child(1), table tr td:nth-child(1)");
+                        colToHide.hide()
+                        var colToHideItemId = $("#tblResult tr th:nth-child(2), table tr td:nth-child(2)");
+                        colToHideItemId.hide()
+                  
+                }
+             
+            }
+            else {
+            }
+        }
+        function GetItems() {
+            var id = $("#Id").val();
+            var obj = {};
+            obj.id = id;
+            $.ajax({
+                type: "POST",
+                url: "/I_StockTaking/GetItemGroupDetails",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    table(model);
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        $(document).ready(function () {
+          
+            GetItems();
+        });
+    </script>
+</section>

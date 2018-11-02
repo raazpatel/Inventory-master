@@ -1,0 +1,111 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.Waste.WasteModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content">
+
+    <p>
+        @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-default" })
+    </p>
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow-x:auto;">
+            <table class="table">
+                <tr>
+                    <th>
+                        <span> Waste No</span>
+                    </th>
+                    <th>
+                        <span>Waste Group</span>
+                    </th>
+                    <th>
+                        <span>Store Name</span>
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Reference)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        <span>Created By</span>
+                    </th>
+                    <th>
+                        <span>Created On</span>
+                    </th>
+                    <th>
+                        <span>Modified By</span>
+                    </th>
+                    <th>
+                        <span>Modified On</span>
+                    </th>
+
+
+                    <th>Action</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("Details", "WasteDetails", new { Id=item.Id})">@Html.DisplayFor(modelItem => item.WasteNo)</a>
+                        
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WasteGroup)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store)
+                        </td>
+                        @{
+                            string Date = Convert.ToDateTime(item.Date).ToShortDateString();
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reference)
+                        </td>
+                        @{ 
+                            string status = "";
+                            if (item.Status == 1)
+                            { status = "Saved"; }
+                            if (item.Status == 2)
+                            { status = "Booked"; }
+
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedOn)
+                        </td>
+                        @{
+                            var trClass = (item.Status == 1 ) ? "" : "hide";
+                        }
+                        <td class="@trClass">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            </div>
+        </div>
+</section>

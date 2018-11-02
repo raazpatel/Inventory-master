@@ -1,0 +1,84 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.MenuItemMaster>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")| @Html.ActionLink("Approve MenuList", "Approve")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.majorItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinorItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PLUSKU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.unit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.majorItem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MinorItem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PLUSKU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.unit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemType)
+        </td>
+        <td>
+           @if (item.IsActive == true)
+           {
+               <span>Active</span>
+
+           }
+           else
+
+           {
+            <span>InActive</span>
+           }
+            @*@Html.DisplayFor(modelItem => item.IsActive)*@
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "MajorMinor", new { id=item._id }) |         
+            @Html.ActionLink("Delete", "Delete", new { id=item._id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,587 @@
+﻿@model InventoryPizzaExpress.Models.Stock.StockRequestModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<section class="content">
+    <style>
+        .LockOff {
+            display: none;
+            visibility: hidden;
+        }
+
+        .modal-dialog {
+            width: 70%;
+        }
+
+        .LockOn {
+            display: block;
+            visibility: visible;
+            position: fixed;
+            z-index: 999;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: #FDFDFD;
+            height: 100%;
+            text-align: center;
+            padding-top: 150px;
+            filter: alpha(opacity=75);
+            opacity: 0.75;
+        }
+
+        .form-horizontal .control-label {
+            padding-left: 0px;
+        }
+    </style>
+    <div class="form-horizontal">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.TransferNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.TransferNo, new { htmlAttributes = new { @class = "form-control",@ReadOnly = "true" } })
+
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.SourceStore, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.SourceStore, new { htmlAttributes = new { @class = "form-control", @ReadOnly = "true" } })
+
+                    </div>
+                    <div class="hidden">
+                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.SourceStoreId, new { htmlAttributes = new { @class = "form-control"  } })
+                        @Html.EditorFor(model => model.TragetStoreId, new { htmlAttributes = new { @class = "form-control"} })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.TragetStore, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.TragetStore, new { htmlAttributes = new { @class = "form-control", @ReadOnly = "true" } })
+
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @{
+                            string parameterValue = Model.Date.ToShortDateString();
+                        }
+                        @Html.EditorFor(model => parameterValue, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Reference, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-10">        
+                        <input type="submit" value="Add Items" class="btn btn-default open-AddBookDialog" data-toggle="modal"  id="btnAdItem" />            
+                        <input type="submit" id="btndelete" value="Delete Items" class="btn btn-default" />                       
+                        <input type="submit" id="btnorder" value="Save" class="btn btn-default" />
+                        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <table id="tblResult" class="table"></table>
+                    </div>
+                </div>
+                <div class="modal fade" id="modal-default" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title">Add Items</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">                                   
+                                    <div class="row">
+                                       
+                                        <div class="col-md-12" style="max-height:500px;overflow-y:auto;">
+                                            <table id="tblMappedResult" class="table"></table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="Save">Add Items</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>                
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    
+                    <div class="col-md-2">
+                        <label>
+                            Total Quantity
+                        </label>
+
+                        <input type="text" class="form-control totalqty" value="" name="" readonly />
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="glow-alert" style="display: none;"></div>
+        </div>
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+        $("#btnAdItem").click(function () {
+            GetItems();
+            $('#modal-default').modal('show');
+           
+        })
+
+        function GetItems() {
+
+            var obj = {};
+            obj.Store = $('#SourceStoreId').val();;
+
+            $.ajax({
+                type: "POST",
+                url: "/StockReq/GetItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblMappedResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+                            tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk'  /></td>");
+                         
+                            tr.append("<td style='text-align: left;'><label id='ItemId'>" + model[i].ItemId + "</label></td>");
+                            tr.append("<td><label id='ItemName'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId'  min='1000' step='1' value='" + model[i].UnitId + "'  class='form-control hidden'/><label id='UnitName'>" + model[i].UnitName + "</label></td>");
+                            tr.append("<td style='text-align: left;'>  <input type='number' min='1' id='ItemQty'  onkeypress='return isNumberKey(event,this)'  style='width:100px;' name='qty' class='form-control qty'  value='' /></td>");
+                         
+
+                            $('#tblMappedResult').append(tr);
+                            var table = document.getElementById("tblMappedResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                var cellSelect = row.insertCell(0);
+                               
+                                var cellItemCode = row.insertCell(1);
+                                var cellItemName = row.insertCell(2);
+                                var cellUnit = row.insertCell(3);
+                                var cellItemQty = row.insertCell(4);
+                              
+
+
+                                // Add some bold text in the new cell:
+                                cellSelect.innerHTML = "<b>Select</b>";                             
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellUnit.innerHTML = "<b>Unit</b>";
+                                cellItemQty.innerHTML = "<b>Qty</b>";
+                               
+                            }
+                          
+
+                        }
+                      
+
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alertGlow(response.responseText);
+                },
+                error: function (response) {
+                    alertGlow(response.responseText);
+                }
+            });
+
+        }
+        function GetMappedItems() {
+
+            var obj = {};
+            obj.Req = $('#Id').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/StockReq/GetMappedItems",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    if (response.length > 0) {
+                        for (var i = 0; i < model.length; i++) {
+                            tr = $('<tr/>');
+                            tr.append("<td style='text-align: center;'> <input type='checkbox' id='chk' checked/></td>");
+                        
+                            tr.append("<td style='text-align: left;'><label id='Id1'  class='hidden'>" + model[i].Id + "</label><label id='ItemId1'>" + model[i].ItemId + "</label></td>");
+                            tr.append("<td><label id='ItemName1'>" + model[i].ItemName + "</label></td>");
+                            tr.append("<td style='text-align: left;'> <input type='number' id='UnitId1'  min='1000' step='1' value='" + model[i].UnitId + "'  class='form-control hidden'/><label id='UnitName1'>" + model[i].UnitName + "</label></td>");
+                            tr.append("<td style='text-align: left;'>  <input type='number' min='1' id='ItemQty1'  onkeypress='return isNumberKey(event,this)'  style='width:100px;' name='qty' class='form-control qty'   value='" + model[i].Qty + "'  /></td>");
+
+
+                            $('#tblResult').append(tr);
+                            var table = document.getElementById("tblResult");
+                            if (!table.tHead) {
+                                var header = table.createTHead();
+
+                                // Create an empty <tr> element and add it to the first position of <thead>:
+                                var row = header.insertRow(0);
+
+                                // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                                var cellSelect = row.insertCell(0);
+
+                                var cellItemCode = row.insertCell(1);
+                                var cellItemName = row.insertCell(2);
+                                var cellUnit = row.insertCell(3);
+                                var cellItemQty = row.insertCell(4);
+
+
+
+                                // Add some bold text in the new cell:
+                                cellSelect.innerHTML = "<b>Select</b>";
+                                cellItemCode.innerHTML = "<b>ItemCode</b>";
+                                cellItemName.innerHTML = "<b>ItemName</b>";
+                                cellUnit.innerHTML = "<b>Unit</b>";
+                                cellItemQty.innerHTML = "<b>Qty</b>";
+                            }
+                           
+                        }
+                    }
+                    else {
+
+
+                    }
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+        function isNumberKey(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
+                return false;
+            else {
+                var len = $(element).val().length;
+                var index = $(element).val().indexOf('.');
+                if (index > 0 && charCode == 46) {
+                    return false;
+                }
+                if (index > 0) {
+                    var CharAfterdot = (len + 1) - index;
+                    if (CharAfterdot > 4) {
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+        }
+        function alertGlow(msg) {
+            $(".glow-alert").html(msg);
+            $(".glow-alert").delay(200).fadeIn().delay(4000).fadeOut();
+        };
+
+        $("#btndelete").click(function () {
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alertGlow('Please select any item to add');
+                return false;
+            }
+            $('#tblResult tbody tr').each(function () {
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+                var Id = row.find("#Id1").text();
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    var id = Number(Id);
+                    objItems.push(id)
+                }
+            });
+            if (objItems.length > 0) {
+           
+                var data1 = { 'id': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/StockReq/DeleteConfirmed",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+                        alertGlow('Item removed successfully');
+                        GetMappedItems();
+                    },
+                    failure: function (response) {
+                        alertGlow(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alertGlow(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+
+        })
+
+        $('#Save').click(function () {
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblMappedResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alert('Please select any item to add');
+                return false;
+            }
+
+
+            $('#tblMappedResult tbody tr').each(function () {
+
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+                var ReqNo = $("#Id").val();
+                var UnitId = row.find("#UnitId").val();              
+                var UnitName = row.find("#UnitName").text();
+                var ItemId = row.find("#ItemId").text();
+                var ItemName = row.find("#ItemName").text();
+                var Qty = row.find("#ItemQty").val();              
+                if (row.find("[id=chk]").prop('checked') == true) {
+
+                    if (Qty == "") {
+                        strMessage += "Please enter item qty.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    else if (Number(Qty) <= 0) {
+                        strMessage += "Item qty should be greater than zero.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    if (strMessage != "") {
+                        if (strMessage != "") {
+                            alertGlow(strMessage);
+                            return false;
+                        }
+                    }
+                    else {
+                        $("#LockPanel").addClass("LockOn");
+                        objItems.push({ 'ItemCode': ItemId, 'ItemName': ItemName, 'Qty': Qty, 'UnitId': UnitId, 'UnitName': UnitName, 'ReqNo': ReqNo })
+                    }
+                }
+
+
+            });
+
+            if (strMessage == "") {
+                var data1 = { 'StockRequest': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/StockReq/AddItems",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alertGlow('Item added successfully');                          
+                            GetMappedItems();
+                            $('#modal-default').modal('hide');
+                        }
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+
+
+
+        })
+
+        $("#btnorder").click(function () {
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alertGlow('Please select any item to add');
+                return false;
+            }
+
+
+            $('#tblResult tbody tr').each(function () {
+
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+                var ReqNo = $("#Id").val();
+                var UnitId = row.find("#UnitId1").val();
+                var UnitName = row.find("#UnitName1").text();
+                var ItemId = row.find("#ItemId1").text();
+                var ItemName = row.find("#ItemName1").text();
+                var Qty = row.find("#ItemQty1").val();
+                if (row.find("[id=chk]").prop('checked') == true) {
+
+                    if (Qty == "") {
+                        strMessage += "Please enter item qty.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    else if (Number(Qty) <= 0) {
+                        strMessage += "Item qty should be greater than zero.\n";
+                        row.find("[id=ItemQty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    if (strMessage != "") {
+                        if (strMessage != "") {
+                            alertGlow(strMessage);
+                            return false;
+                        }
+                    }
+                    else {
+                        $("#LockPanel").addClass("LockOn");
+                        objItems.push({ 'ItemCode': ItemId, 'ItemName': ItemName, 'Qty': Qty, 'UnitId': UnitId, 'UnitName': UnitName, 'ReqNo': ReqNo })
+                    }
+                }
+
+
+            });
+
+            if (strMessage == "") {
+                var data1 = { 'StockRequest': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/StockReq/AddItems",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alertGlow('Item added successfully');
+                            GetMappedItems();
+                            $('#modal-default').modal('hide');
+                        }
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+        })
+
+        $(document).ready(function () {
+            $('#parameterValue').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: 0,
+                dateFormat: 'mm/dd/yy'
+            }).datepicker("setDate", new Date());
+
+            GetMappedItems();
+        });
+    </script>
+</section>

@@ -1,0 +1,472 @@
+﻿@model InventoryPizzaExpress.I_RecipeDetails
+
+@{
+    ViewBag.Title = "Create";
+}
+   <style>
+     
+            .vl {
+                border-left: 2px solid green;
+                height:400px;
+                margin-right:-10%
+            }
+           
+            .form-control text{
+
+                height:20px;
+                font-size:12px;
+            }
+       .col-md-8 {
+       margin-right:0px;
+       }
+
+      
+</style>
+   <section class="content">
+
+       <div class="form-horizontal">
+           @using (Html.BeginForm("PartialIndex", "Recipe"))
+           {
+               @Html.AntiForgeryToken()
+
+               <div class="form-group disabled">
+                   @Html.LabelFor(model => model.RecipeId, "Recipe Name", htmlAttributes: new { @class = "control-label col-md-1" })
+                   <div class="col-md-2">
+                       @Html.DropDownList("RecipeId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                       @Html.ValidationMessageFor(model => model.RecipeId, "", new { @class = "text-danger" })
+                   </div>
+                   <div class="col-md-2 hidden">
+                       <input type="submit" value="Search" class="btn btn-default" />
+                   </div>
+               </div>
+
+
+           }
+
+
+       </div>
+       <div class="box box-primary">
+           <div class="box-body">
+               <div class="col-lg-3" style="overflow-y:auto;height:450px; width:24%">
+                   <h4>Add/Edit Ingredient</h4>
+                   @using (Html.BeginForm())
+                   {
+                       @Html.AntiForgeryToken()
+
+                       <div class="form-horizontal">
+                           @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                           @Html.HiddenFor(model => model.Id)
+                           @Html.HiddenFor(model => model.RecipeId)
+
+                           <div class="form-group">
+                               @Html.LabelFor(model => model.MemuItem, "MenuItem", htmlAttributes: new { @class = "control-label col-md-3" })
+                               <div class="col-md-8">
+
+                                   @Html.DropDownList("MemuItem", null, htmlAttributes: new { @class = "form-control", @ReadOnly = "true" })
+                                   @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               @Html.LabelFor(model => model.Article, "Article", htmlAttributes: new { @class = "control-label col-md-3" })
+                               <div class="col-md-8">
+                                   I: @Html.RadioButtonFor(m => m.Article, 0, ViewBag.Price == 0 ? new { @checked = "checked" } : null)
+                                   P: @Html.RadioButtonFor(m => m.Article, 1, ViewBag.Price == 1 ? new { @checked = "checked" } : null)
+                                   @Html.ValidationMessageFor(model => model.Article, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               @Html.LabelFor(model => model.ItemId, "Ingredient", htmlAttributes: new { @class = "control-label col-md-3" })
+                               <div class="col-md-8">
+                                   @Html.DropDownList("ItemId", null, htmlAttributes: new { @class = "form-control" })
+                                   @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               @Html.LabelFor(model => model.I_InventoryItemMaster.I_UnitMaster.UnitName, "Unit Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                               <div class="col-md-8">
+                                   @Html.EditorFor(model => model.I_InventoryItemMaster.I_UnitMaster.UnitName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                   @Html.ValidationMessageFor(model => model.I_InventoryItemMaster.I_UnitMaster.UnitName, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+
+                           <div class="form-group">
+                               @Html.LabelFor(model => model.I_InventoryItemMaster.Price, "Cost", htmlAttributes: new { @class = "control-label col-md-3" })
+                               <div class="col-md-8">
+
+                                   @Html.EditorFor(model => model.I_InventoryItemMaster.Price, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                   <label id="price" class="hidden">@ViewBag.Price</label>
+                                   @Html.ValidationMessageFor(model => model.I_InventoryItemMaster.Price, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-md-3" })
+                               <div class="col-md-8">
+                                   @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group hidden">
+                               @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                               <div class="col-md-10">
+                                   @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group hidden">
+                               @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+                               <div class="col-md-10">
+                                   @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group hidden">
+                               @Html.LabelFor(model => model.ModifiedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                               <div class="col-md-10">
+                                   @Html.EditorFor(model => model.ModifiedBy, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.ValidationMessageFor(model => model.ModifiedBy, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+                           <div class="form-group hidden">
+                               @Html.LabelFor(model => model.ModifiedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+                               <div class="col-md-10">
+
+                                   @Html.EditorFor(model => model.ModifiedOn, new { htmlAttributes = new { @class = "form-control" } })
+                                   @Html.ValidationMessageFor(model => model.ModifiedOn, "", new { @class = "text-danger" })
+                               </div>
+                           </div>
+
+                           <div class="form-group">
+                               <div class="col-md-offset-3 col-md-8">
+                                   @if (ViewBag.Action == "Create")
+                                   {
+                                       <input type="submit" value="Save" class="btn btn-default" formaction="Create" onclick="return Validate();" />
+                                   }
+                                   @if (ViewBag.Action == "Edit")
+                                   {
+                                       <input type="submit" value="Update" class="btn btn-default" formaction="Edit" onclick="return Validate();" />
+                                   }
+
+                                   <input type="hidden" value="@ViewBag.Action" id="hdnFlag" />
+                                 
+                               </div>
+
+                           </div>
+                           <hr />
+                           <div class="form-group">
+                               <label class="control-label col-md-6">Recipe Cost:</label>
+                               <div class="col-md-6">
+                                   <b>Rs.</b> <label id="RecipeTotalCost" class="control-label">@ViewBag.Cost</label>
+                               </div>
+                           </div>
+
+                       </div>
+                       <div class="form-group">
+                           <div class="col-md-8">
+                               @Html.ActionLink("Back to List", "Index")
+                           </div>
+                       </div>
+                   }
+               </div>
+               <div class="col-md-1 vl " style="overflow-y:auto;height:450px; width:1%"></div>
+               <div class="col-lg-8" style="overflow-y:auto;height:500px; width:76%">
+                   <h4>Recipe Ingredients</h4>
+                   <table class="table">
+                       <thead>
+                           <tr>
+                               <th>
+                                   <span>MenuItem</span>
+                               </th>
+                               <th>
+                                   <span>Ingredient</span>
+                                   @*@Html.DisplayNameFor(model => model.I_InventoryItemMaster.ItemName)*@
+                               </th>
+                               <th>
+                                   @Html.DisplayNameFor(model => model.Article)
+                               </th>
+                               <th>
+                                   @Html.DisplayNameFor(model => model.Qty)
+                               </th>
+                               <th>
+                                   <span>Unit Name</span>
+                                   @*@Html.DisplayNameFor(model => model.I_InventoryItemMaster.I_UnitMaster.UnitName)*@
+                               </th>
+                               <th>
+                                   <span>Cost</span>
+                                   @*@Html.DisplayNameFor(model => model.I_InventoryItemMaster.Price)*@
+                               </th>
+                               <th>
+                                   <span>Created By</span>
+
+                               </th>
+                               <th>
+                                   <span>Created On</span>
+
+                               </th>
+                               <th>
+                                   <span>Modified By</span>
+
+                               </th>
+                               <th>
+                                   <span>Modified On</span>
+
+                               </th>
+
+                               <th>Action</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           @foreach (var item in ViewBag.userdetails)
+                           {
+                               <tr>
+                                   <td>
+                                       @item.MenuName
+                                   </td>
+                                   <td>
+
+                                       @item.Ingedient
+
+                                   </td>
+                                   <td>
+                                       @item.Article
+                                   </td>
+                                   <td>
+                                       @item.Qty
+                                   </td>
+                                   <td>
+                                       @item.Unit
+
+
+                                   </td>
+                                   <td>
+                                       @item.cost
+
+                                   </td>
+                                   <td>
+                                       @item.CreatedBy
+                                   </td>
+                                   <td>
+                                       @item.CreatedOn.ToShortDateString()
+                                   </td>
+                                   <td>
+                                       @item.ModifiedBy
+                                   </td>
+                                   <td>
+                                       @if (@item.ModifiedOn != null)
+                                       {
+                                           //add format
+                                           @item.ModifiedOn.ToShortDateString()}
+                                   </td>
+
+                                   <td>
+                                       @if (item.Article != "Prod article")
+                                       {
+
+                                       }
+                                       @Html.ActionLink("Edit", "Create", new { Rid = item.RecipeId, invItem = item.Id })
+                                       @Html.ActionLink("Delete", "Delete", new { Rid = item.Id })
+                                   </td>
+                               </tr>
+                           }
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+       <div class="glow-alert" style="display: none;"></div>
+       @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+       @section Scripts {
+
+           @Scripts.Render("~/bundles/jqueryval")
+       }
+       @Scripts.Render("~/bundles/jquery")
+       <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+       <script src="~/Scripts/jquery.dataTables.min.js"></script>
+       <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+
+       <script type="text/javascript">
+           function alertGlow(msg) {
+               $(".glow-alert").html(msg);
+               $(".glow-alert").delay(200).fadeIn().delay(4000).fadeOut();
+           };
+           function Validate() {
+               var strMessage = "";
+               var ItemId = $("#ItemId").val();
+               var Article = $("input[name='Article']:checked").val();
+               var UnitName = $("#I_InventoryItemMaster_I_UnitMaster_UnitName").val();
+               var Price = $("#I_InventoryItemMaster_Price").val();
+               var Qty = $("#Qty").val();
+               if (ItemId == "0") {
+                   strMessage += "Please select Ingredient.<br />";
+                   $("#ItemId").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+               }
+               else {
+                   $("#ItemId").css('border', '');
+               }
+               if (Article == 0) {
+                   if (UnitName == "") {
+                       strMessage += "Please select unit name.<br />";
+                       $("#I_InventoryItemMaster_I_UnitMaster_UnitName").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                   }
+                   else {
+                       $("#I_InventoryItemMaster_I_UnitMaster_UnitName").css('border', '');
+                   }
+               }
+               if (Price == "") {
+                   strMessage += "Please enter cost.<br />";
+                   $("#I_InventoryItemMaster_Price").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+               }
+               else {
+                   $("#I_InventoryItemMaster_Price").css('border', '');
+               }
+               if (Qty == "") {
+                   strMessage += "Please enter quatity.<br />";
+                   $("#Qty").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+               }
+               else if (Qty < 1) {
+                   strMessage += "Quatity should be greater than zero.<br />";
+                   $("#Qty").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+               }
+               else {
+                   $("#Qty").css('border', '');
+               }
+               if (strMessage != "") {
+                   alertGlow(strMessage);
+                   return false;
+               }
+               else { return true; }
+           }
+           $(function () {
+               if ($("input:radio[name='Article']").is(":checked")) {
+                   //its checked
+               }
+               else {
+                   $("#ItemId").attr("disabled", "disabled");
+                   $("#ItemId").empty().append('<option selected="selected" value="0">Please select</option>');
+               }
+               $("select").each(function () {
+                   if ($(this).find("option").length <= 1) {
+                       $(this).attr("disabled", "disabled");
+                   }
+               });
+               $('input[type=radio][name=Article]').change(function () {
+
+                   var value = 0;
+                   if (this.value != "") {
+                       value = this.value;
+                   }
+                   var id = $(this).attr("id");
+                   $.ajax({
+                       type: "POST",
+                       url: "/Recipe/AjaxMethod",
+                       data: '{type: "' + id + '", value: ' + value + '}',
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       success: function (response) {
+                           var list;
+                           list = response;
+                           DisableDropDown("#ItemId");
+                           PopulateDropDown("#ItemId", list);
+
+                           $("#ItemId").prop('class', 'selectpicker form-control');
+                           $("#ItemId").attr('data-live-search', true);
+                           $('#ItemId').selectpicker();
+
+                       },
+                       failure: function (response) {
+                           alertGlow(response.responseText);
+                       },
+                       error: function (response) {
+                           alertGlow(response.responseText);
+                       }                  
+                   });
+               });
+               $("#ItemId").change(function () {
+                   $('input[name="Article"]:checked').each(function () {
+                       selection = (this.value);
+                   });
+
+
+                   var value = 0;
+                   if ($(this).val() != "") {
+                       value = $(this).val();
+                   }
+                   var id = $(this).attr("id");
+
+                   $.ajax({
+                       type: "POST",
+                       url: "/Recipe/CostAndUnit",
+                       data: '{type: "' + id + '", value: ' + value + ',Selection: ' + selection + '}',
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       success: function (response) {
+                           debugger;
+                           var list;
+
+                           list = response;
+                           if (list != null && list.length > 0) {
+                               $.each(list, function () {
+                                   $("#Unit").val(this['UnitId']);
+                                   $("#I_InventoryItemMaster_I_UnitMaster_UnitName").val(this['Unit']);
+                                   $("#I_InventoryItemMaster_Price").val(this['Price']);
+
+                               });
+                           }
+
+
+                       },
+                       failure: function (response) {
+                           alertGlow(response.responseText);
+                       },
+                       error: function (response) {
+                           alertGlow(response.responseText);
+                       }
+                   });
+               });
+           });
+
+           function DisableDropDown(dropDownId) {
+               $(dropDownId).attr("disabled", "disabled");
+               $(dropDownId).empty().append('<option selected="selected" value="0">Please select</option>');
+           }
+
+           function PopulateDropDown(dropDownId, list) {
+               if (list != null && list.length > 0) {
+                   $(dropDownId).removeAttr("disabled");
+                   $.each(list, function () {
+                       $(dropDownId).append($("<option></option>").val(this['Value']).html(this['Text']));
+                   });
+               }
+           }
+
+
+       </script>
+       <script>    
+           //$(window).load(function () {
+           //    $("#loader").fadeOut(1000);
+           //});
+           $('.table').DataTable({
+
+               "aLengthMenu": [[10, 20, 50, 100, 250, -1], [10, 20, 50, 100, 250, "All"]],
+               "iDisplayLength": 10
+
+           });
+           $(document).ready(function () {
+               var cost = $("#RecipeTotalCost")[0].innerText;
+               $("#RecipeTotalCost")[0].innerText = Number(cost).toFixed(2);
+
+               var price = $("#price")[0].innerText;
+               var Itemprice = $("#I_InventoryItemMaster_Price").val();
+               if (Itemprice == "") {
+                   $("#I_InventoryItemMaster_Price").val(Number($("#price")[0].innerText).toFixed(2));
+               }             
+               if ($("#hdnFlag").val() == "Edit") {
+                   $("#ItemId").prop('class', 'selectpicker form-control');
+                   $("#ItemId").attr('data-live-search', true);
+                   $('#ItemId').selectpicker();
+               }
+           });
+       </script>
+   </section>

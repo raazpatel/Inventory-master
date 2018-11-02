@@ -1,0 +1,156 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.Stock.ItemInStock>
+
+@{
+    ViewBag.Title = "ItemReceived";
+}
+<section class="content">
+    <p>@Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })</p>
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow:auto; max-height:550px; ">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VendorName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StoreName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReceiptNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ref)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ItemId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ItemName)
+                    </th>
+                
+                    <th>
+                        @Html.DisplayNameFor(model => model.UnitName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NetTotal)
+                    </th>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.DiscountType)
+                    </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.DiscountValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tax)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalAmount)
+                    </th>                  
+                    <th>
+                        @Html.DisplayNameFor(model => model.BusinessDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+                  
+                 
+                   
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VendorName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StoreName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiptNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ref)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemName)
+                        </td>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NetTotal)
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.DiscountType)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DiscountValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tax)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalAmount)
+                        </td>
+                    @{ 
+
+                        string Date = item.BusinessDate.ToShortDateString();
+                    }
+                        <td>
+                            @Html.DisplayFor(modelItem => Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedOn)
+                        </td>
+                       
+                      
+                       
+                    </tr>
+            }
+
+            </table>
+        </div>
+    </div>
+</section>

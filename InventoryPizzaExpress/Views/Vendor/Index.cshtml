@@ -1,0 +1,129 @@
+﻿@model IEnumerable<InventoryPizzaExpress.Models.Vendor.Vendor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<section class="content">
+    <p>
+        @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Vendor Item Catalog", "VendorItemCatalog", new { controller = "VendorItemCatalog" } ,new { @class = "btn btn-default"} )
+    </p>
+    <div class="box box-primary">
+
+        <div class="box-body" style="overflow-x:auto; ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <span>Vendor Name</span>
+                            @*@Html.DisplayNameFor(model => model.VenderName)*@
+                        </th>
+                        <th>
+                            <span> Address</span>
+                            @*@Html.DisplayNameFor(model => model.AddressLine)*@
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GSTIN)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.City)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.State)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Country)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Phone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            <span>Created By</span>
+                            @*@Html.DisplayNameFor(model => model.CreatedBy)*@
+                        </th>
+                        <th>
+                            <span>Created On</span>
+                            @*@Html.DisplayNameFor(model => model.CreatedOn)*@
+                        </th>
+                        <th>
+                            <span>Modified By</span>
+                            @*@Html.DisplayNameFor(model => model.ModifiedBy)*@
+                        </th>
+                        <th>
+                            <span>Modified On</span>
+                            @*@Html.DisplayNameFor(model => model.ModifiedOn)*@
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VenderName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AddressLine)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GSTIN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Country)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tr>
+                    <td>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script>
+
+                $('.table').DataTable({"columnDefs": [ {
+                    "targets": 12,
+                    "orderable": false
+                } ]});
+    </script>
+</section>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<InventoryPizzaExpress.I_Recipe>
+<section class="content">
+    <p>
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("CreateRecipe", "Recipe")';return false;">Add</button>
+          
+</p>
+   
+    <div class="box box-primary">
+        <div class="box-body">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                          <span>Recipe Name</span> 
+                        </th>
+                        <th>
+                            <span>Created By</span> 
+                          
+                        </th>
+                        <th>
+                            <span>Created On</span> 
+                           
+                        </th>
+                        <th>
+                            <span>Modified By</span> 
+                          
+                        </th>
+                        <th>
+                            <span>Modified On</span> 
+                          
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td >
+                                <a href="@Url.Action("Create", "Recipe", new {  Rid = item.Id, invItem = 0  })">@item.RecipeName</a>
+
+                                @*@Html.DisplayFor(modelItem => item.RecipeName)*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Create", "Recipe", new {  Rid = item.Id, invItem = 0  })">Edit</a>
+                               @*@Html.ActionLink("Edit", "EditRecipe", new { id = item.Id })|*@
+                                @*@Html.ActionLink("Detail`s", "Details", new { id = item.Id }) |*@
+                               @Html.ActionLink("Delete", "DeleteRecipe", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Scripts.Render("~/bundles/jquery")
+            <script src="~/Scripts/jquery.dataTables.min.js"></script>
+            <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+            <script>
+
+                $('.table').DataTable({"columnDefs": [ {
+                    "targets": 5,
+                    "orderable": false
+                } ]});
+            </script>
+
+        </div>
+    </div>
+</section>

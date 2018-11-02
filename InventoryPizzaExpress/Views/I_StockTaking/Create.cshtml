@@ -1,0 +1,393 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+
+
+<section class="content">
+    <style type="text/css">
+        .dual-list .list-group {
+            margin-top: 8px;
+        }
+
+        .list-left li, .list-right li {
+            cursor: pointer;
+        }
+
+        .list-arrows {
+            padding-top: 100px;
+        }
+
+            .list-arrows button {
+                margin-bottom: 20px;
+            }
+    </style>
+    <style type="text/css">
+        .LockOff {
+            display: none;
+            visibility: hidden;
+        }
+
+        .LockOn {
+            display: block;
+            visibility: visible;
+            position: fixed;
+            z-index: 999;
+            top: 0px;
+            left: 0px;
+            width: 105%;
+            height: 105%;
+            background-color: #ccc;
+            text-align: center;
+            padding-top: 20%;
+            filter: alpha(opacity=75);
+            opacity: 0.75;
+        }
+    </style>
+
+    <div class="form-horizontal col-md-4">
+        <div class="form-group">
+
+            <div class="col-md-12">
+                <b>Select Store:</b> <span style="color: red;">* </span>
+                <select id="ddlStore" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-12">
+                <label class="control-label" for="">
+                    <b>Date:</b><span style="color: red;"> * </span>
+                </label>
+                <input class="form-control mytablecell" type="text" id="txtdate" placeholder='mm/dd/yyyy'>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <label class="control-label" for="">
+                    <b>Inventory Time:</b> <span style="color: red;">* </span>
+                </label>
+                <ul>
+                    <li>
+                        <input type="radio" id="rbStartOfday" name="inventoryTime" value="1" /> Start of day (SOD)
+                    </li>
+                    <li>
+                        <input type="radio" id="rbMidDay" name="inventoryTime" value="2" />Mid-Day
+                    </li>
+                    <li>
+                        <input type="radio" id="rbStartOfDate" name="inventoryTime" value="3" checked />End of Day (EOD)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <label class="control-label" for="">
+                    <b>Closing Method:</b><span style="color: red;"> * </span>
+                </label>
+                <ul>
+                    <li>
+                        <input type="radio" id="rbnotzero" name="ClosingMethod" value="1" /> Set not counted to 0
+                    </li>
+                    <li>
+                        <input type="radio" id="rbnottotheo" name="ClosingMethod" value="2" checked />Set not counted to Theo. SOH
+
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <button id="btnSubmit" class="btn btn-default">Create</button>
+                @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+       
+        <label class="control-label" for="">
+            <b>Choose Item Group:</b><span style="color: red;"> * </span>
+        </label>
+        <div class="row">
+
+            <div class="dual-list list-left col-md-5" style="overflow-x:auto; max-height:500px;">
+                <div class="well text-right">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="btn-group">
+                                <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group" id="Itemlist"></ul>
+                </div>
+            </div>
+
+            <div class="list-arrows col-md-1 text-center">
+                <button class="btn btn-default btn-sm move-left">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+
+                <button class="btn btn-default btn-sm move-right">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
+            </div>
+
+            <div class="dual-list list-right col-md-5" style="overflow-x:auto; max-height:500px;">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="btn-group">
+                                <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group" id="slectedItems"></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="glow-alert" style="display: none;"></div>
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+        function alertGlow(msg) {
+            $(".glow-alert").html(msg);
+            $(".glow-alert").delay(200).fadeIn().delay(4000).fadeOut();
+        };
+            function ListGroup() {
+                $.ajax({
+                    type: "POST",
+                    url: "/VendorItemCatalog/GetMinorGroups",
+                    data: '',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+                        var list;
+                        list = response;
+                        $('#Itemlist').empty();
+
+                        $.each(list, function (key, value) {
+                            $('#Itemlist').append(
+                                $("<li class='list-group-item'></li>")
+                                  .attr("value", value.Value)
+                                  .text(value.Text)
+                            );
+                        });
+                    },
+                    failure: function (response) {
+                        alertGlow(response.responseText);
+                    },
+                    error: function (response) {
+                        alertGlow(response.responseText);
+                    }
+                });
+
+            }
+            $("#btnSubmit").click(function()
+            {
+                var strMessage = "";
+                if ($('#ddlStore').val() == "0") {
+                    strMessage += "Please select Store.\n";
+                    $("#ddlStore").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else
+                    $("#ddlStore").css('border', '');
+
+                if ($('#txtdate').val() == "") {
+                    strMessage += "Please select date.\n";
+                    $("#txtdate").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else
+                    $("#txtdate").css('border', '');
+                var hasitems = 0;
+
+                $('#slectedItems li').each(function (i) {
+                    hasitems = 1;
+                    var index = $(this).index();
+                    var text = $(this).text();
+                    var value = $(this).attr('value');
+                   // alert('Index is: ' + index + ' and text is ' + text + ' and Value ' + value);
+                });
+
+                if (hasitems == 0) {
+                    strMessage += "Please select any item.\n";
+                    $("#slectedItems").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                }
+                else
+                    $("#slectedItems").css('border', '');
+
+                if (strMessage != "") {
+                    alertGlow(strMessage);
+                    return false;
+                }
+                else {
+                    $("#LockPanel").addClass("LockOn");
+                    var Items = '';
+                    $('#slectedItems li').each(function (i) {
+                        var value = $(this).attr('value');
+                        if (typeof value === "undefined")
+                        { }
+                        else
+                        Items += value +','
+                    });
+                    var obj = {};
+                    obj.StoreId = $('#ddlStore').val();
+                    obj.Date = $('#txtdate').val();
+                    obj.InventoryTime = $("input[name='inventoryTime']:checked").val();
+                    obj.ClosingMethod = $("input[name='ClosingMethod']:checked").val();
+                    obj.Items = Items;
+                    $.ajax({
+                        type: "POST",
+                        url: "/I_StockTaking/AddItems",
+                        data: JSON.stringify(obj),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response, status) {
+
+                            if (response.success) {
+                                alertGlow('Item Saved Successfully')
+                            }
+
+                            $("#LockPanel").removeClass("LockOn");
+
+
+                        },
+                        failure: function (response) {
+                            alertGlow(response.responseText);
+                            $("#LockPanel").removeClass("LockOn");
+
+                        },
+                        error: function (response) {
+                            alertGlow(response.responseText);
+                            $("#LockPanel").removeClass("LockOn");
+
+                        }
+                    });
+                    return false;
+
+                }
+            })
+
+
+            function StoreDetails() {
+                $.ajax({
+                    type: "POST",
+                    url: "/I_StockTaking/GetStoreDetails",
+                    data: '',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+                        var list;
+                        list = response;
+                        $('#ddlStore').empty();
+                        $('#ddlStore').append(
+                              $("<option></option>")
+                                .attr("value", 0)
+                                .text("Select Store")
+                          );
+                        $.each(list, function (key, value) {
+                            $('#ddlStore').append(
+                                $("<option></option>")
+                                  .attr("value", value.Value)
+                                  .text(value.Text)
+                            );
+                        });
+                        $("#ddlStore").prop('class', 'selectpicker form-control');
+                        $("#ddlStore").attr('data-live-search', true);
+                        $('#ddlStore').selectpicker();
+
+                    },
+                    failure: function (response) {
+                        alertGlow(response.responseText);
+                    },
+                    error: function (response) {
+                        alertGlow(response.responseText);
+                    }
+                });
+
+            }
+            $(document).ready(function () {
+                StoreDetails();
+                ListGroup();
+                $('body').on('focus', ".mytablecell", function () {
+                    $(this).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        minDate: 0,
+                        dateFormat: 'mm/dd/yy'
+                    });
+                });
+                $(".mytablecell").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: 0,
+                    dateFormat: 'mm/dd/yy'
+                });
+            });
+    </script>
+    <script type="text/javascript">
+            $(function () {
+
+                $('body').on('click', '.list-group .list-group-item', function () {
+                    $(this).toggleClass('active');
+                });
+                $('.list-arrows button').click(function () {
+                    var $button = $(this), actives = '';
+                    if ($button.hasClass('move-left')) {
+                        actives = $('.list-right ul li.active');
+                        actives.clone().appendTo('.list-left ul');
+                        actives.remove();
+                    } else if ($button.hasClass('move-right')) {
+                        actives = $('.list-left ul li.active');
+                        actives.clone().appendTo('.list-right ul');
+                        actives.remove();
+                    }
+                });
+                $('.dual-list .selector').click(function () {
+                    var $checkBox = $(this);
+                    if (!$checkBox.hasClass('selected')) {
+                        $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
+                        $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+                    } else {
+                        $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+                        $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+                    }
+                });
+                $('[name="SearchDualList"]').keyup(function (e) {
+                    var code = e.keyCode || e.which;
+                    if (code == '9') return;
+                    if (code == '27') $(this).val(null);
+                    var $rows = $(this).closest('.dual-list').find('.list-group li');
+                    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+                    $rows.show().filter(function () {
+                        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                        return !~text.indexOf(val);
+                    }).hide();
+                });
+
+            });
+    </script>
+</section>

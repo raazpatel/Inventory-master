@@ -1,0 +1,497 @@
+﻿@model InventoryPizzaExpress.I_RecievingItemCatalog
+
+@{
+    ViewBag.Title = "ReceivingItemCatalog";
+}
+
+
+<section class="content">
+    <div class="hidden">
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+
+                @Html.DisplayNameFor(model => model.OrderIds)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.OrderIds)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ReceiptNo)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.ReceiptNo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ref)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.Ref)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DelieveryDate)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.DelieveryDate)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="form-horizontal col-md-12">
+        <div class="form-group">
+            <h4> Order Details:</h4>
+            <div class="col-md-2">
+
+                <b>Vendor</b><span style="color: red;"> * </span>
+                <input type="text" id="txtvendor" class="form-control" readonly />
+            </div>
+            <div class="col-md-2">
+
+                <b>Receipt:</b><span style="color: red;"> * </span>
+                <input type="text" id="txtReceiptNo" class="form-control" />
+            </div>
+
+
+            <div class="col-md-2">
+
+                <b>Delivery Date:</b><span style="color: red;"> * </span>
+                <input class="form-control mytablecell" type="text" id="txtdate" placeholder='mm/dd/yyyy'>
+            </div>
+            <div class="col-md-2">
+
+                <b>Reference</b>
+                <input class="form-control" type="text" id="txtRef">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <h4> Order List</h4>
+           
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+
+                            <b>Total Qty:</b>
+                            <input type="text" id="txtTotalQty" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-2">
+
+                            <b>Total Price:</b>
+                            <input type="text" id="txtTotalPrice" class="form-control" readonly />
+                        </div>
+
+
+                        <div class="col-md-2">
+
+                            <b>Total Net Amount:</b>
+                            <input class="form-control" type="text" id="txtNetAmount" readonly>
+                        </div>
+                        <div class="col-md-2">
+
+                            <b>Total Discount</b>
+                            <input class="form-control" type="text" id="txtTotalDiscount" readonly>
+                        </div>
+                        <div class="col-md-2">
+
+                            <b>Total Amount</b>
+                            <input class="form-control" type="text" id="txtTotalAmount" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-primary">
+
+                    <div class="box-body" style="overflow:auto;max-height:400px">
+                        <table class="wp-list-table table" id="tblResult"></table>
+                    </div>
+                </div>
+            
+            </div>
+        <div class="form-group">
+           
+            <div class="col-md-12 form-horizontal">
+            
+                    <button id="btnbookReceipt" class="btn btn-default">Receive</button>
+                    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+              
+                    <button id="btnSaveReceipt" class="btn btn-default">Save</button>
+              
+                    <button id="btnCancelReceipt" class="btn btn-default">Cancel</button>
+              
+                    <button id="btnAddReceipt" class="btn btn-default">Add More</button>
+           
+            </div>
+
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Scripts/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script>
+        function table(model) {
+            if (model.length > 0) {
+                for (var i = 0; i < model.length; i++) {
+
+                    $("#txtvendor").val(model[i].VendorName);
+
+                    
+                    tr = $('<tr/>');
+                   
+                    if (model[i].Status == 0) {
+                        if (model[i].VendorName == null)
+                            tr.append("<td style='text-align: center;'> <input type='checkbox' users[] checked class='addValue' id='chk_" + i + "' disabled/></td>");
+                        else
+                            tr.append("<td style='text-align: center;'> <input type='checkbox' users[] checked class='addValue' id='chk_" + i + "'/></td>");
+                        tr.append("<td style='text-align: center;'>" + model[i].Id + "</td>");
+                        tr.append("<td style='text-align: left;'><label id='orderNo'>" + model[i].OrderId + "</label></td>");
+                        tr.append("<td><label id='orderNanme'>" + model[i].OrderName + "</label></td>");
+                        tr.append("<td style='text-align: left;'><label id='itemid'>" + model[i].ItemsId + "</label></td>");
+                        tr.append("<td><label id='itemNanme'>" + model[i].ItemName + "</label></td>");
+                        tr.append("<td style='text-align: left;'><label  id='StoreId' class='hidden'>" + model[i].Storeid + "</label><label for='store'>  " + model[i].StoreName + "</label></td>");
+                        tr.append("<td style='text-align: left;'><label  id='VendorId' class='hidden'> " + model[i].VendorId + "</label> <label for='vendor'> " + model[i].VendorName + "</label></td>");
+                        tr.append("<td style='text-align: left;'><label  id='UnitId' class='hidden'> " + model[i].Unit + "</label> <label for='unit' id='unit'> " + model[i].UnitName + "</label></td>");
+                        if (model[i].VendorName == null)
+                            tr.append("<td style='text-align: left;'><input  type='text' class='form-control' style='width: 100px;' onkeypress='return isNumberKey(event,this)'  id='qty_" + i + "' Value='" + Number(model[i].Qty).toFixed(3) + "' onkeyup= 'calQty(this, this.value)' disabled/></td>");
+                        else
+                            tr.append("<td style='text-align: left;'><input  type='text' class='form-control' style='width: 100px;' onkeypress='return isNumberKey(event,this)'  id='qty_" + i + "' Value='" + Number(model[i].Qty).toFixed(3) + "' onkeyup= 'calQty(this, this.value)' /></td>");
+                        tr.append("<td style='text-align: left;'><label for='Price' id='price_" + i + "'> " + Number(model[i].Price).toFixed(3) + "</label></td>");
+
+                        tr.append("<td style='text-align: left;'><label for='Net' id='net_" + i + "'> " + Number(parseFloat(model[i].Qty) * parseFloat(model[i].Price)).toFixed(3) + "</label></td>");
+                        tr.append("<td style='text-align: left;'> <input type='text' onkeypress='return isNumberKey(event,this)'  id='txtdiscount_" + i + "' style='width: 100px;' class='form-control' onkeyup= 'cal(this, this.value)' /></td>");
+                        tr.append("<td style='text-align: left;'></td>");
+                        tr.append("<td style='text-align: left;'><label for='Total' id='total_" + i + "'>" + Number(parseFloat(model[i].Qty) * parseFloat(model[i].Price)).toFixed(3) + "</label></td>");
+
+                        $('#tblResult').append(tr);
+                        var table = document.getElementById("tblResult");
+                        if (!table.tHead) {
+                            var header = table.createTHead();
+
+                            // Create an empty <tr> element and add it to the first position of <thead>:
+                            var row = header.insertRow(0);
+
+                            // Insert a new cell (<td style='text-decoration: underline;'>) at the first position of the "new" <tr> element:
+                            var cellSelect = row.insertCell(0);
+                            var cellId = row.insertCell(1);
+                            var cellOrderId = row.insertCell(2);
+                            var cellOrderName = row.insertCell(3);
+                            var cellItemId = row.insertCell(4);
+                            var cellitemName = row.insertCell(5);
+                            var cellStoreName = row.insertCell(6);
+                            var cellVendor = row.insertCell(7);
+                            var cellUnitName = row.insertCell(8);
+                            var cellQty = row.insertCell(9);
+                            var cellPrice = row.insertCell(10);
+                            var cellNet = row.insertCell(11);
+                            var cellDiscount = row.insertCell(12);
+                            var cellTax = row.insertCell(13);
+                            var cellTotalAmount = row.insertCell(14);
+                            // Add some bold text in the new cell:
+                            cellSelect.innerHTML = "<b>Select</b>";
+                            cellId.innerHTML = "<b>ID</b>";
+                            cellOrderId.innerHTML = "<b>OrderId</b>";
+                            cellOrderName.innerHTML = "<b>OrderName</b>";
+                            cellItemId.innerHTML = "<b>Item Code</b>";
+                            cellitemName.innerHTML = "<b>Item Name</b>";
+                            cellStoreName.innerHTML = "<b>StoreName</b>";
+                            cellVendor.innerHTML = "<b>Vendor</b>";
+                            cellUnitName.innerHTML = "<b>UnitName</b>";
+                            cellQty.innerHTML = "<b>Qty</b>";
+                            cellPrice.innerHTML = "<b>Price</b>";
+                            cellNet.innerHTML = "<b>Net Amount</b>";
+                            cellDiscount.innerHTML = "<b>Discount</b>";
+                            cellTax.innerHTML = "<b>Tax</b>";
+                            cellTotalAmount.innerHTML = "<b>Total Amount</b>";
+
+                        }
+                        var colToHide = $("#tblResult tr th:nth-child(2), table tr td:nth-child(2)");
+                        colToHide.hide()
+                        var colToHideid = $("#tblResult tr th:nth-child(3), table tr td:nth-child(3)");
+                        colToHideid.hide()
+                    }
+                }
+                tablesum();
+            }
+            else {
+            }
+        }
+        function GetItems() {
+            var orderIds = $("#OrderIds").val();
+            var obj = {};
+            obj.orderIds = orderIds;
+            $.ajax({
+                type: "POST",
+                url: "/OrderDetails/GetOrderedItemsforReceiving",
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response, status) {
+                    var model;
+                    model = response;
+                    $("#tblResult tbody").empty();
+                    table(model);
+                    $("#LockPanel").removeClass("LockOn");
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+  
+        $('#btnbookReceipt').click(function () {
+            var objItems = [];
+            var check = false;
+            var strMessage = '';
+            $('#tblResult tbody tr').each(function () {
+                var strMessage = '';
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");
+
+
+                if (row.find("[id*=chk]").prop('checked') == true) {
+                    check = true;
+                }
+
+
+            });
+            if (check == false) {
+                alert('Please select any item to add');
+                return false;
+            }
+
+
+            $('#tblResult tbody tr').each(function () {
+
+
+                var currentIdx = $(this).closest('tr').index();
+                var row = $(this).closest("tr");              
+                var Qty = row.find("[id*=qty]").val();
+                var Date = $("#txtdate").val();
+                if (row.find("[id*=chk]").prop('checked') == true) {
+
+                    if (Qty == "") {
+                        strMessage += "Please enter item qty.\n";
+                        row.find("[id*=qty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    else if (Number(Qty) <= 0) {
+                        strMessage += "Item qty should be greater than zero.\n";
+                        row.find("[id*=qty]").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+
+                    }
+
+                    if (Date == "") {
+                        strMessage += "Please enter item qty.\n";
+                        $("#txtdate").css({ "border-color": "#900", "border-width": "1px", "border-style": "solid" });
+                    }
+                    else {
+                        $("#txtdate").css('border', '');
+                    }
+
+                    if (strMessage != "") {
+
+
+                    }
+                    else {
+                        $("#LockPanel").addClass("LockOn");
+                        var ReceiptNo = $("#txtReceiptNo").val();
+                        var VendorId = row.find("#VendorId")[0].innerText;
+                        var OrderNo = row.find("#orderNanme")[0].innerText;
+                        var Ref = $("#txtRef").val();
+                        var itemId = row.find("#itemid")[0].innerText;
+                        var ItemName = row.find("#itemNanme")[0].innerText;
+                        var UnitId = row.find("#UnitId")[0].innerText;
+                        var UnitName = row.find("#unit")[0].innerText;
+                        var Price = row.find("[id*=price]")[0].innerText;
+                        var Qty = row.find("[id*=qty]").val();
+                        var NetTotal = row.find("[id*=net]")[0].innerText;
+                        var DiscountType = 1;
+                        if (row.find("[id*=txtdiscount]").val() !== "")
+                            var DiscountValue = row.find("[id*=txtdiscount]").val();
+                        else
+                            var DiscountValue = 0;
+                        var Tax = 0;
+                        var TotalAmount = row.find("[id*=total]")[0].innerText;
+                        var BusinessDate = $("#txtdate").val();
+                        var StoreId = row.find("#StoreId")[0].innerText;
+
+                        objItems.push({
+                            'ReceiptNo': ReceiptNo, 'VendorId': VendorId, 'OrderNo': OrderNo, 'Ref': Ref, 'itemId': itemId, 'ItemName': ItemName, 'UnitId': UnitId, 'UnitName': UnitName, 'Price': Price,
+                            'Qty': Qty, 'NetTotal': NetTotal, 'DiscountType': DiscountType, 'DiscountValue': DiscountValue, 'Tax': Tax, 'TotalAmount': TotalAmount, 'BusinessDate': BusinessDate, 'StoreId': StoreId
+                        })
+
+                    }
+                }
+
+
+            });
+            if (strMessage == "") {
+                var data1 = { 'listObject': objItems };
+                var data = JSON.stringify(data1)
+                $.ajax({
+                    type: "POST",
+                    url: "/Receiving/AddItems1",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response, status) {
+
+                        if (response.success) {
+                            alert('Item Submit Successfully');
+                            window.open("/Receiving/Index", '_self');
+                        }
+
+
+
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                        $("#LockPanel").removeClass("LockOn");
+
+                    }
+                });
+            }
+        });
+
+        function calQty(eval, val) {           
+
+            var id = eval.id
+            var index = id.replace(/^qty_/, '')
+            var qty = val;
+            var price = $("#price_" + index)[0].innerText;
+            $("#net_" + index)[0].innerText =  (parseFloat(qty) * parseFloat(price)).toFixed(3);
+            var netAmount = $("#net_" + index)[0].innerText;
+            var Discount = $("#txtdiscount_" + index)[0].value;
+            if (Discount!="")
+                $("#total_" + index)[0].innerText = Number(parseFloat(netAmount) - parseFloat(Discount)).toFixed(3);
+            else
+                $("#total_" + index)[0].innerText = parseFloat(netAmount).toFixed(3)
+            tablesum();
+        }
+
+        function cal(eval, val)
+        {
+
+            var id = eval.id
+            var index = id.replace(/^txtdiscount_/, '')
+            var netAmount = $("#net_" + index)[0].innerText;
+
+            if (Number(netAmount) >= Number(val)) {
+                $("#total_" + index)[0].innerText = Number(parseFloat(netAmount) - parseFloat(val)).toFixed(3);
+            }
+            else {
+                eval.value = (Number(netAmount));
+                $("#total_" + index)[0].innerText = Number(parseFloat(netAmount) - parseFloat(eval.value)).toFixed(3);
+                alert('Discount value should not be greater than net amount');
+            }
+            tablesum();
+        }
+        function tablesum()
+        {
+            var sumtotalqty = 0;
+            var sumtotalprice = 0;
+            var sumtotalnet = 0;
+            var sumtotaldiscount = 0;
+            var sumtotalamount = 0;
+            var totalQty = $('input[id*="qty"]');
+            var totalPrice = $('label[id*="price"]');
+            var totalnet = $('label[id*="net"]');
+            var totaldiscount = $('input[id*="txtdiscount"]');
+            var totalAmount = $('label[id*="total"]');
+           
+            for (var i = 0; i < totalQty.length; i++) {
+                sumtotalqty += Number(totalQty[i].value)
+
+            }
+            for (var i = 0; i < totalPrice.length; i++) {
+                sumtotalprice += parseFloat(totalPrice[i].innerText)
+
+            }
+            for (var i = 0; i < totalnet.length; i++) {
+                sumtotalnet += parseFloat(totalnet[i].innerText)
+
+            }
+            for (var i = 0; i < totaldiscount.length; i++) {
+                sumtotaldiscount += Number(totaldiscount[i].value)
+
+            }
+            for (var i = 0; i < totalAmount.length; i++) {
+                sumtotalamount += parseFloat(totalAmount[i].innerText)
+
+            }
+
+            $("#txtTotalQty").val(sumtotalqty);
+            $("#txtTotalPrice").val(sumtotalprice);
+            $("#txtNetAmount").val(sumtotalnet);
+            $("#txtTotalDiscount").val(sumtotaldiscount);
+            $("#txtTotalAmount").val(sumtotalamount);
+
+            $("#txtTotalQty").val(Number( $("#txtTotalQty").val().replace(/^0+/, '')).toFixed(3));
+            $("#txtTotalPrice").val(Number($("#txtTotalPrice").val().replace(/^0+/, '')).toFixed(3));
+            $("#txtNetAmount").val(Number($("#txtNetAmount").val().replace(/^0+/, '')).toFixed(3));
+            $("#txtTotalDiscount").val(Number($("#txtTotalDiscount").val().replace(/^0+/, '')).toFixed(3));
+            $("#txtTotalAmount").val(Number($("#txtTotalAmount").val().replace(/^0+/, '')).toFixed(3));
+        }
+        function isNumberKey(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
+                return false;
+            else {
+                var len = $(element).val().length;
+                var index = $(element).val().indexOf('.');
+                if (index > 0 && charCode == 46) {
+                    return false;
+                }
+                if (index > 0) {
+                    var CharAfterdot = (len + 1) - index;
+                    if (CharAfterdot > 4) {
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+        }
+        $(document).ready(function () {
+          
+            var date = $("#DelieveryDate").val();
+            var arr = [];
+            arr = date.split(' ');
+            $("#txtdate").val(arr[0]);
+            $("#txtReceiptNo").val($("#ReceiptNo").val());
+            $("#txtRef").val($("#Ref").val());
+
+            $('#txtdate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: 0,
+                dateFormat: 'mm/dd/yy'
+            })
+            GetItems();
+           
+        });
+    </script>
+</section>
