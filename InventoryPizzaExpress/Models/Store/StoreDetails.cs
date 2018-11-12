@@ -35,4 +35,20 @@ namespace InventoryPizzaExpress.Models.Store
         [Display(Name = "Manager")]
         public string manager { get; set; }
     }
+
+    public class StoreDetails1
+    {       
+        public int storeId { get; set; }
+        public string storename { get; set; } 
+        public string MasterStoreName { get; set; } 
+        public string address { get; set; }      
+        public string city { get; set; }       
+        public string state { get; set; }   
+        public string email { get; set; }       
+        public string phone { get; set; }      
+        public string manager { get; set; }
+        public List<StoreDetails1> StoreDetails1List { get; set; }
+    }
+
+
 }

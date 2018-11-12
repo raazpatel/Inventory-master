@@ -201,17 +201,11 @@ namespace InventoryPizzaExpress.Controllers.API.Order
                 ModifiedBy = x.ModifiedBy,
                 ModifiedOn = x.ModifiedOn,
                 FixedorVariable=x.FixedorVariable,
-
             }).ToList();
-
-
-
-
             if ((i_OrderDetails == null) && (i_OrderDetails.Count == 0))
             {
                 return NotFound();
             }
-
             return Ok(i_OrderDetails);
         }
 

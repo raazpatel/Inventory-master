@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InventoryPizzaExpress.Store_Details>
+﻿@model InventoryPizzaExpress.Models.Store.StoreDetails1
 
 @{
     ViewBag.Title = "Index";
@@ -20,61 +20,61 @@
                             <span>Cost center</span>
                         </th>
                         <th>
+                            <span>Master Store</span>
+                        </th>
+                        <th>
                             <span>Address</span>
                         </th>
                         <th>
                             <span>City</span>
-
                         </th>
                         <th>
                             <span>State</span>
-
                         </th>
                         <th>
                             <span>Email Id</span>
-
                         </th>
                         <th>
                             <span>Phone No</span>
-
                         </th>
                         <th>
                             <span>Manager</span>
-
                         </th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.StoreDetails1List)
             {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.storename)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.city)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.state)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.phone)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.manager)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.storeId })
-
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.storename)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MasterStoreName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.city)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.state)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.manager)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.storeId })
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

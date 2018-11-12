@@ -21,7 +21,25 @@ namespace InventoryPizzaExpress.Controllers.Store
         // GET: Store
         public ActionResult Index()
         {
-            return View(db.Store_Details.Where(m => m.MasterStoreId != 0).ToList());
+
+            StoreDetails1 obj = new StoreDetails1();
+            obj.StoreDetails1List = (from c1 in db.Store_Details
+                        where c1.MasterStoreId == 0
+                        join c2 in db.Store_Details on c1.storeId equals c2.MasterStoreId
+                        select new StoreDetails1
+                        {
+                            storeId= c2.storeId,
+                            storename= c2.storename,
+                            address= c2.address,
+                            city=  c2.city,
+                            state= c2.state,
+                            email= c2.email,
+                            phone=c2.phone,
+                            manager= c2.manager,
+                            MasterStoreName = c1.storename
+                        }).ToList();         
+            //return View(db.Store_Details.Where(m => m.MasterStoreId != 0).ToList());        commented old qurey new query change by rajesh on 12-11-2018
+            return View(obj);
         }
         [HttpPost]
         public  JsonResult GetStoresDetails()
@@ -49,6 +67,16 @@ namespace InventoryPizzaExpress.Controllers.Store
         // GET: Store/Create
         public ActionResult Create()
         {
+            //return View(db.Store_Details.Where(m => m.MasterStoreId == 0).ToList());
+            ViewBag.MasterStoreList = from m in db.Store_Details
+                                      where m.MasterStoreId == 0
+                                      select new SelectListItem
+                                      {
+                                          Value = m.storeId.ToString(),
+                                          Text = m.storename
+                                      };
+
+
             return View();
         }
 
@@ -83,6 +111,14 @@ namespace InventoryPizzaExpress.Controllers.Store
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.MasterStoreList = from m in db.Store_Details
+                                      where m.MasterStoreId == 0
+                                      select new SelectListItem
+                                      {
+                                          Value = m.storeId.ToString(),
+                                          Text = m.storename
+                                      };
+
 
             Store_Details storeDetail = db.Store_Details.Find(id);
             var config = new MapperConfiguration(cfg => {
